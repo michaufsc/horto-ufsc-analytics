@@ -17,7 +17,7 @@ st.set_page_config(
 )
 
 # ============================================
-# INFORMAÇÕES DO TRABALHO (COMPLETAS)
+# INFORMAÇÕES DO TRABALHO
 # ============================================
 
 TITULO = "Etnobiologia digital no Horto Didático da UFSC: circulação do saber etnobotânico mensurada por web analytics"
@@ -299,7 +299,7 @@ st.markdown("""
         color: white !important;
     }
     
-    /* Referências */
+    /* Referências - SEM tags <p> visíveis */
     .ref-box {
         background: #f8f9fa;
         padding: 20px;
@@ -325,6 +325,7 @@ st.markdown("""
         border-radius: 10px;
         border-left: 4px solid #17B978;
         margin: 15px 0;
+        line-height: 1.6;
     }
     .highlight-box h4 {
         color: #1E3D59;
@@ -332,7 +333,22 @@ st.markdown("""
     }
     .highlight-box p {
         font-size: 0.95rem;
-        line-height: 1.6;
+        line-height: 1.8;
+        margin: 10px 0;
+    }
+    
+    /* Resumo */
+    .resumo-texto {
+        font-size: 0.95rem;
+        line-height: 1.8;
+        text-align: justify;
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        border-left: 4px solid #17B978;
+    }
+    .resumo-texto strong {
+        color: #1E3D59;
     }
     
     /* Rodapé */
@@ -343,6 +359,22 @@ st.markdown("""
         border-top: 2px solid #e0e0e0;
         font-size: 0.8rem;
         color: #999;
+        line-height: 1.8;
+    }
+    
+    /* Link do Horto */
+    .horto-link {
+        text-align: center;
+        margin: 5px 0 15px 0;
+        font-size: 0.9rem;
+    }
+    .horto-link a {
+        color: #17B978;
+        text-decoration: none;
+        font-weight: 600;
+    }
+    .horto-link a:hover {
+        text-decoration: underline;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -368,6 +400,17 @@ with col_logo2:
         "https://xxviiispmb.com.br/wp-content/uploads/2026/01/logo-spmb-2026.png",
         use_container_width=True
     )
+
+# ============================================
+# LINK DO HORTO DIDÁTICO
+# ============================================
+
+st.markdown("""
+<div class="horto-link">
+    🌱 <a href="https://hortodidatico.ufsc.br/" target="_blank">Horto Didático de Plantas Medicinais da UFSC</a> 
+    — Hospital Universitário (HU) / Centro de Ciências da Saúde (CCS)
+</div>
+""", unsafe_allow_html=True)
 
 # ============================================
 # TÍTULO DO TRABALHO E AUTORES
@@ -405,22 +448,24 @@ aba1, aba2, aba3 = st.tabs([
 ])
 
 # ============================================
-# ABA 1: RESULTADOS (COM TEXTOS COMPLETOS)
+# ABA 1: RESULTADOS
 # ============================================
 
 with aba1:
     st.header("📈 Resultados e Discussão da Pesquisa")
     
-    # Resumo completo com todos os números
+    # RESUMO COMPLETO
     st.markdown(f"""
-    > **Resumo dos Resultados:** A análise combinada entre aquisição de usuários e aquisição de tráfego revela a sólida autoridade e o alcance do portal. Em **2025**, o site registrou **{DADOS_2025['usuarios']:,} usuários** ({DADOS_2025['usuarios_novos']:,} novos), com predomínio da busca orgânica ({DADOS_2025['busca_organica_usuarios']:,}; **{DADOS_2025['busca_organica_pct']:.2f}%**) e do acesso direto ({DADOS_2025['acesso_direto_usuarios']:,}; **{DADOS_2025['acesso_direto_pct']:.2f}%**). Na perspectiva de tráfego, o mesmo período contabilizou {DADOS_2025['usuarios_engajados']:,} usuários engajados, liderados pela busca orgânica ({DADOS_2025['busca_organica_trafego']:,}; **{DADOS_2025['busca_organica_trafego_pct']:.2f}%**) e acesso direto ({DADOS_2025['acesso_direto_trafego']:,}; **{DADOS_2025['acesso_direto_trafego_pct']:.2f}%**).
-    > 
-    > Em **2026 (jan–jul)**, foram **{DADOS_2026['usuarios']:,} usuários** ({DADOS_2026['usuarios_novos']:,} novos), mantendo a liderança da busca orgânica ({DADOS_2026['busca_organica_usuarios']:,}; **{DADOS_2026['busca_organica_pct']:.2f}%**) e acesso direto ({DADOS_2026['acesso_direto_usuarios']:,}; **{DADOS_2026['acesso_direto_pct']:.2f}%**), enquanto o tráfego total atingiu {DADOS_2026['usuarios_engajados']:,} usuários, com busca orgânica ({DADOS_2026['busca_organica_trafego']:,}; **{DADOS_2026['busca_organica_trafego_pct']:.2f}%**) e acesso direto ({DADOS_2026['acesso_direto_trafego']:,}; **{DADOS_2026['acesso_direto_trafego_pct']:.2f}%**).
-    > 
-    > Os dados indicam ritmo de crescimento consistente, com projeção de superar o tráfego total de 2025 até o final de 2026. Observou-se ainda a emergência de assistentes de IA como novos vetores de tráfego (139 usuários em 2026; 221 em sessões de tráfego), e canais de indicação (Referral) registraram alta retenção (20,12%), evidenciando a maturidade, a evolução das dinâmicas de busca e a constante expansão da audiência do site.
-    > 
-    > Quanto ao perfil demográfico, observou-se predominância expressiva do público feminino (**{DADOS_2025['feminino']:.1f}% em 2025** e **{DADOS_2026['feminino']:.1f}% em 2026**) e de jovens adultos na faixa etária de 25 a 34 anos (**40,1%**), seguidos pelas faixas de 35 a 44 anos e 18 a 24 anos. A imensa maioria dos acessos está concentrada no Brasil (**{DADOS_2025['brasil']:.1f}% em 2025** e **{DADOS_2026['brasil']:.1f}% em 2026**), com destaque para os estados de SP, RJ, MG, PR, RS e SC. O tráfego internacional representa cerca de 5% a 7,5% dos acessos, com destaque para países de língua portuguesa e das Américas, como Portugal, Estados Unidos, Moçambique, Angola e Espanha.
-    """)
+    <div class="resumo-texto">
+        <p>A análise combinada entre aquisição de usuários e aquisição de tráfego revela a sólida autoridade e o alcance do portal. Em <strong>2025</strong>, o site registrou <strong>{DADOS_2025['usuarios']:,} usuários</strong> ({DADOS_2025['usuarios_novos']:,} novos), com predomínio da busca orgânica ({DADOS_2025['busca_organica_usuarios']:,}; <strong>{DADOS_2025['busca_organica_pct']:.2f}%</strong>) e do acesso direto ({DADOS_2025['acesso_direto_usuarios']:,}; <strong>{DADOS_2025['acesso_direto_pct']:.2f}%</strong>). Na perspectiva de tráfego, o mesmo período contabilizou {DADOS_2025['usuarios_engajados']:,} usuários engajados, liderados pela busca orgânica ({DADOS_2025['busca_organica_trafego']:,}; <strong>{DADOS_2025['busca_organica_trafego_pct']:.2f}%</strong>) e acesso direto ({DADOS_2025['acesso_direto_trafego']:,}; <strong>{DADOS_2025['acesso_direto_trafego_pct']:.2f}%</strong>).</p>
+        
+        <p>Em <strong>2026 (jan–jul)</strong>, foram <strong>{DADOS_2026['usuarios']:,} usuários</strong> ({DADOS_2026['usuarios_novos']:,} novos), mantendo a liderança da busca orgânica ({DADOS_2026['busca_organica_usuarios']:,}; <strong>{DADOS_2026['busca_organica_pct']:.2f}%</strong>) e acesso direto ({DADOS_2026['acesso_direto_usuarios']:,}; <strong>{DADOS_2026['acesso_direto_pct']:.2f}%</strong>), enquanto o tráfego total atingiu {DADOS_2026['usuarios_engajados']:,} usuários, com busca orgânica ({DADOS_2026['busca_organica_trafego']:,}; <strong>{DADOS_2026['busca_organica_trafego_pct']:.2f}%</strong>) e acesso direto ({DADOS_2026['acesso_direto_trafego']:,}; <strong>{DADOS_2026['acesso_direto_trafego_pct']:.2f}%</strong>).</p>
+        
+        <p>Os dados indicam ritmo de crescimento consistente, com projeção de superar o tráfego total de 2025 até o final de 2026. Observou-se ainda a emergência de assistentes de IA como novos vetores de tráfego (139 usuários em 2026; 221 em sessões de tráfego), e canais de indicação (Referral) registraram alta retenção (20,12%), evidenciando a maturidade, a evolução das dinâmicas de busca e a constante expansão da audiência do site.</p>
+        
+        <p>Quanto ao perfil demográfico, observou-se predominância expressiva do público feminino (<strong>{DADOS_2025['feminino']:.1f}% em 2025</strong> e <strong>{DADOS_2026['feminino']:.1f}% em 2026</strong>) e de jovens adultos na faixa etária de 25 a 34 anos (<strong>40,1%</strong>), seguidos pelas faixas de 35 a 44 anos e 18 a 24 anos. A imensa maioria dos acessos está concentrada no Brasil (<strong>{DADOS_2025['brasil']:.1f}% em 2025</strong> e <strong>{DADOS_2026['brasil']:.1f}% em 2026</strong>), com destaque para os estados de SP, RJ, MG, PR, RS e SC. O tráfego internacional representa cerca de 5% a 7,5% dos acessos, com destaque para países de língua portuguesa e das Américas, como Portugal, Estados Unidos, Moçambique, Angola e Espanha.</p>
+    </div>
+    """, unsafe_allow_html=True)
     
     st.divider()
     
@@ -465,7 +510,7 @@ with aba1:
     
     st.divider()
     
-    # Gráficos
+    # GRÁFICOS
     col_g1, col_g2 = st.columns(2)
     
     with col_g1:
@@ -502,7 +547,7 @@ with aba1:
     
     st.divider()
     
-    # Ranking de espécies
+    # RANKING DE ESPÉCIES
     st.subheader("🌿 Ranking de Espécies Medicinais Mais Acessadas (2026)")
     st.caption("Espécies cujas páginas registraram maior engajamento e volume de acessos no período")
     
@@ -529,17 +574,17 @@ with aba1:
     
     st.divider()
     
-    # Conclusão completa
+    # CONCLUSÃO COMPLETA
     st.subheader("💡 Conclusão")
     st.markdown("""
     <div class="highlight-box">
-        <p>Os resultados confirmam o site do Horto como <b>efetivo lócus empírico da Etnobiologia Digital</b>, ampliando o alcance do conhecimento etnobotânico para além dos muros da universidade e alcançando públicos diversos em escala nacional e internacional.</p>
+        <p>Os resultados confirmam o site do Horto como <strong>efetivo lócus empírico da Etnobiologia Digital</strong>, ampliando o alcance do conhecimento etnobotânico para além dos muros da universidade e alcançando públicos diversos em escala nacional e internacional.</p>
         
-        <p>As métricas de <b>Web Analytics</b> mostraram-se ferramentas robustas para avaliar essa circulação, permitindo identificar os principais canais de acesso, com destaque para buscadores e, mais recentemente, assistentes de IA, bem como o perfil demográfico dos usuários e os conteúdos mais acessados.</p>
+        <p>As métricas de <strong>Web Analytics</strong> mostraram-se ferramentas robustas para avaliar essa circulação, permitindo identificar os principais canais de acesso, com destaque para buscadores e, mais recentemente, assistentes de IA, bem como o perfil demográfico dos usuários e os conteúdos mais acessados.</p>
         
-        <p>Essa análise evidencia a <b>tensão entre a capilaridade digital</b>, entendida como a ampla disseminação do conhecimento, e o <b>risco de descontextualização</b>, isto é, a perda do vínculo do saber com suas origens étnicas, ecológicas e culturais. Essa tensão reforça a necessidade de conciliar acessibilidade com a preservação da integridade dos saberes, garantindo que a divulgação científica não comprometa a riqueza e a segurança dos conhecimentos tradicionais <i>(De Meyer & Ceuterick, 2022; Simon & Camargo, 2021)</i>.</p>
+        <p>Essa análise evidencia a <strong>tensão entre a capilaridade digital</strong>, entendida como a ampla disseminação do conhecimento, e o <strong>risco de descontextualização</strong>, isto é, a perda do vínculo do saber com suas origens étnicas, ecológicas e culturais. Essa tensão reforça a necessidade de conciliar acessibilidade com a preservação da integridade dos saberes, garantindo que a divulgação científica não comprometa a riqueza e a segurança dos conhecimentos tradicionais <em>(De Meyer & Ceuterick, 2022; Simon & Camargo, 2021)</em>.</p>
         
-        <p style="color: #555; margin-top: 10px;"><b>Apoio Financeiro:</b> Universidade Federal de Santa Catarina (UFSC)</p>
+        <p style="color: #555; margin-top: 10px;"><strong>Apoio Financeiro:</strong> Universidade Federal de Santa Catarina (UFSC)</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -712,7 +757,7 @@ with aba2:
                 st.plotly_chart(fig, use_container_width=True)
 
 # ============================================
-# ABA 3: REFERÊNCIAS
+# ABA 3: REFERÊNCIAS (SEM TAGS <p> VISÍVEIS)
 # ============================================
 
 with aba3:
@@ -746,7 +791,7 @@ st.markdown("---")
 col1, col2, col3 = st.columns(3)
 
 with col1:
-    st.markdown("🏛️ **Horto Didático UFSC - Departamento de Botânica**", unsafe_allow_html=True)
+    st.markdown("🏛️ **Horto Didático UFSC - HU/CCS**", unsafe_allow_html=True)
 with col2:
     st.markdown(f"📅 Última atualização: {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}", unsafe_allow_html=True)
 with col3:
@@ -757,5 +802,7 @@ st.markdown(f"""
     🌿 Desenvolvido para apresentação no XXVIII Simpósio de Plantas Medicinais do Brasil (SPMB) 2026
     <br>
     <span style="font-size: 0.75rem;">Apoio Financeiro: Universidade Federal de Santa Catarina (UFSC)</span>
+    <br>
+    <span style="font-size: 0.75rem;">🔗 <a href="https://hortodidatico.ufsc.br/" target="_blank" style="color: #17B978;">hortodidatico.ufsc.br</a></span>
 </div>
 """, unsafe_allow_html=True)
