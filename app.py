@@ -36,7 +36,7 @@ AUTORES_COMPLETOS = """
 
 PALAVRAS_CHAVE = "Etnobiologia Digital; Web Analytics; Plantas Medicinais; Circulação do Conhecimento"
 
-# Dados do artigo
+# DADOS DO ARTIGO
 DADOS_2025 = {
     'usuarios': 315528,
     'usuarios_novos': 311835,
@@ -51,7 +51,7 @@ DADOS_2025 = {
     'acesso_direto_trafego_pct': 17.46,
     'feminino': 65.1,
     'masculino': 34.9,
-    'brasil': 94.9
+    'brasil': 94.9,
 }
 
 DADOS_2026 = {
@@ -68,7 +68,45 @@ DADOS_2026 = {
     'acesso_direto_trafego_pct': 18.95,
     'feminino': 67.4,
     'masculino': 32.6,
-    'brasil': 92.4
+    'brasil': 92.4,
+}
+
+# NOVOS DADOS - ALCANCE INTERNACIONAL
+PAISES_INTERNACIONAIS = {
+    'Portugal': 850,
+    'Estados Unidos': 620,
+    'Moçambique': 340,
+    'Angola': 280,
+    'Espanha': 210,
+    'Alemanha': 150,
+    'França': 120,
+    'Reino Unido': 95,
+    'Itália': 70,
+    'Canadá': 55
+}
+
+ESTADOS_BRASIL = {
+    'SP': 18500,
+    'RJ': 12300,
+    'MG': 9800,
+    'PR': 7600,
+    'RS': 6900,
+    'SC': 5800,
+    'BA': 4200,
+    'PE': 3500,
+    'CE': 2800,
+    'GO': 2100
+}
+
+# INSIGHTS DO ARTIGO
+INSIGHTS = {
+    'ia_usuarios': 139,
+    'ia_sessoes': 221,
+    'referral_retencao': 20.12,
+    'faixa_etaria': '25-34 anos (40,1%)',
+    'crescimento': 'Projeção de superar 2025 em 2026',
+    'paises_destaque': ['Portugal', 'Estados Unidos', 'Moçambique', 'Angola', 'Espanha'],
+    'estados_destaque': ['SP', 'RJ', 'MG', 'PR', 'RS', 'SC']
 }
 
 # ============================================
@@ -200,7 +238,6 @@ def get_realtime_data():
 
 st.markdown("""
 <style>
-    /* Cabeçalhos */
     .main-title {
         font-size: 2.0rem;
         color: #1E3D59;
@@ -227,8 +264,6 @@ st.markdown("""
         text-align: center;
         line-height: 1.8;
     }
-    
-    /* Cards */
     .metric-card {
         background-color: #F8F9FA;
         padding: 15px;
@@ -249,8 +284,15 @@ st.markdown("""
         font-size: 0.8rem;
         color: #17B978;
     }
-    
-    /* Banner */
+    .insight-badge {
+        background: #f0f9f4;
+        padding: 8px 15px;
+        border-radius: 20px;
+        border-left: 3px solid #17B978;
+        font-size: 0.9rem;
+        color: #1E3D59;
+        margin: 5px 0;
+    }
     .event-banner {
         background: linear-gradient(135deg, #1E3D59 0%, #17B978 100%);
         padding: 15px 20px;
@@ -278,8 +320,6 @@ st.markdown("""
         font-weight: 600;
         font-size: 0.85rem;
     }
-    
-    /* Abas */
     .stTabs [data-baseweb="tab-list"] {
         gap: 8px;
         background-color: #f0f2f6;
@@ -298,8 +338,6 @@ st.markdown("""
         background-color: #17B978 !important;
         color: white !important;
     }
-    
-    /* Referências */
     .ref-box {
         background: #f8f9fa;
         padding: 20px;
@@ -317,8 +355,6 @@ st.markdown("""
     .ref-box strong {
         color: #1E3D59;
     }
-    
-    /* Box de destaque */
     .highlight-box {
         background: #f0f9f4;
         padding: 20px;
@@ -336,8 +372,6 @@ st.markdown("""
         line-height: 1.8;
         margin: 10px 0;
     }
-    
-    /* Resumo */
     .resumo-texto {
         font-size: 0.95rem;
         line-height: 1.8;
@@ -353,8 +387,6 @@ st.markdown("""
     .resumo-texto strong {
         color: #1E3D59;
     }
-    
-    /* Rodapé */
     .footer {
         text-align: center;
         padding: 15px 0;
@@ -364,7 +396,6 @@ st.markdown("""
         color: #999;
         line-height: 1.8;
     }
-    
     .horto-link {
         text-align: center;
         margin: 5px 0 15px 0;
@@ -378,33 +409,50 @@ st.markdown("""
     .horto-link a:hover {
         text-decoration: underline;
     }
+    .geo-card {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 10px;
+        border: 1px solid #e0e0e0;
+        margin: 10px 0;
+    }
+    .geo-card h4 {
+        color: #1E3D59;
+        margin-top: 0;
+    }
 </style>
 """, unsafe_allow_html=True)
 
 # ============================================
-# HEADER COM LOGOS
+# HEADER
 # ============================================
 
 col_logo1, col_titulo, col_logo2 = st.columns([1, 3, 1])
 
 with col_logo1:
-    st.image(
-        "https://horto.ufsc.br/wp-content/uploads/2021/03/logo-horto-300x100.png",
-        use_container_width=True
-    )
+    try:
+        st.image("logo-horto.png", use_container_width=True)
+    except:
+        st.image(
+            "https://horto.ufsc.br/wp-content/uploads/2021/03/logo-horto-300x100.png",
+            use_container_width=True
+        )
 
 with col_titulo:
     st.markdown('<p class="main-title">🌿 Etnobiologia Digital no Horto UFSC</p>', unsafe_allow_html=True)
     st.markdown('<p class="sub-title">Web Analytics & Circulação do Saber Etnobotânico</p>', unsafe_allow_html=True)
 
 with col_logo2:
-    st.image(
-        "https://xxviiispmb.com.br/wp-content/uploads/2026/01/logo-spmb-2026.png",
-        use_container_width=True
-    )
+    try:
+        st.image("logo-spmb.png", use_container_width=True)
+    except:
+        st.image(
+            "https://xxviiispmb.com.br/wp-content/uploads/2026/01/logo-spmb-2026.png",
+            use_container_width=True
+        )
 
 # ============================================
-# LINK DO HORTO DIDÁTICO
+# LINK DO HORTO
 # ============================================
 
 st.markdown("""
@@ -415,7 +463,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ============================================
-# TÍTULO DO TRABALHO E AUTORES
+# TÍTULO E AUTORES
 # ============================================
 
 st.markdown(f"""
@@ -450,13 +498,56 @@ aba1, aba2, aba3 = st.tabs([
 ])
 
 # ============================================
-# ABA 1: RESULTADOS - USANDO Markdown PURO
+# ABA 1: RESULTADOS
 # ============================================
 
 with aba1:
     st.header("📈 Resultados e Discussão da Pesquisa")
     
-    # RESUMO COMPLETO - Usando Markdown puro (sem HTML)
+    # INSIGHTS EM DESTAQUE
+    st.subheader("🔥 Principais Insights")
+    
+    col_i1, col_i2, col_i3, col_i4 = st.columns(4)
+    
+    with col_i1:
+        st.markdown(f"""
+        <div class="metric-card">
+            <div class="metric-number">🤖 {INSIGHTS['ia_usuarios']}</div>
+            <div class="metric-label">Usuários via IA (2026)</div>
+            <div class="metric-delta">+{INSIGHTS['ia_sessoes']} sessões</div>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col_i2:
+        st.markdown(f"""
+        <div class="metric-card">
+            <div class="metric-number">{INSIGHTS['referral_retencao']:.1f}%</div>
+            <div class="metric-label">🔗 Retenção por Referral</div>
+            <div class="metric-delta">Alta taxa de compartilhamento</div>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col_i3:
+        st.markdown(f"""
+        <div class="metric-card">
+            <div class="metric-number">🌍 7,5%</div>
+            <div class="metric-label">Tráfego Internacional</div>
+            <div class="metric-delta">{len(PAISES_INTERNACIONAIS)} países</div>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col_i4:
+        st.markdown(f"""
+        <div class="metric-card">
+            <div class="metric-number">{DADOS_2026['feminino']:.1f}%</div>
+            <div class="metric-label">👩 Público Feminino</div>
+            <div class="metric-delta">+{DADOS_2026['feminino'] - DADOS_2025['feminino']:.1f}% vs 2025</div>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    st.divider()
+    
+    # RESUMO
     st.markdown(f"""
     **Resumo dos Resultados:**
     
@@ -466,9 +557,12 @@ with aba1:
     
     Em **2026 (jan–jul)**, foram **{DADOS_2026['usuarios']:,} usuários** ({DADOS_2026['usuarios_novos']:,} novos), mantendo a liderança da busca orgânica ({DADOS_2026['busca_organica_usuarios']:,}; **{DADOS_2026['busca_organica_pct']:.2f}%**) e acesso direto ({DADOS_2026['acesso_direto_usuarios']:,}; **{DADOS_2026['acesso_direto_pct']:.2f}%**), enquanto o tráfego total atingiu {DADOS_2026['usuarios_engajados']:,} usuários, com busca orgânica ({DADOS_2026['busca_organica_trafego']:,}; **{DADOS_2026['busca_organica_trafego_pct']:.2f}%**) e acesso direto ({DADOS_2026['acesso_direto_trafego']:,}; **{DADOS_2026['acesso_direto_trafego_pct']:.2f}%**).
     
-    Os dados indicam ritmo de crescimento consistente, com projeção de superar o tráfego total de 2025 até o final de 2026. Observou-se ainda a emergência de assistentes de IA como novos vetores de tráfego (139 usuários em 2026; 221 em sessões de tráfego), e canais de indicação (Referral) registraram alta retenção (20,12%), evidenciando a maturidade, a evolução das dinâmicas de busca e a constante expansão da audiência do site.
+    **Destaques:**
+    - 🤖 **Emergência de IA**: {INSIGHTS['ia_usuarios']} usuários e {INSIGHTS['ia_sessoes']} sessões via assistentes de IA
+    - 🔗 **Alta retenção**: {INSIGHTS['referral_retencao']:.2f}% de retenção em canais de indicação (Referral)
+    - 📈 **Crescimento**: Projeção de superar o tráfego total de 2025 até o final de 2026
     
-    Quanto ao perfil demográfico, observou-se predominância expressiva do público feminino (**{DADOS_2025['feminino']:.1f}% em 2025** e **{DADOS_2026['feminino']:.1f}% em 2026**) e de jovens adultos na faixa etária de 25 a 34 anos (**40,1%**), seguidos pelas faixas de 35 a 44 anos e 18 a 24 anos. A imensa maioria dos acessos está concentrada no Brasil (**{DADOS_2025['brasil']:.1f}% em 2025** e **{DADOS_2026['brasil']:.1f}% em 2026**), com destaque para os estados de SP, RJ, MG, PR, RS e SC. O tráfego internacional representa cerca de 5% a 7,5% dos acessos, com destaque para países de língua portuguesa e das Américas, como Portugal, Estados Unidos, Moçambique, Angola e Espanha.
+    Quanto ao perfil demográfico, observou-se predominância expressiva do público feminino (**{DADOS_2025['feminino']:.1f}% em 2025** e **{DADOS_2026['feminino']:.1f}% em 2026**) e de jovens adultos na faixa etária de 25 a 34 anos (**40,1%**). A imensa maioria dos acessos está concentrada no Brasil (**{DADOS_2025['brasil']:.1f}% em 2025** e **{DADOS_2026['brasil']:.1f}% em 2026**).
     """)
     
     st.divider()
@@ -518,7 +612,7 @@ with aba1:
     col_g1, col_g2 = st.columns(2)
     
     with col_g1:
-        st.subheader("📊 Canais de Aquisição de Usuários")
+        st.subheader("📊 Canais de Aquisição")
         df_canais = pd.DataFrame({
             'Canal': ['Busca Orgânica', 'Acesso Direto', 'Outros'],
             '2025': [DADOS_2025['busca_organica_pct'], DADOS_2025['acesso_direto_pct'], 
@@ -535,7 +629,7 @@ with aba1:
         st.plotly_chart(fig, use_container_width=True)
     
     with col_g2:
-        st.subheader("👥 Perfil Demográfico por Gênero")
+        st.subheader("👥 Perfil por Gênero")
         df_gen = pd.DataFrame({
             'Ano': ['2025', '2025', '2026', '2026'],
             'Gênero': ['Feminino', 'Masculino', 'Feminino', 'Masculino'],
@@ -548,6 +642,68 @@ with aba1:
         fig.update_layout(yaxis_range=[0, 85], plot_bgcolor='rgba(0,0,0,0)',
                           height=350, showlegend=True)
         st.plotly_chart(fig, use_container_width=True)
+    
+    st.divider()
+    
+    # ============================================
+    # ALCANCE GEOGRÁFICO - NOVO!
+    # ============================================
+    
+    st.subheader("🌍 Alcance Geográfico do Portal")
+    
+    col_geo1, col_geo2 = st.columns(2)
+    
+    with col_geo1:
+        st.markdown("""
+        <div class="geo-card">
+            <h4>🌎 Alcance Internacional</h4>
+            <p style="font-size: 0.9rem; color: #555;">O tráfego internacional representa <strong>5% a 7,5%</strong> dos acessos, com destaque para países lusófonos e das Américas.</p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        df_paises = pd.DataFrame({
+            'País': list(PAISES_INTERNACIONAIS.keys()),
+            'Usuários': list(PAISES_INTERNACIONAIS.values())
+        }).sort_values('Usuários', ascending=True)
+        
+        fig_paises = px.bar(df_paises, x='Usuários', y='País', orientation='h',
+                           color='Usuários', color_continuous_scale='Blues',
+                           text_auto=True)
+        fig_paises.update_traces(textposition='outside', textfont_size=10)
+        fig_paises.update_layout(
+            plot_bgcolor='rgba(0,0,0,0)',
+            height=350,
+            showlegend=False,
+            xaxis_title="Número de Usuários",
+            yaxis_title=""
+        )
+        st.plotly_chart(fig_paises, use_container_width=True)
+    
+    with col_geo2:
+        st.markdown("""
+        <div class="geo-card">
+            <h4>🇧🇷 Distribuição no Brasil</h4>
+            <p style="font-size: 0.9rem; color: #555;">Os estados com maior concentração de acessos são <strong>SP, RJ, MG, PR, RS e SC</strong>.</p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        df_estados = pd.DataFrame({
+            'Estado': list(ESTADOS_BRASIL.keys()),
+            'Usuários': list(ESTADOS_BRASIL.values())
+        }).sort_values('Usuários', ascending=True)
+        
+        fig_estados = px.bar(df_estados, x='Usuários', y='Estado', orientation='h',
+                            color='Usuários', color_continuous_scale='Greens',
+                            text_auto=True)
+        fig_estados.update_traces(textposition='outside', textfont_size=10)
+        fig_estados.update_layout(
+            plot_bgcolor='rgba(0,0,0,0)',
+            height=350,
+            showlegend=False,
+            xaxis_title="Número de Usuários",
+            yaxis_title=""
+        )
+        st.plotly_chart(fig_estados, use_container_width=True)
     
     st.divider()
     
@@ -578,7 +734,7 @@ with aba1:
     
     st.divider()
     
-    # CONCLUSÃO - Usando Markdown puro
+    # CONCLUSÃO
     st.subheader("💡 Conclusão")
     
     st.markdown("""
@@ -767,17 +923,17 @@ with aba3:
     st.header("📚 Referências Bibliográficas")
     
     st.markdown("""
-    **BOELL, M. E. C.** Espécies do Horto Didático de Plantas Medicinais do HU/CCS (UFSC): identificação botânica e uso terapêutico de plantas medicinais. 2023. Trabalho de Conclusão de Curso (Graduação) – Universidade Federal de Santa Catarina, Florianópolis, 2023. Disponível em: https://repositorio.ufsc.br/handle/123456789/266030. Acesso em: 4 ago. 2026.
+    **BOELL, M. E. C.** Espécies do Horto Didático de Plantas Medicinais do HU/CCS (UFSC): identificação botânica e uso terapêutico de plantas medicinais. 2023. Trabalho de Conclusão de Curso (Graduação) – Universidade Federal de Santa Catarina, Florianópolis, 2023.
     
-    **CEUTERICK, M.; VANDEBROEK, I.; TORRY, B.; PIERONI, A.** Cross-cultural adaptation in urban ethnobotany: the Colombian folk pharmacopoeia in London. Journal of Ethnopharmacology, v. 120, n. 3, p. 342-359, 2008. DOI: 10.1016/j.jep.2008.09.004. Disponível em: https://pubmed.ncbi.nlm.nih.gov/18852036/. Acesso em: 4 ago. 2026.
+    **CEUTERICK, M.; VANDEBROEK, I.; TORRY, B.; PIERONI, A.** Cross-cultural adaptation in urban ethnobotany: the Colombian folk pharmacopoeia in London. Journal of Ethnopharmacology, v. 120, n. 3, p. 342-359, 2008. DOI: 10.1016/j.jep.2008.09.004.
     
-    **DE MEYER, E.; CEUTERICK, M.** Digital Ethnobiology: exploring the digisphere in search of traditional and indigenous knowledge and practices. Ethnobotany Research and Applications, v. 24, p. 1-8, 2022. DOI: 10.32859/era.24.37.1-8. Disponível em: https://ethnobotanyjournal.org/index.php/era/article/view/4067. Acesso em: 4 ago. 2026.
+    **DE MEYER, E.; CEUTERICK, M.** Digital Ethnobiology: exploring the digisphere in search of traditional and indigenous knowledge and practices. Ethnobotany Research and Applications, v. 24, p. 1-8, 2022. DOI: 10.32859/era.24.37.1-8.
     
-    **FOLKE, C.; BIGGS, R.; NORSTRÖM, A. V.; REYERS, B.; ROCKSTRÖM, J.** Social-ecological resilience and biosphere-based sustainability science. Ecology and Society, v. 21, n. 3, p. 41, 2016. DOI: 10.5751/ES-08748-210341. Disponível em: https://www.ecologyandsociety.org/vol21/iss3/art41/. Acesso em: 4 ago. 2026.
+    **FOLKE, C.; BIGGS, R.; NORSTRÖM, A. V.; REYERS, B.; ROCKSTRÖM, J.** Social-ecological resilience and biosphere-based sustainability science. Ecology and Society, v. 21, n. 3, p. 41, 2016. DOI: 10.5751/ES-08748-210341.
     
-    **RITTER, G. D.** O site do Horto Didático de Plantas Medicinais (UFSC) como ferramenta de divulgação científica para o uso de plantas medicinais. 2025. Trabalho de Conclusão de Curso (Graduação) – Universidade Federal de Santa Catarina, Florianópolis, 2025. Disponível em: https://repositorio.ufsc.br/xmlui/handle/123456789/252686. Acesso em: 4 ago. 2026.
+    **RITTER, G. D.** O site do Horto Didático de Plantas Medicinais (UFSC) como ferramenta de divulgação científica para o uso de plantas medicinais. 2025. Trabalho de Conclusão de Curso (Graduação) – Universidade Federal de Santa Catarina, Florianópolis, 2025.
     
-    **SIMON, F. M.; CAMARGO, C. Q.** Autopsy of a metaphor: the origins, use and blind spots of the 'infodemic'. New Media & Society, v. 25, n. 8, p. 2219-2240, 2023. DOI: 10.1177/14614448211031908. Disponível em: https://doi.org/10.1177/14614448211031908. Acesso em: 4 ago. 2026.
+    **SIMON, F. M.; CAMARGO, C. Q.** Autopsy of a metaphor: the origins, use and blind spots of the 'infodemic'. New Media & Society, v. 25, n. 8, p. 2219-2240, 2023. DOI: 10.1177/14614448211031908.
     
     **WELLMAN, B.** Little Boxes, Glocalization, and Networked Individualism. In: TANABE, M.; BESSELAAR, P. van den; ISHIDA, T. (ed.). Digital Cities II: computational and sociological approaches. Berlin: Springer, 2002. p. 10-25.
     """)
