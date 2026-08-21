@@ -299,7 +299,7 @@ st.markdown("""
         color: white !important;
     }
     
-    /* Referências - SEM tags <p> visíveis */
+    /* Referências */
     .ref-box {
         background: #f8f9fa;
         padding: 20px;
@@ -347,6 +347,9 @@ st.markdown("""
         border-radius: 10px;
         border-left: 4px solid #17B978;
     }
+    .resumo-texto p {
+        margin: 10px 0;
+    }
     .resumo-texto strong {
         color: #1E3D59;
     }
@@ -362,7 +365,6 @@ st.markdown("""
         line-height: 1.8;
     }
     
-    /* Link do Horto */
     .horto-link {
         text-align: center;
         margin: 5px 0 15px 0;
@@ -433,7 +435,7 @@ st.markdown("""
     <h2>🎓 XXVIII Simpósio de Plantas Medicinais do Brasil (SPMB) 2026</h2>
     <p>15 a 18 de setembro de 2026 | Univali - Campus Professor Edison Villela, Itajaí/SC</p>
     <p>Tema: <strong>Plantas medicinais como fonte de novos agentes medicinais</strong></p>
-    <div class="highlight">🌟 Apresentação: Michael A. Lopes</div>
+    <div class="highlight">Apresentador: Michael A. Lopes</div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -448,24 +450,26 @@ aba1, aba2, aba3 = st.tabs([
 ])
 
 # ============================================
-# ABA 1: RESULTADOS
+# ABA 1: RESULTADOS - USANDO Markdown PURO
 # ============================================
 
 with aba1:
     st.header("📈 Resultados e Discussão da Pesquisa")
     
-    # RESUMO COMPLETO
+    # RESUMO COMPLETO - Usando Markdown puro (sem HTML)
     st.markdown(f"""
-    <div class="resumo-texto">
-        <p>A análise combinada entre aquisição de usuários e aquisição de tráfego revela a sólida autoridade e o alcance do portal. Em <strong>2025</strong>, o site registrou <strong>{DADOS_2025['usuarios']:,} usuários</strong> ({DADOS_2025['usuarios_novos']:,} novos), com predomínio da busca orgânica ({DADOS_2025['busca_organica_usuarios']:,}; <strong>{DADOS_2025['busca_organica_pct']:.2f}%</strong>) e do acesso direto ({DADOS_2025['acesso_direto_usuarios']:,}; <strong>{DADOS_2025['acesso_direto_pct']:.2f}%</strong>). Na perspectiva de tráfego, o mesmo período contabilizou {DADOS_2025['usuarios_engajados']:,} usuários engajados, liderados pela busca orgânica ({DADOS_2025['busca_organica_trafego']:,}; <strong>{DADOS_2025['busca_organica_trafego_pct']:.2f}%</strong>) e acesso direto ({DADOS_2025['acesso_direto_trafego']:,}; <strong>{DADOS_2025['acesso_direto_trafego_pct']:.2f}%</strong>).</p>
-        
-        <p>Em <strong>2026 (jan–jul)</strong>, foram <strong>{DADOS_2026['usuarios']:,} usuários</strong> ({DADOS_2026['usuarios_novos']:,} novos), mantendo a liderança da busca orgânica ({DADOS_2026['busca_organica_usuarios']:,}; <strong>{DADOS_2026['busca_organica_pct']:.2f}%</strong>) e acesso direto ({DADOS_2026['acesso_direto_usuarios']:,}; <strong>{DADOS_2026['acesso_direto_pct']:.2f}%</strong>), enquanto o tráfego total atingiu {DADOS_2026['usuarios_engajados']:,} usuários, com busca orgânica ({DADOS_2026['busca_organica_trafego']:,}; <strong>{DADOS_2026['busca_organica_trafego_pct']:.2f}%</strong>) e acesso direto ({DADOS_2026['acesso_direto_trafego']:,}; <strong>{DADOS_2026['acesso_direto_trafego_pct']:.2f}%</strong>).</p>
-        
-        <p>Os dados indicam ritmo de crescimento consistente, com projeção de superar o tráfego total de 2025 até o final de 2026. Observou-se ainda a emergência de assistentes de IA como novos vetores de tráfego (139 usuários em 2026; 221 em sessões de tráfego), e canais de indicação (Referral) registraram alta retenção (20,12%), evidenciando a maturidade, a evolução das dinâmicas de busca e a constante expansão da audiência do site.</p>
-        
-        <p>Quanto ao perfil demográfico, observou-se predominância expressiva do público feminino (<strong>{DADOS_2025['feminino']:.1f}% em 2025</strong> e <strong>{DADOS_2026['feminino']:.1f}% em 2026</strong>) e de jovens adultos na faixa etária de 25 a 34 anos (<strong>40,1%</strong>), seguidos pelas faixas de 35 a 44 anos e 18 a 24 anos. A imensa maioria dos acessos está concentrada no Brasil (<strong>{DADOS_2025['brasil']:.1f}% em 2025</strong> e <strong>{DADOS_2026['brasil']:.1f}% em 2026</strong>), com destaque para os estados de SP, RJ, MG, PR, RS e SC. O tráfego internacional representa cerca de 5% a 7,5% dos acessos, com destaque para países de língua portuguesa e das Américas, como Portugal, Estados Unidos, Moçambique, Angola e Espanha.</p>
-    </div>
-    """, unsafe_allow_html=True)
+    **Resumo dos Resultados:**
+    
+    A análise combinada entre aquisição de usuários e aquisição de tráfego revela a sólida autoridade e o alcance do portal. 
+    
+    Em **2025**, o site registrou **{DADOS_2025['usuarios']:,} usuários** ({DADOS_2025['usuarios_novos']:,} novos), com predomínio da busca orgânica ({DADOS_2025['busca_organica_usuarios']:,}; **{DADOS_2025['busca_organica_pct']:.2f}%**) e do acesso direto ({DADOS_2025['acesso_direto_usuarios']:,}; **{DADOS_2025['acesso_direto_pct']:.2f}%**). Na perspectiva de tráfego, o mesmo período contabilizou {DADOS_2025['usuarios_engajados']:,} usuários engajados, liderados pela busca orgânica ({DADOS_2025['busca_organica_trafego']:,}; **{DADOS_2025['busca_organica_trafego_pct']:.2f}%**) e acesso direto ({DADOS_2025['acesso_direto_trafego']:,}; **{DADOS_2025['acesso_direto_trafego_pct']:.2f}%**).
+    
+    Em **2026 (jan–jul)**, foram **{DADOS_2026['usuarios']:,} usuários** ({DADOS_2026['usuarios_novos']:,} novos), mantendo a liderança da busca orgânica ({DADOS_2026['busca_organica_usuarios']:,}; **{DADOS_2026['busca_organica_pct']:.2f}%**) e acesso direto ({DADOS_2026['acesso_direto_usuarios']:,}; **{DADOS_2026['acesso_direto_pct']:.2f}%**), enquanto o tráfego total atingiu {DADOS_2026['usuarios_engajados']:,} usuários, com busca orgânica ({DADOS_2026['busca_organica_trafego']:,}; **{DADOS_2026['busca_organica_trafego_pct']:.2f}%**) e acesso direto ({DADOS_2026['acesso_direto_trafego']:,}; **{DADOS_2026['acesso_direto_trafego_pct']:.2f}%**).
+    
+    Os dados indicam ritmo de crescimento consistente, com projeção de superar o tráfego total de 2025 até o final de 2026. Observou-se ainda a emergência de assistentes de IA como novos vetores de tráfego (139 usuários em 2026; 221 em sessões de tráfego), e canais de indicação (Referral) registraram alta retenção (20,12%), evidenciando a maturidade, a evolução das dinâmicas de busca e a constante expansão da audiência do site.
+    
+    Quanto ao perfil demográfico, observou-se predominância expressiva do público feminino (**{DADOS_2025['feminino']:.1f}% em 2025** e **{DADOS_2026['feminino']:.1f}% em 2026**) e de jovens adultos na faixa etária de 25 a 34 anos (**40,1%**), seguidos pelas faixas de 35 a 44 anos e 18 a 24 anos. A imensa maioria dos acessos está concentrada no Brasil (**{DADOS_2025['brasil']:.1f}% em 2025** e **{DADOS_2026['brasil']:.1f}% em 2026**), com destaque para os estados de SP, RJ, MG, PR, RS e SC. O tráfego internacional representa cerca de 5% a 7,5% dos acessos, com destaque para países de língua portuguesa e das Américas, como Portugal, Estados Unidos, Moçambique, Angola e Espanha.
+    """)
     
     st.divider()
     
@@ -574,19 +578,18 @@ with aba1:
     
     st.divider()
     
-    # CONCLUSÃO COMPLETA
+    # CONCLUSÃO - Usando Markdown puro
     st.subheader("💡 Conclusão")
+    
     st.markdown("""
-    <div class="highlight-box">
-        <p>Os resultados confirmam o site do Horto como <strong>efetivo lócus empírico da Etnobiologia Digital</strong>, ampliando o alcance do conhecimento etnobotânico para além dos muros da universidade e alcançando públicos diversos em escala nacional e internacional.</p>
-        
-        <p>As métricas de <strong>Web Analytics</strong> mostraram-se ferramentas robustas para avaliar essa circulação, permitindo identificar os principais canais de acesso, com destaque para buscadores e, mais recentemente, assistentes de IA, bem como o perfil demográfico dos usuários e os conteúdos mais acessados.</p>
-        
-        <p>Essa análise evidencia a <strong>tensão entre a capilaridade digital</strong>, entendida como a ampla disseminação do conhecimento, e o <strong>risco de descontextualização</strong>, isto é, a perda do vínculo do saber com suas origens étnicas, ecológicas e culturais. Essa tensão reforça a necessidade de conciliar acessibilidade com a preservação da integridade dos saberes, garantindo que a divulgação científica não comprometa a riqueza e a segurança dos conhecimentos tradicionais <em>(De Meyer & Ceuterick, 2022; Simon & Camargo, 2021)</em>.</p>
-        
-        <p style="color: #555; margin-top: 10px;"><strong>Apoio Financeiro:</strong> Universidade Federal de Santa Catarina (UFSC)</p>
-    </div>
-    """, unsafe_allow_html=True)
+    Os resultados confirmam o site do Horto como **efetivo lócus empírico da Etnobiologia Digital**, ampliando o alcance do conhecimento etnobotânico para além dos muros da universidade e alcançando públicos diversos em escala nacional e internacional.
+    
+    As métricas de **Web Analytics** mostraram-se ferramentas robustas para avaliar essa circulação, permitindo identificar os principais canais de acesso, com destaque para buscadores e, mais recentemente, assistentes de IA, bem como o perfil demográfico dos usuários e os conteúdos mais acessados.
+    
+    Essa análise evidencia a **tensão entre a capilaridade digital**, entendida como a ampla disseminação do conhecimento, e o **risco de descontextualização**, isto é, a perda do vínculo do saber com suas origens étnicas, ecológicas e culturais. Essa tensão reforça a necessidade de conciliar acessibilidade com a preservação da integridade dos saberes, garantindo que a divulgação científica não comprometa a riqueza e a segurança dos conhecimentos tradicionais *(De Meyer & Ceuterick, 2022; Simon & Camargo, 2021)*.
+    
+    **Apoio Financeiro:** Universidade Federal de Santa Catarina (UFSC)
+    """)
 
 # ============================================
 # ABA 2: TEMPO REAL
@@ -757,29 +760,27 @@ with aba2:
                 st.plotly_chart(fig, use_container_width=True)
 
 # ============================================
-# ABA 3: REFERÊNCIAS (SEM TAGS <p> VISÍVEIS)
+# ABA 3: REFERÊNCIAS
 # ============================================
 
 with aba3:
     st.header("📚 Referências Bibliográficas")
     
     st.markdown("""
-    <div class="ref-box">
-        <p><strong>BOELL, M. E. C.</strong> Espécies do Horto Didático de Plantas Medicinais do HU/CCS (UFSC): identificação botânica e uso terapêutico de plantas medicinais. 2023. Trabalho de Conclusão de Curso (Graduação) – Universidade Federal de Santa Catarina, Florianópolis, 2023. Disponível em: https://repositorio.ufsc.br/handle/123456789/266030. Acesso em: 4 ago. 2026.</p>
-        
-        <p><strong>CEUTERICK, M.; VANDEBROEK, I.; TORRY, B.; PIERONI, A.</strong> Cross-cultural adaptation in urban ethnobotany: the Colombian folk pharmacopoeia in London. Journal of Ethnopharmacology, v. 120, n. 3, p. 342-359, 2008. DOI: 10.1016/j.jep.2008.09.004. Disponível em: https://pubmed.ncbi.nlm.nih.gov/18852036/. Acesso em: 4 ago. 2026.</p>
-        
-        <p><strong>DE MEYER, E.; CEUTERICK, M.</strong> Digital Ethnobiology: exploring the digisphere in search of traditional and indigenous knowledge and practices. Ethnobotany Research and Applications, v. 24, p. 1-8, 2022. DOI: 10.32859/era.24.37.1-8. Disponível em: https://ethnobotanyjournal.org/index.php/era/article/view/4067. Acesso em: 4 ago. 2026.</p>
-        
-        <p><strong>FOLKE, C.; BIGGS, R.; NORSTRÖM, A. V.; REYERS, B.; ROCKSTRÖM, J.</strong> Social-ecological resilience and biosphere-based sustainability science. Ecology and Society, v. 21, n. 3, p. 41, 2016. DOI: 10.5751/ES-08748-210341. Disponível em: https://www.ecologyandsociety.org/vol21/iss3/art41/. Acesso em: 4 ago. 2026.</p>
-        
-        <p><strong>RITTER, G. D.</strong> O site do Horto Didático de Plantas Medicinais (UFSC) como ferramenta de divulgação científica para o uso de plantas medicinais. 2025. Trabalho de Conclusão de Curso (Graduação) – Universidade Federal de Santa Catarina, Florianópolis, 2025. Disponível em: https://repositorio.ufsc.br/xmlui/handle/123456789/252686. Acesso em: 4 ago. 2026.</p>
-        
-        <p><strong>SIMON, F. M.; CAMARGO, C. Q.</strong> Autopsy of a metaphor: the origins, use and blind spots of the 'infodemic'. New Media & Society, v. 25, n. 8, p. 2219-2240, 2023. DOI: 10.1177/14614448211031908. Disponível em: https://doi.org/10.1177/14614448211031908. Acesso em: 4 ago. 2026.</p>
-        
-        <p><strong>WELLMAN, B.</strong> Little Boxes, Glocalization, and Networked Individualism. In: TANABE, M.; BESSELAAR, P. van den; ISHIDA, T. (ed.). Digital Cities II: computational and sociological approaches. Berlin: Springer, 2002. p. 10-25.</p>
-    </div>
-    """, unsafe_allow_html=True)
+    **BOELL, M. E. C.** Espécies do Horto Didático de Plantas Medicinais do HU/CCS (UFSC): identificação botânica e uso terapêutico de plantas medicinais. 2023. Trabalho de Conclusão de Curso (Graduação) – Universidade Federal de Santa Catarina, Florianópolis, 2023. Disponível em: https://repositorio.ufsc.br/handle/123456789/266030. Acesso em: 4 ago. 2026.
+    
+    **CEUTERICK, M.; VANDEBROEK, I.; TORRY, B.; PIERONI, A.** Cross-cultural adaptation in urban ethnobotany: the Colombian folk pharmacopoeia in London. Journal of Ethnopharmacology, v. 120, n. 3, p. 342-359, 2008. DOI: 10.1016/j.jep.2008.09.004. Disponível em: https://pubmed.ncbi.nlm.nih.gov/18852036/. Acesso em: 4 ago. 2026.
+    
+    **DE MEYER, E.; CEUTERICK, M.** Digital Ethnobiology: exploring the digisphere in search of traditional and indigenous knowledge and practices. Ethnobotany Research and Applications, v. 24, p. 1-8, 2022. DOI: 10.32859/era.24.37.1-8. Disponível em: https://ethnobotanyjournal.org/index.php/era/article/view/4067. Acesso em: 4 ago. 2026.
+    
+    **FOLKE, C.; BIGGS, R.; NORSTRÖM, A. V.; REYERS, B.; ROCKSTRÖM, J.** Social-ecological resilience and biosphere-based sustainability science. Ecology and Society, v. 21, n. 3, p. 41, 2016. DOI: 10.5751/ES-08748-210341. Disponível em: https://www.ecologyandsociety.org/vol21/iss3/art41/. Acesso em: 4 ago. 2026.
+    
+    **RITTER, G. D.** O site do Horto Didático de Plantas Medicinais (UFSC) como ferramenta de divulgação científica para o uso de plantas medicinais. 2025. Trabalho de Conclusão de Curso (Graduação) – Universidade Federal de Santa Catarina, Florianópolis, 2025. Disponível em: https://repositorio.ufsc.br/xmlui/handle/123456789/252686. Acesso em: 4 ago. 2026.
+    
+    **SIMON, F. M.; CAMARGO, C. Q.** Autopsy of a metaphor: the origins, use and blind spots of the 'infodemic'. New Media & Society, v. 25, n. 8, p. 2219-2240, 2023. DOI: 10.1177/14614448211031908. Disponível em: https://doi.org/10.1177/14614448211031908. Acesso em: 4 ago. 2026.
+    
+    **WELLMAN, B.** Little Boxes, Glocalization, and Networked Individualism. In: TANABE, M.; BESSELAAR, P. van den; ISHIDA, T. (ed.). Digital Cities II: computational and sociological approaches. Berlin: Springer, 2002. p. 10-25.
+    """)
     
     st.caption("📄 Referências do trabalho 'Etnobiologia digital no Horto Didático da UFSC'")
 
@@ -791,18 +792,16 @@ st.markdown("---")
 col1, col2, col3 = st.columns(3)
 
 with col1:
-    st.markdown("🏛️ **Horto Didático UFSC - HU/CCS**", unsafe_allow_html=True)
+    st.markdown("🏛️ **Horto Didático UFSC - HU/CCS**")
 with col2:
-    st.markdown(f"📅 Última atualização: {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}", unsafe_allow_html=True)
+    st.markdown(f"📅 Última atualização: {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}")
 with col3:
-    st.markdown("🎓 **XXVIII SPMB 2026 - Apresentação de Trabalho**", unsafe_allow_html=True)
+    st.markdown("🎓 **XXVIII SPMB 2026 - Apresentação de Trabalho**")
 
-st.markdown(f"""
-<div class="footer">
-    🌿 Desenvolvido para apresentação no XXVIII Simpósio de Plantas Medicinais do Brasil (SPMB) 2026
-    <br>
-    <span style="font-size: 0.75rem;">Apoio Financeiro: Universidade Federal de Santa Catarina (UFSC)</span>
-    <br>
-    <span style="font-size: 0.75rem;">🔗 <a href="https://hortodidatico.ufsc.br/" target="_blank" style="color: #17B978;">hortodidatico.ufsc.br</a></span>
-</div>
-""", unsafe_allow_html=True)
+st.markdown("""
+🌿 Desenvolvido para apresentação no XXVIII Simpósio de Plantas Medicinais do Brasil (SPMB) 2026
+
+*Apoio Financeiro: Universidade Federal de Santa Catarina (UFSC)*
+
+🔗 [hortodidatico.ufsc.br](https://hortodidatico.ufsc.br/)
+""")
