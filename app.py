@@ -24,7 +24,7 @@ TITULO = "Etnobiologia digital no Horto Didático da UFSC: circulação do saber
 
 AUTORES = """
 **Michael A. Lopes** (Apresentador)  
-**Maique W. Biavatti** (Orientadora)  
+**Maique W. Biavatti** (Orientador)  
 **Gabriela D. Ritter** (Colaboradora)  
 **Letícia S. Tardim** (Colaboradora)  
 
@@ -220,7 +220,7 @@ def get_realtime_data():
         return None
 
 # ============================================
-# ESTILOS VISUAIS - COM DESTAQUE PARA QUADROS
+# ESTILOS VISUAIS
 # ============================================
 
 st.markdown("""
@@ -321,7 +321,6 @@ st.markdown("""
     .status-warning { background: #fff3cd; color: #856404; border: 1px solid #ffc107; padding: 10px; border-radius: 8px; }
     .status-error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; padding: 10px; border-radius: 8px; }
     
-    /* DESTAQUE PARA GLOSSÁRIO */
     .glossary-box {
         background: linear-gradient(135deg, #f8f9fa, #e8f5e9);
         padding: 20px 25px;
@@ -333,18 +332,13 @@ st.markdown("""
         line-height: 2.0;
         box-shadow: 0 4px 15px rgba(23,185,120,0.15);
     }
-    .glossary-box strong { 
-        color: #1E3D59; 
-        font-size: 0.95rem;
-    }
+    .glossary-box strong { color: #1E3D59; font-size: 0.95rem; }
     .glossary-box .termo {
         display: inline-block;
         min-width: 180px;
         font-weight: 600;
         color: #1E3D59;
     }
-    
-    /* DESTAQUE PARA BOX DE CONCLUSÃO */
     .conclusion-box {
         background: linear-gradient(135deg, #f0f9f4, #e8f5e9);
         padding: 25px;
@@ -354,8 +348,6 @@ st.markdown("""
         line-height: 1.8;
         box-shadow: 0 4px 15px rgba(23,185,120,0.12);
     }
-    
-    /* DESTAQUE PARA O RESUMO */
     .resumo-box {
         background: #f8f9fa;
         padding: 25px;
@@ -364,16 +356,6 @@ st.markdown("""
         margin: 15px 0;
         line-height: 1.8;
         box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    }
-    
-    /* DESTAQUE PARA BOX DE INFORMAÇÃO */
-    .info-box {
-        background: #e3f2fd;
-        padding: 15px 20px;
-        border-radius: 10px;
-        border-left: 4px solid #1E3D59;
-        margin: 10px 0;
-        line-height: 1.6;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -425,10 +407,10 @@ st.markdown(f"""
 st.markdown(f"**Palavras-chave:** {PALAVRAS_CHAVE}")
 
 # ============================================
-# GLOSSÁRIO COM DESTAQUE
+# GLOSSÁRIO
 # ============================================
 
-with st.expander("📖 Glossário - Entenda os termos (clique para expandir)"):
+with st.expander("📖 Glossário - Entenda os termos"):
     st.markdown("""
     <div class="glossary-box">
         <p><span class="termo">📊 Google Analytics 4 (GA4)</span> → Plataforma do Google para coletar e analisar dados de interação dos usuários com sites.</p>
@@ -449,14 +431,10 @@ with st.expander("📖 Glossário - Entenda os termos (clique para expandir)"):
     """, unsafe_allow_html=True)
 
 # ============================================
-# STATUS GA4 COM DESTAQUE
+# STATUS GA4
 # ============================================
 
-with st.expander("🔍 Status da Conexão com GA4 (clique para expandir)"):
-    st.markdown("""
-    <div style="background: #f0f4f8; padding: 15px; border-radius: 10px; border: 1px solid #c0d0e0; margin: 10px 0;">
-    """, unsafe_allow_html=True)
-    
+with st.expander("🔍 Status da Conexão com GA4"):
     if credentials_info:
         st.markdown('<div class="status-success">✅ Conectado ao Google Analytics</div>', unsafe_allow_html=True)
         st.write(f"📊 Property ID: `{GA4_PROPERTY_ID}`")
@@ -468,18 +446,16 @@ with st.expander("🔍 Status da Conexão com GA4 (clique para expandir)"):
         st.markdown('<div class="status-success">✅ Permissão concedida</div>', unsafe_allow_html=True)
     else:
         st.markdown('<div class="status-error">❌ Sem permissão</div>', unsafe_allow_html=True)
-    
-    st.markdown("</div>", unsafe_allow_html=True)
 
 # ============================================
-# BANNER DO EVENTO (SEM SEU NOME)
+# BANNER DO EVENTO
 # ============================================
 
 st.markdown("""
 <div class="event-banner">
     <h2>🎓 XXVIII Simpósio de Plantas Medicinais do Brasil (SPMB) 2026</h2>
-    <p>📅 15 a 18 de setembro de 2026 | 📍 Univali - Itajaí/SC</p>
-    <p>🌿 Tema: <strong>Plantas medicinais como fonte de novos agentes medicinais</strong></p>
+    <p>15 a 18 de setembro de 2026 | Univali - Itajaí/SC</p>
+    <p>Tema: <strong>Plantas medicinais como fonte de novos agentes medicinais</strong></p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -543,7 +519,7 @@ with aba1:
     
     st.divider()
     
-    # RESUMO COM DESTAQUE
+    # RESUMO
     st.markdown("### 📋 Resumo dos Resultados")
     
     st.markdown(f"""
@@ -699,7 +675,7 @@ with aba1:
     
     st.divider()
     
-    # CONCLUSÃO COM DESTAQUE
+    # CONCLUSÃO
     st.subheader("💡 Conclusão")
     
     st.markdown("""
@@ -886,7 +862,7 @@ with aba2:
             """)
 
 # ============================================
-# ABA 3: REFERÊNCIAS
+# ABA 3: REFERÊNCIAS - CORRIGIDAS (SEM TAGS HTML)
 # ============================================
 
 with aba3:
