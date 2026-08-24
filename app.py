@@ -110,12 +110,21 @@ INSIGHTS = {
 # CARREGAR CREDENCIAIS GA4
 # ============================================
 
-GA4_PROPERTY_ID = "GA4_PROPERTY_ID = "353285465"
+GA4_PROPERTY_ID = "353285465"  # ← PROPRIEDADE Horto hu ccs
 
 if os.path.exists('ga4-credentials.json'):
     try:
         with open('ga4-credentials.json', 'r') as f:
             credentials_info = json.load(f)
+    except:
+        credentials_info = None
+else:
+    try:
+        credentials_json = st.secrets["google_analytics"]["credentials_json"]
+        if isinstance(credentials_json, str):
+            credentials_info = json.loads(credentials_json)
+        else:
+            credentials_info = credentials_json
     except:
         credentials_info = None
 else:
