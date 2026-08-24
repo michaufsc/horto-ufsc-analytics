@@ -17,17 +17,16 @@ st.set_page_config(
 )
 
 # ============================================
-# INFORMAÇÕES DO TRABALHO (CORRIGIDAS)
+# INFORMAÇÕES DO TRABALHO (AUTORES ORGANIZADOS)
 # ============================================
 
 TITULO = "Etnobiologia digital no Horto Didático da UFSC: circulação do saber etnobotânico mensurada por web analytics"
 
-# VERSÃO MAIS CLARA DOS AUTORES
 AUTORES_COMPLETOS = """
-👤 **Michael A. Lopes** (Apresentador) - Graduando em Química Tecnológica  
-👤 **Maique W. Biavatti** - Depto. Ciências Farmacêuticas  
-👤 **Gabriela D. Ritter** - Farmacêutica  
-👤 **Letícia S. Tardim** - Graduanda em Farmácia  
+👤 **Michael A. Lopes** (Apresentador) · Graduando em Química Tecnológica - UFSC  
+👤 **Maique W. Biavatti** · Depto. Ciências Farmacêuticas - UFSC  
+👤 **Gabriela D. Ritter** · Farmacêutica  
+👤 **Letícia S. Tardim** · Graduanda em Farmácia - UFSC  
 
 🏛️ Universidade Federal de Santa Catarina (UFSC) - Florianópolis, SC, Brasil
 """
@@ -189,8 +188,7 @@ def get_ga4_data(start_date, end_date):
         
         return pd.DataFrame(data)
         
-    except Exception as e:
-        st.error(f"Erro ao buscar dados do GA4: {str(e)}")
+    except:
         return None
 
 def get_realtime_data():
@@ -228,7 +226,7 @@ def get_realtime_data():
         
         return pd.DataFrame(data)
         
-    except Exception as e:
+    except:
         return None
 
 # ============================================
@@ -477,22 +475,43 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 # ============================================
-# TESTE DE CONEXÃO GA4 (OPCIONAL)
+# TESTE DE CONEXÃO GA4 (DIAGNÓSTICO)
 # ============================================
 
-# Descomente para testar
-# with st.expander("🔍 Status da conexão GA4"):
-#     if credentials_info:
-#         st.success("✅ Credenciais carregadas")
-#         st.info(f"Property ID: {GA4_PROPERTY_ID}")
-#         # Teste rápido
-#         df_test = get_ga4_data((datetime.now() - timedelta(days=7)).strftime('%Y-%m-%d'), datetime.now().strftime('%Y-%m-%d'))
-#         if df_test is not None and not df_test.empty:
-#             st.success(f"✅ Dados carregados: {len(df_test)} linhas")
-#         else:
-#             st.warning("⚠️ Nenhum dado encontrado para os últimos 7 dias")
-#     else:
-#         st.error("❌ Credenciais não carregadas")
+with st.expander("🔍 Status da Conexão com GA4 (Clique para ver)"):
+    st.write("**Verificando conexão...**")
+    
+    if credentials_info:
+        st.success("✅ Credenciais carregadas com sucesso!")
+        st.write(f"📊 Property ID: `{GA4_PROPERTY_ID}`")
+        st.write(f"📧 Client Email: `{credentials_info.get('client_email', 'N/A')}`")
+    else:
+        st.error("❌ Credenciais NÃO carregadas!")
+        st.warning("Verifique o arquivo secrets.toml ou ga4-credentials.json")
+    
+    client = get_ga4_client()
+    if client:
+        st.success("✅ Cliente GA4 criado com sucesso!")
+    else:
+        st.error("❌ Falha ao criar cliente GA4!")
+    
+    st.write("---")
+    st.write("**Testando busca de dados (últimos 7 dias):**")
+    
+    try:
+        end_date = datetime.now().strftime('%Y-%m-%d')
+        start_date = (datetime.now() - timedelta(days=7)).strftime('%Y-%m-%d')
+        df_test = get_ga4_data(start_date, end_date)
+        
+        if df_test is not None and not df_test.empty:
+            st.success(f"✅ Dados carregados! {len(df_test)} linhas encontradas.")
+            st.dataframe(df_test.head(5))
+        else:
+            st.warning("⚠️ Nenhum dado encontrado para os últimos 7 dias.")
+            st.info("Isso pode ser normal se o site não teve acessos no período.")
+            st.info("Tente selecionar um período mais longo na aba 'TEMPO REAL'.")
+    except Exception as e:
+        st.error(f"❌ Erro ao buscar dados: {str(e)}")
 
 # ============================================
 # BANNER DO EVENTO
@@ -628,13 +647,13 @@ with aba1:
     
     st.divider()
     
-    # GRÁFICOS - CORRIGIDOS
+    # GRÁFICOS
     col_g1, col_g2 = st.columns(2)
     
     with col_g1:
         st.subheader("📊 Canais de Aquisição")
         df_canais = pd.DataFrame({
-            'Canal': ['Busca Orgânica', 'Acesso Direto', 'Outras Fontes'],  # CORRIGIDO
+            'Canal': ['Busca Orgânica', 'Acesso Direto', 'Outras Fontes'],
             '2025': [DADOS_2025['busca_organica_pct'], DADOS_2025['acesso_direto_pct'], 
                     100 - DADOS_2025['busca_organica_pct'] - DADOS_2025['acesso_direto_pct']],
             '2026': [DADOS_2026['busca_organica_pct'], DADOS_2026['acesso_direto_pct'],
