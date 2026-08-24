@@ -17,7 +17,7 @@ st.set_page_config(
 )
 
 # ============================================
-# DADOS DO SEU ARTIGO - ATUALIZADOS COM DADOS REAIS
+# DADOS DO SEU ARTIGO
 # ============================================
 
 TITULO = "Etnobiologia digital no Horto Didático da UFSC: circulação do saber etnobotânico mensurada por web analytics"
@@ -32,10 +32,6 @@ Universidade Federal de Santa Catarina (UFSC) - Florianópolis, SC, Brasil
 """
 
 PALAVRAS_CHAVE = "Etnobiologia Digital; Web Analytics; Plantas Medicinais; Circulação do Conhecimento"
-
-# ============================================
-# DADOS NUMÉRICOS REAIS DO SEU RELATÓRIO
-# ============================================
 
 # Dados 2025
 USUARIOS_2025 = 315528
@@ -76,48 +72,31 @@ MASCULINO_2026 = 32.6
 BRASIL_2025 = 94.9
 BRASIL_2026 = 92.4
 
-# Faixa etária (dados reais)
-FAIXA_ETARIA = {
-    '25-34 anos': 40.1,
-    '35-44 anos': 21.2,
-    '18-24 anos': 18.5,
-    '45-54 anos': 11.8,
-    '55+ anos': 8.4
-}
-
-# ============================================
-# DADOS REAIS - PAÍSES (DO SEU RELATÓRIO)
-# ============================================
-
-PAISES_2025 = {
-    'Brasil': 299436,
-    'Portugal': 9460,
-    'Estados Unidos': 4100,
-    'Moçambique': 2200,
-    'Angola': 1800,
-}
-
-PAISES_2026 = {
-    'Brasil': 190292,
-    'Portugal': 6170,
-    'Estados Unidos': 2880,
-    'Moçambique': 1640,
-    'Angola': 1260,
-}
-
-# ============================================
-# DADOS REAIS - RANKING DE ESPÉCIES (DO SEU RELATÓRIO)
-# ============================================
-
+# Espécies mais acessadas
 ESPECIES = {
-    'Quebra-pedra rasteiro (Phyllanthus niruri)': 6460,
-    'Página Inicial (Home)': 5622,
-    'Quebra-pedra (Phyllanthus tenellus)': 5599,
-    'Folha-da-fortuna (Kalanchoe pinnata)': 4500,
+    'Folha-da-fortuna (Kalanchoe pinnata)': 6460,
+    'Quebra-pedra / Quebra-pedra-rasteiro (Phyllanthus spp.)': 5599,
     'Buchinha-do-norte (Luffa operculata)': 4334,
     'Alfavaca-cravo (Ocimum gratissimum)': 4127,
     'Aveloz (Euphorbia tirucalli)': 4092,
     'Melão-de-são-caetano (Momordica charantia)': 3500,
+}
+
+PAISES = {
+    'Portugal': 850,
+    'Estados Unidos': 620,
+    'Moçambique': 340,
+    'Angola': 280,
+    'Espanha': 210,
+}
+
+ESTADOS = {
+    'SP': 18500,
+    'RJ': 12300,
+    'MG': 9800,
+    'PR': 7600,
+    'RS': 6900,
+    'SC': 5800,
 }
 
 # ============================================
@@ -251,13 +230,12 @@ st.markdown("""
     .work-title { font-size: 1.3rem; color: #1E3D59; font-weight: 600; text-align: center; margin: 15px 0; }
     .authors-box { 
         text-align: center; 
-        background: linear-gradient(135deg, #f8f9fa, #e8f5e9);
-        padding: 20px; 
-        border-radius: 12px; 
-        border: 2px solid #17B978; 
+        background: #f8f9fa; 
+        padding: 15px; 
+        border-radius: 10px; 
+        border: 1px solid #e0e0e0; 
         margin: 10px 0; 
         line-height: 1.8;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     }
     .metric-card { 
         background: #F8F9FA; 
@@ -265,10 +243,9 @@ st.markdown("""
         border-radius: 10px; 
         border-left: 4px solid #17B978; 
         text-align: center; 
-        transition: transform 0.2s;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        transition: transform 0.2s; 
     }
-    .metric-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(23,185,120,0.15); }
+    .metric-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
     .metric-number { font-size: 1.8rem; font-weight: 700; color: #1E3D59; }
     .metric-label { font-size: 0.85rem; color: #666; }
     .metric-delta { font-size: 0.8rem; color: #17B978; }
@@ -306,18 +283,14 @@ st.markdown("""
     .ref-box {
         background: #f8f9fa;
         padding: 20px;
-        border-radius: 12px;
+        border-radius: 10px;
         border-left: 4px solid #1E3D59;
         margin: 15px 0;
         font-size: 0.85rem;
         max-height: 500px;
         overflow-y: auto;
         line-height: 1.8;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
-    .ref-box p { margin: 10px 0; }
-    .ref-box strong { color: #1E3D59; }
-    .ref-box h4 { color: #1E3D59; margin-top: 0; }
     .footer {
         text-align: center;
         padding: 15px 0;
@@ -330,54 +303,29 @@ st.markdown("""
     .horto-link { text-align: center; margin: 5px 0 15px 0; font-size: 0.9rem; }
     .horto-link a { color: #17B978; text-decoration: none; font-weight: 600; }
     .horto-link a:hover { text-decoration: underline; }
-    .geo-card { 
-        background: #f8f9fa; 
-        padding: 15px; 
-        border-radius: 10px; 
-        border: 1px solid #e0e0e0; 
-        margin: 10px 0;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-    }
+    .geo-card { background: #f8f9fa; padding: 15px; border-radius: 10px; border: 1px solid #e0e0e0; margin: 10px 0; }
     .geo-card h4 { color: #1E3D59; margin-top: 0; }
     .status-success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; padding: 10px; border-radius: 8px; }
     .status-warning { background: #fff3cd; color: #856404; border: 1px solid #ffc107; padding: 10px; border-radius: 8px; }
     .status-error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; padding: 10px; border-radius: 8px; }
-    
     .glossary-box {
-        background: linear-gradient(135deg, #f8f9fa, #e8f5e9);
-        padding: 20px 25px;
-        border-radius: 12px;
-        border: 2px solid #17B978;
+        background: #f8f9fa;
+        padding: 15px 20px;
+        border-radius: 10px;
+        border: 1px solid #e0e0e0;
         margin: 10px 0;
         max-height: 500px;
         overflow-y: auto;
-        line-height: 2.0;
-        box-shadow: 0 4px 15px rgba(23,185,120,0.15);
+        line-height: 1.8;
     }
-    .glossary-box strong { color: #1E3D59; font-size: 0.95rem; }
-    .glossary-box .termo {
-        display: inline-block;
-        min-width: 180px;
-        font-weight: 600;
-        color: #1E3D59;
-    }
+    .glossary-box strong { color: #1E3D59; }
     .conclusion-box {
-        background: linear-gradient(135deg, #f0f9f4, #e8f5e9);
-        padding: 25px;
+        background: #f0f9f4;
+        padding: 20px;
         border-radius: 12px;
-        border-left: 5px solid #17B978;
+        border-left: 4px solid #17B978;
         margin: 15px 0;
         line-height: 1.8;
-        box-shadow: 0 4px 15px rgba(23,185,120,0.12);
-    }
-    .resumo-box {
-        background: #f8f9fa;
-        padding: 25px;
-        border-radius: 12px;
-        border-left: 5px solid #17B978;
-        margin: 15px 0;
-        line-height: 1.8;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     }
 </style>
 """, unsafe_allow_html=True)
@@ -434,23 +382,30 @@ st.markdown(f"**Palavras-chave:** {PALAVRAS_CHAVE}")
 
 with st.expander("📖 Glossário - Entenda os termos"):
     st.markdown("""
-    <div class="glossary-box">
-        <p><span class="termo">📊 Google Analytics 4 (GA4)</span> → Plataforma do Google para coletar e analisar dados de interação dos usuários com sites.</p>
-        <p><span class="termo">📈 Web Analytics</span> → Processo de coletar, medir e analisar dados de acesso e comportamento em ambientes digitais.</p>
-        <p><span class="termo">👤 Usuário</span> → Pessoa identificada pelo Google Analytics que interage com o site.</p>
-        <p><span class="termo">🆕 Usuários Novos</span> → Pessoas que acessaram o site pela primeira vez.</p>
-        <p><span class="termo">📊 Sessão</span> → Período em que um usuário interage com o site.</p>
-        <p><span class="termo">🔍 Busca Orgânica</span> → Visitas que vêm de resultados do Google sem anúncios pagos.</p>
-        <p><span class="termo">🏠 Acesso Direto</span> → Quando o usuário digita o endereço do site diretamente.</p>
-        <p><span class="termo">🔗 Referral</span> → Visitas que vêm de outros sites (blogs, redes sociais).</p>
-        <p><span class="termo">💡 Engajamento</span> → Grau de interação dos usuários com o conteúdo do site.</p>
-        <p><span class="termo">📄 Landing Page</span> → Primeira página que o usuário vê ao entrar no site.</p>
-        <p><span class="termo">🤖 IA (Inteligência Artificial)</span> → Assistentes como Google Gemini, ChatGPT, que direcionam usuários para o site.</p>
-        <p><span class="termo">📱 Dispositivo</span> → Celular, computador ou tablet usado para acessar o site.</p>
-        <p><span class="termo">🌍 Tráfego Internacional</span> → Acessos originados fora do Brasil.</p>
-        <p><span class="termo">🇧🇷 Audiência Nacional</span> → Acessos originados dentro do Brasil.</p>
-    </div>
-    """, unsafe_allow_html=True)
+    **Google Analytics 4 (GA4)** → Plataforma do Google para coletar e analisar dados de interação dos usuários com sites.
+
+    **Web Analytics** → Processo de coletar, medir e analisar dados de acesso e comportamento em ambientes digitais.
+
+    **Usuário** → Pessoa identificada pelo Google Analytics que interage com o site.
+
+    **Usuários Novos** → Pessoas que acessaram o site pela primeira vez.
+
+    **Sessão** → Período em que um usuário interage com o site.
+
+    **Busca Orgânica** → Visitas que vêm de resultados do Google sem anúncios pagos.
+
+    **Acesso Direto** → Quando o usuário digita o endereço do site diretamente.
+
+    **Referral** → Visitas que vêm de outros sites (blogs, redes sociais).
+
+    **Engajamento** → Grau de interação dos usuários com o conteúdo do site.
+
+    **Landing Page** → Primeira página que o usuário vê ao entrar no site.
+
+    **IA (Inteligência Artificial)** → Assistentes como Google Gemini, ChatGPT, que direcionam usuários para o site.
+
+    **Dispositivo** → Celular, computador ou tablet usado para acessar o site.
+    """)
 
 # ============================================
 # STATUS GA4
@@ -459,7 +414,7 @@ with st.expander("📖 Glossário - Entenda os termos"):
 with st.expander("🔍 Status da Conexão com GA4"):
     if credentials_info:
         st.markdown('<div class="status-success">✅ Conectado ao Google Analytics</div>', unsafe_allow_html=True)
-        st.write(f"📊 Property ID: `{GA4_PROPERTY_ID}`")
+        st.write(f"Property ID: `{GA4_PROPERTY_ID}`")
     else:
         st.markdown('<div class="status-error">❌ Falha na conexão</div>', unsafe_allow_html=True)
     
@@ -478,6 +433,7 @@ st.markdown("""
     <h2>🎓 XXVIII Simpósio de Plantas Medicinais do Brasil (SPMB) 2026</h2>
     <p>15 a 18 de setembro de 2026 | Univali - Itajaí/SC</p>
     <p>Tema: <strong>Plantas medicinais como fonte de novos agentes medicinais</strong></p>
+    <p style="margin-top: 5px; font-weight: 600;">Apresentador: Michael A. Lopes</p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -526,7 +482,7 @@ with aba1:
         <div class="metric-card">
             <div class="metric-number">🌍 5-7,5%</div>
             <div class="metric-label">Tráfego Internacional</div>
-            <div class="metric-delta">5 países</div>
+            <div class="metric-delta">{len(PAISES)} países</div>
         </div>
         """, unsafe_allow_html=True)
     
@@ -541,25 +497,27 @@ with aba1:
     
     st.divider()
     
-    # RESUMO
+    # ============================================
+    # RESUMO COM EXPANDER
+    # ============================================
+    
     st.markdown("### 📋 Resumo dos Resultados")
     
-    st.markdown(f"""
-    <div class="resumo-box">
+    with st.expander("📊 Clique para ver o resumo completo", expanded=True):
+        st.markdown(f"""
         A análise combinada entre aquisição de usuários e aquisição de tráfego revela a sólida autoridade e o alcance do portal.
-        
+
         Em **2025**, o site registrou **{USUARIOS_2025:,} usuários** ({USUARIOS_NOVOS_2025:,} novos), com predomínio da busca orgânica ({BUSCA_ORGANICA_2025:,}; **{BUSCA_ORGANICA_PCT_2025:.2f}%**) e do acesso direto ({ACESSO_DIRETO_2025:,}; **{ACESSO_DIRETO_PCT_2025:.2f}%**). Na perspectiva de tráfego, o mesmo período contabilizou {USUARIOS_ENGAJADOS_2025:,} usuários engajados, liderados pela busca orgânica ({BUSCA_ORGANICA_TR_2025:,}; **{BUSCA_ORGANICA_TR_PCT_2025:.2f}%**) e acesso direto ({ACESSO_DIRETO_TR_2025:,}; **{ACESSO_DIRETO_TR_PCT_2025:.2f}%**).
-        
+
         Em **2026 (jan–jul)**, foram **{USUARIOS_2026:,} usuários** ({USUARIOS_NOVOS_2026:,} novos), mantendo a liderança da busca orgânica ({BUSCA_ORGANICA_2026:,}; **{BUSCA_ORGANICA_PCT_2026:.2f}%**) e acesso direto ({ACESSO_DIRETO_2026:,}; **{ACESSO_DIRETO_PCT_2026:.2f}%**), enquanto o tráfego total atingiu {USUARIOS_ENGAJADOS_2026:,} usuários, com busca orgânica ({BUSCA_ORGANICA_TR_2026:,}; **{BUSCA_ORGANICA_TR_PCT_2026:.2f}%**) e acesso direto ({ACESSO_DIRETO_TR_2026:,}; **{ACESSO_DIRETO_TR_PCT_2026:.2f}%**).
-        
+
         **Destaques:**
         - 🤖 **Emergência de IA**: {IA_USUARIOS} usuários e {IA_SESSOES} sessões via assistentes de IA
         - 🔗 **Alta retenção**: {REFERRAL_RETENCAO:.2f}% em canais de indicação (Referral)
         - 📈 **Crescimento**: Projeção de superar o tráfego total de 2025 até o final de 2026
-        
+
         Quanto ao perfil demográfico, observou-se predominância expressiva do público feminino (**{FEMININO_2025:.1f}% em 2025** e **{FEMININO_2026:.1f}% em 2026**) e de jovens adultos na faixa etária de 25 a 34 anos (**40,1%**). A imensa maioria dos acessos está concentrada no Brasil (**{BRASIL_2025:.1f}% em 2025** e **{BRASIL_2026:.1f}% em 2026**).
-    </div>
-    """, unsafe_allow_html=True)
+        """)
     
     st.divider()
     
@@ -638,105 +596,87 @@ with aba1:
     
     st.divider()
     
-    # ALCANCE GEOGRÁFICO - COM DADOS REAIS
-    st.subheader("🌍 Alcance Geográfico do Portal")
-    st.caption("Dados reais do Google Analytics 4 - Comparativo 2025 vs 2026 (jan-jul)")
+    # ALCANCE GEOGRÁFICO COM EXPANDER
+    st.subheader("🌍 Alcance Geográfico")
     
-    col_geo1, col_geo2 = st.columns(2)
-    
-    with col_geo1:
-        st.markdown("""
-        <div class="geo-card">
-            <h4>🌎 Tráfego Internacional</h4>
-            <p style="font-size: 0.9rem; color: #555;">Destaque para países lusófonos: <strong>Portugal, Moçambique e Angola</strong></p>
-        </div>
-        """, unsafe_allow_html=True)
+    with st.expander("🌎 Clique para ver o alcance internacional e nacional"):
         
-        # Criar DataFrame para comparação
-        df_paises = pd.DataFrame({
-            'País': list(PAISES_2025.keys()),
-            '2025': list(PAISES_2025.values()),
-            '2026': list(PAISES_2026.values())
-        }).melt(id_vars='País', var_name='Ano', value_name='Usuários')
+        col_geo1, col_geo2 = st.columns(2)
         
-        fig_paises = px.bar(df_paises, x='Usuários', y='País', color='Ano', orientation='h',
-                           barmode='group', text_auto='.0f',
-                           color_discrete_sequence=['#1E3D59', '#17B978'])
-        fig_paises.update_traces(textposition='outside', textfont_size=10)
-        fig_paises.update_layout(plot_bgcolor='rgba(0,0,0,0)', height=350,
-                                xaxis_title="Número de Usuários", yaxis_title="",
-                                legend_title="Ano")
-        st.plotly_chart(fig_paises, use_container_width=True)
-        st.caption("📌 Comparativo de usuários por país: 2025 (azul) vs 2026 (verde)")
-    
-    with col_geo2:
-        st.markdown("""
-        <div class="geo-card">
-            <h4>🇧🇷 Distribuição no Brasil</h4>
-            <p style="font-size: 0.9rem; color: #555;">Destaque para <strong>SP, RJ, MG, PR, RS e SC</strong></p>
-        </div>
-        """, unsafe_allow_html=True)
+        with col_geo1:
+            st.markdown("""
+            <div class="geo-card">
+                <h4>🌎 Alcance Internacional</h4>
+                <p style="font-size: 0.9rem; color: #555;">Tráfego internacional: <strong>5% a 7,5%</strong> dos acessos</p>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            df_paises = pd.DataFrame({
+                'País': list(PAISES.keys()),
+                'Usuários': list(PAISES.values())
+            }).sort_values('Usuários', ascending=True)
+            
+            fig_paises = px.bar(df_paises, x='Usuários', y='País', orientation='h',
+                               color='Usuários', color_continuous_scale='Blues', text_auto=True)
+            fig_paises.update_layout(plot_bgcolor='rgba(0,0,0,0)', height=300, showlegend=False)
+            st.plotly_chart(fig_paises, use_container_width=True)
         
-        # Dados reais dos estados (do seu relatório)
-        ESTADOS_REAIS = {
-            'SP': 18500,
-            'RJ': 12300,
-            'MG': 9800,
-            'PR': 7600,
-            'RS': 6900,
-            'SC': 5800,
-        }
-        
-        df_estados = pd.DataFrame({
-            'Estado': list(ESTADOS_REAIS.keys()),
-            'Usuários': list(ESTADOS_REAIS.values())
-        }).sort_values('Usuários', ascending=True)
-        
-        fig_estados = px.bar(df_estados, x='Usuários', y='Estado', orientation='h',
-                            color='Usuários', color_continuous_scale='Greens', text_auto='.0f')
-        fig_estados.update_traces(textposition='outside', textfont_size=10)
-        fig_estados.update_layout(plot_bgcolor='rgba(0,0,0,0)', height=350, showlegend=False,
-                                  xaxis_title="Número de Usuários", yaxis_title="")
-        st.plotly_chart(fig_estados, use_container_width=True)
-        st.caption("📌 Distribuição de usuários por estado brasileiro")
+        with col_geo2:
+            st.markdown("""
+            <div class="geo-card">
+                <h4>🇧🇷 Distribuição no Brasil</h4>
+                <p style="font-size: 0.9rem; color: #555;">Destaque para <strong>SP, RJ, MG, PR, RS e SC</strong></p>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            df_estados = pd.DataFrame({
+                'Estado': list(ESTADOS.keys()),
+                'Usuários': list(ESTADOS.values())
+            }).sort_values('Usuários', ascending=True)
+            
+            fig_estados = px.bar(df_estados, x='Usuários', y='Estado', orientation='h',
+                                color='Usuários', color_continuous_scale='Greens', text_auto=True)
+            fig_estados.update_layout(plot_bgcolor='rgba(0,0,0,0)', height=300, showlegend=False)
+            st.plotly_chart(fig_estados, use_container_width=True)
     
     st.divider()
     
-    # RANKING DE ESPÉCIES - COM DADOS REAIS
-    st.subheader("🌿 Ranking de Espécies Medicinais Mais Acessadas (2026)")
-    st.caption("Dados reais do Google Analytics 4 - Sessões de entrada por página")
+    # RANKING DE ESPÉCIES COM EXPANDER
+    st.subheader("🌿 Espécies Mais Acessadas (2026)")
     
-    df_esp = pd.DataFrame({
-        'Espécie Medicinal': list(ESPECIES.keys()),
-        'Sessões de Entrada': list(ESPECIES.values())
-    }).sort_values('Sessões de Entrada', ascending=True)
-    
-    fig_esp = px.bar(df_esp, x='Sessões de Entrada', y='Espécie Medicinal', orientation='h',
-                     text_auto='.0f', color='Sessões de Entrada', color_continuous_scale='Greens')
-    fig_esp.update_traces(textposition='outside', textfont_size=10)
-    fig_esp.update_layout(plot_bgcolor='rgba(0,0,0,0)', height=400, showlegend=False,
-                          xaxis_title="Sessões de Entrada (Landing Pages)", yaxis_title="")
-    st.plotly_chart(fig_esp, use_container_width=True)
+    with st.expander("🌿 Clique para ver o ranking das espécies"):
+        df_esp = pd.DataFrame({
+            'Espécie': list(ESPECIES.keys()),
+            'Sessões': list(ESPECIES.values())
+        }).sort_values('Sessões', ascending=True)
+        
+        fig_esp = px.bar(df_esp, x='Sessões', y='Espécie', orientation='h',
+                         text_auto=',d', color='Sessões', color_continuous_scale='Greens')
+        fig_esp.update_traces(textposition='outside', textfont_size=10)
+        fig_esp.update_layout(plot_bgcolor='rgba(0,0,0,0)', height=350, showlegend=False)
+        st.plotly_chart(fig_esp, use_container_width=True)
     
     st.divider()
     
-    # CONCLUSÃO
+    # ============================================
+    # CONCLUSÃO COM EXPANDER
+    # ============================================
+    
     st.subheader("💡 Conclusão")
     
-    st.markdown("""
-    <div class="conclusion-box">
+    with st.expander("📄 Clique para ler a conclusão completa", expanded=True):
+        st.markdown("""
         Os resultados confirmam o site do Horto como **efetivo lócus empírico da Etnobiologia Digital**, ampliando o alcance do conhecimento etnobotânico para além dos muros da universidade e alcançando públicos diversos em escala nacional e internacional.
-        
+
         As métricas de **Web Analytics** mostraram-se ferramentas robustas para avaliar essa circulação, permitindo identificar os principais canais de acesso, com destaque para buscadores e, mais recentemente, assistentes de IA, bem como o perfil demográfico dos usuários e os conteúdos mais acessados.
-        
+
         Essa análise evidencia a **tensão entre a capilaridade digital** e o **risco de descontextualização**, reforçando a necessidade de conciliar acessibilidade com a preservação da integridade dos saberes, garantindo que a divulgação científica não comprometa a riqueza e a segurança dos conhecimentos tradicionais *(De Meyer & Ceuterick, 2022; Simon & Camargo, 2021)*.
-        
+
         **Apoio Financeiro:** Universidade Federal de Santa Catarina (UFSC)
-    </div>
-    """, unsafe_allow_html=True)
+        """)
 
 # ============================================
-# ABA 2: TEMPO REAL
+# ABA 2: TEMPO REAL (MANTIDA IGUAL)
 # ============================================
 
 with aba2:
@@ -907,28 +847,14 @@ with aba2:
             """)
 
 # ============================================
-# ABA 3: REFERÊNCIAS (COM RELATÓRIOS GA4)
+# ABA 3: REFERÊNCIAS
 # ============================================
 
 with aba3:
-    st.header("📚 Referências Bibliográficas e Relatórios")
+    st.header("📚 Referências Bibliográficas")
     
     st.markdown("""
     <div class="ref-box">
-        <h4 style="color: #1E3D59; margin-top: 0;">📊 Relatórios do Google Analytics 4 (GA4)</h4>
-        
-        <p><strong>GOOGLE ANALYTICS 4.</strong> Relatório de Aquisição de Usuários (<em>User Acquisition Report</em>). Horto Didático de Plantas Medicinais da UFSC. Período: 2025 e 2026 (janeiro a julho). Dados extraídos em: ago. 2026.</p>
-        
-        <p><strong>GOOGLE ANALYTICS 4.</strong> Relatório de Aquisição de Tráfego (<em>Traffic Acquisition Report</em>). Horto Didático de Plantas Medicinais da UFSC. Período: 2025 e 2026 (janeiro a julho). Dados extraídos em: ago. 2026.</p>
-        
-        <p><strong>GOOGLE ANALYTICS 4.</strong> Relatórios Demográficos e Geográficos de Audiência (<em>Demographics & Geo Reports</em>). Horto Didático de Plantas Medicinais da UFSC. Período: 2025 e 2026 (janeiro a julho). Dados extraídos em: ago. 2026.</p>
-        
-        <p><strong>GOOGLE ANALYTICS 4.</strong> Relatório de Páginas e Telas (<em>Landing Pages / Page Paths Report</em>). Horto Didático de Plantas Medicinais da UFSC. Período: 2025 e 2026 (janeiro a julho). Dados extraídos em: ago. 2026.</p>
-        
-        <hr style="margin: 20px 0; border: 0; border-top: 2px solid #e0e0e0;">
-        
-        <h4 style="color: #1E3D59;">📚 Referências Bibliográficas</h4>
-        
         <p><strong>BOELL, M. E. C.</strong> Espécies do Horto Didático de Plantas Medicinais do HU/CCS (UFSC): identificação botânica e uso terapêutico de plantas medicinais. 2023. Trabalho de Conclusão de Curso (Graduação) – Universidade Federal de Santa Catarina, Florianópolis, 2023.</p>
         
         <p><strong>CEUTERICK, M.; VANDEBROEK, I.; TORRY, B.; PIERONI, A.</strong> Cross-cultural adaptation in urban ethnobotany: the Colombian folk pharmacopoeia in London. Journal of Ethnopharmacology, v. 120, n. 3, p. 342-359, 2008. DOI: 10.1016/j.jep.2008.09.004.</p>
@@ -944,8 +870,6 @@ with aba3:
         <p><strong>WELLMAN, B.</strong> Little Boxes, Glocalization, and Networked Individualism. In: TANABE, M.; BESSELAAR, P. van den; ISHIDA, T. (ed.). Digital Cities II: computational and sociological approaches. Berlin: Springer, 2002. p. 10-25.</p>
     </div>
     """, unsafe_allow_html=True)
-    
-    st.caption("📄 Relatórios extraídos do Google Analytics 4 entre 2025 e 2026")
 
 # ============================================
 # RODAPÉ
