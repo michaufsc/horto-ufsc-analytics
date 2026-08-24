@@ -1,4 +1,4 @@
-import streamlit as st
+streamlit run import streamlit as st
 import pandas as pd
 import plotly.express as px
 from streamlit_autorefresh import st_autorefresh
@@ -75,7 +75,7 @@ MASCULINO_2026 = 32.6
 BRASIL_2025 = 94.9
 BRASIL_2026 = 92.4
 
-# Espécies mais acessadas (dados do artigo)
+# Espécies mais acessadas (dados do Google Analytics)
 ESPECIES = {
     'Folha-da-fortuna (Kalanchoe pinnata)': 6460,
     'Quebra-pedra / Quebra-pedra-rasteiro (Phyllanthus spp.)': 5599,
@@ -322,14 +322,6 @@ st.markdown("""
         line-height: 1.8;
     }
     .glossary-box strong { color: #1E3D59; }
-    .highlight-box {
-        background: #f0f9f4;
-        padding: 20px;
-        border-radius: 12px;
-        border-left: 4px solid #17B978;
-        margin: 15px 0;
-        line-height: 1.8;
-    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -380,27 +372,28 @@ st.markdown(f"""
 st.markdown(f"**Palavras-chave:** {PALAVRAS_CHAVE}")
 
 # ============================================
-# GLOSSÁRIO - SEMPRE VISÍVEL
+# GLOSSÁRIO - EXPANDER COM TÍTULO DESTACADO
 # ============================================
 
-st.markdown("### 📖 Glossário - Entenda os termos")
+st.markdown("### 📖 Glossário de Termos Técnicos")
 
-st.markdown("""
-<div class="glossary-box">
-    <p><strong>Google Analytics 4 (GA4)</strong> → Plataforma do Google para coletar e analisar dados de interação dos usuários com sites.</p>
-    <p><strong>Web Analytics</strong> → Processo de coletar, medir e analisar dados de acesso e comportamento em ambientes digitais.</p>
-    <p><strong>Usuário</strong> → Pessoa identificada pelo Google Analytics que interage com o site.</p>
-    <p><strong>Usuários Novos</strong> → Pessoas que acessaram o site pela primeira vez.</p>
-    <p><strong>Sessão</strong> → Período em que um usuário interage com o site.</p>
-    <p><strong>Busca Orgânica</strong> → Visitas que vêm de resultados do Google sem anúncios pagos.</p>
-    <p><strong>Acesso Direto</strong> → Quando o usuário digita o endereço do site diretamente.</p>
-    <p><strong>Referral</strong> → Visitas que vêm de outros sites (blogs, redes sociais).</p>
-    <p><strong>Engajamento</strong> → Grau de interação dos usuários com o conteúdo do site.</p>
-    <p><strong>Landing Page</strong> → Primeira página que o usuário vê ao entrar no site.</p>
-    <p><strong>IA (Inteligência Artificial)</strong> → Assistentes como Google Gemini, ChatGPT, que direcionam usuários para o site.</p>
-    <p><strong>Dispositivo</strong> → Celular, computador ou tablet usado para acessar o site.</p>
-</div>
-""", unsafe_allow_html=True)
+with st.expander("🔍 Clique aqui para ver o significado dos termos", expanded=False):
+    st.markdown("""
+    <div class="glossary-box">
+        <p><strong>Google Analytics 4 (GA4)</strong> → Plataforma do Google para coletar e analisar dados de interação dos usuários com sites.</p>
+        <p><strong>Web Analytics</strong> → Processo de coletar, medir e analisar dados de acesso e comportamento em ambientes digitais.</p>
+        <p><strong>Usuário</strong> → Pessoa identificada pelo Google Analytics que interage com o site.</p>
+        <p><strong>Usuários Novos</strong> → Pessoas que acessaram o site pela primeira vez.</p>
+        <p><strong>Sessão</strong> → Período em que um usuário interage com o site.</p>
+        <p><strong>Busca Orgânica</strong> → Visitas que vêm de resultados do Google sem anúncios pagos.</p>
+        <p><strong>Acesso Direto</strong> → Quando o usuário digita o endereço do site diretamente.</p>
+        <p><strong>Referral</strong> → Visitas que vêm de outros sites (blogs, redes sociais).</p>
+        <p><strong>Engajamento</strong> → Grau de interação dos usuários com o conteúdo do site.</p>
+        <p><strong>Landing Page</strong> → Primeira página que o usuário vê ao entrar no site.</p>
+        <p><strong>IA (Inteligência Artificial)</strong> → Assistentes como Google Gemini, ChatGPT, que direcionam usuários para o site.</p>
+        <p><strong>Dispositivo</strong> → Celular, computador ou tablet usado para acessar o site.</p>
+    </div>
+    """, unsafe_allow_html=True)
 
 # ============================================
 # STATUS GA4
@@ -492,10 +485,7 @@ with aba1:
     
     st.divider()
     
-    # ============================================
     # RELATÓRIOS ANALISADOS
-    # ============================================
-    
     st.subheader("📊 Relatórios do Google Analytics Analisados")
     
     st.markdown("""
@@ -511,10 +501,7 @@ with aba1:
     
     st.divider()
     
-    # ============================================
     # RESUMO
-    # ============================================
-    
     st.markdown("### 📋 Resumo dos Resultados")
     
     with st.expander("📊 Clique para ver o resumo completo", expanded=True):
@@ -655,20 +642,61 @@ with aba1:
     
     st.divider()
     
-    # RANKING DE ESPÉCIES
+    # RANKING DE ESPÉCIES - VERSÃO MELHORADA
     st.subheader("🌿 Ranking de Espécies Mais Acessadas em 2026")
-    st.caption("Dados do artigo - espécies com maior volume de acessos no período")
+    st.caption("Dados do Google Analytics - espécies com maior volume de acessos no período")
     
+    # Criar DataFrame e ordenar (da mais acessada para a menos)
     df_esp = pd.DataFrame({
         'Espécie': list(ESPECIES.keys()),
         'Sessões de Entrada': list(ESPECIES.values())
     }).sort_values('Sessões de Entrada', ascending=True)
     
-    fig_esp = px.bar(df_esp, x='Sessões de Entrada', y='Espécie', orientation='h',
-                     text_auto=',d', color='Sessões de Entrada', color_continuous_scale='Greens')
-    fig_esp.update_traces(textposition='outside', textfont_size=10)
-    fig_esp.update_layout(plot_bgcolor='rgba(0,0,0,0)', height=400, showlegend=False)
+    # Criar gráfico com cores mais bonitas
+    fig_esp = px.bar(
+        df_esp,
+        x='Sessões de Entrada',
+        y='Espécie',
+        orientation='h',
+        text_auto='.0f',
+        color='Sessões de Entrada',
+        color_continuous_scale=px.colors.sequential.Greens_r,
+        labels={'Sessões de Entrada': 'Sessões de Entrada', 'Espécie': ''}
+    )
+    
+    # Ajustar o texto das barras
+    fig_esp.update_traces(
+        textposition='outside',
+        textfont_size=12,
+        textfont_color='#1E3D59',
+        hovertemplate='<b>%{y}</b><br>Sessões: %{x:,.0f}<extra></extra>'
+    )
+    
+    # Ajustar o layout
+    fig_esp.update_layout(
+        plot_bgcolor='rgba(0,0,0,0)',
+        height=450,
+        showlegend=False,
+        margin=dict(l=0, r=30, t=20, b=20),
+        xaxis=dict(
+            title='Sessões de Entrada',
+            title_font_size=12,
+            tickfont_size=11,
+            gridcolor='rgba(0,0,0,0.05)'
+        ),
+        yaxis=dict(
+            title='',
+            tickfont_size=13,
+            tickangle=0
+        ),
+        hovermode='y unified'
+    )
+    
+    # Exibir o gráfico
     st.plotly_chart(fig_esp, use_container_width=True)
+    
+    # Adicionar uma nota sobre os dados
+    st.caption("💡 Passe o mouse sobre as barras para ver detalhes das espécies")
     
     st.divider()
     
@@ -719,10 +747,7 @@ with aba2:
     
     st.divider()
     
-    # ============================================
     # MODO TEMPO REAL
-    # ============================================
-    
     if "Agora" in periodo:
         st.markdown("### 🟢 Quem está no site AGORA?")
         
@@ -896,10 +921,7 @@ with aba2:
         
         st.caption(f"🔄 Atualizado automaticamente a cada 30 segundos | Ciclo: #{count}")
     
-    # ============================================
     # MODO HISTÓRICO
-    # ============================================
-    
     else:
         st.markdown(f"### 📊 Visitas na **{periodo.replace('📆 ', '')}**")
         
