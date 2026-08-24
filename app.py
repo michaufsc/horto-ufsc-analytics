@@ -23,12 +23,15 @@ st.set_page_config(
 TITULO = "Etnobiologia digital no Horto Didático da UFSC: circulação do saber etnobotânico mensurada por web analytics"
 
 AUTORES = """
-**Michael A. Lopes** (Apresentador)  
-**Maique W. Biavatti** (Orientador)  
-**Gabriela D. Ritter** (Colaboradora)  
-**Letícia S. Tardim** (Colaboradora)  
+**Michael A. Lopes**¹ (Apresentador)  
+**Maique W. Biavatti**² (Orientadora)  
+**Gabriela D. Ritter**³ (Colaboradora)  
+**Letícia S. Tardim**⁴ (Colaboradora)  
 
-Universidade Federal de Santa Catarina (UFSC) - Florianópolis, SC, Brasil
+¹Universidade Federal de Santa Catarina – UFSC, Graduando em Química Tecnológica, Florianópolis, SC, Brasil.  
+²Universidade Federal de Santa Catarina – UFSC, Departamento de Ciências Farmacêuticas, Florianópolis, SC, Brasil.  
+³Farmacêutica, Florianópolis, SC, Brasil.  
+⁴Universidade Federal de Santa Catarina – UFSC, Graduanda em Farmácia, Florianópolis, SC, Brasil.
 """
 
 PALAVRAS_CHAVE = "Etnobiologia Digital; Web Analytics; Plantas Medicinais; Circulação do Conhecimento"
@@ -72,7 +75,7 @@ MASCULINO_2026 = 32.6
 BRASIL_2025 = 94.9
 BRASIL_2026 = 92.4
 
-# Espécies mais acessadas
+# Espécies mais acessadas (dados do artigo)
 ESPECIES = {
     'Folha-da-fortuna (Kalanchoe pinnata)': 6460,
     'Quebra-pedra / Quebra-pedra-rasteiro (Phyllanthus spp.)': 5599,
@@ -82,6 +85,7 @@ ESPECIES = {
     'Melão-de-são-caetano (Momordica charantia)': 3500,
 }
 
+# Países internacionais
 PAISES = {
     'Portugal': 850,
     'Estados Unidos': 620,
@@ -90,6 +94,7 @@ PAISES = {
     'Espanha': 210,
 }
 
+# Estados brasileiros
 ESTADOS = {
     'SP': 18500,
     'RJ': 12300,
@@ -220,6 +225,82 @@ def get_realtime_data():
         return None
 
 # ============================================
+# FUNÇÃO: PLANTAS MAIS ACESSADAS POR PERÍODO
+# ============================================
+
+@st.cache_data(ttl=300)
+def get_top_plants(start_date, end_date, top_n=10):
+    """
+    Busca as plantas medicinais mais acessadas no período.
+    """
+    try:
+        from google.analytics.data_v1beta.types import DateRange, Dimension, Metric, RunReportRequest
+        
+        client = get_ga4_client()
+        if not client:
+            return None
+        
+        request = RunReportRequest(
+            property=f"properties/{GA4_PROPERTY_ID}",
+            dimensions=[
+                Dimension(name="pageTitle"),
+                Dimension(name="pagePath"),
+            ],
+            metrics=[
+                Metric(name="screenPageViews"),
+                Metric(name="activeUsers"),
+            ],
+            date_ranges=[DateRange(start_date=start_date, end_date=end_date)],
+            limit=50,
+            order_bys=[{"metric": {"metric_name": "screenPageViews"}, "desc": True}]
+        )
+        
+        response = client.run_report(request)
+        
+        palavras_planta = [
+            'folha', 'quebra', 'buchinha', 'alfavaca', 'aveloz', 'melão',
+            'kalanchoe', 'phyllanthus', 'luffa', 'ocimum', 'euphorbia', 'momordica'
+        ]
+        
+        plantas = []
+        for row in response.rows:
+            titulo = row.dimension_values[0].value.lower() if len(row.dimension_values) > 0 else ""
+            caminho = row.dimension_values[1].value.lower() if len(row.dimension_values) > 1 else ""
+            
+            is_planta = any(palavra in titulo or palavra in caminho for palavra in palavras_planta)
+            is_home = caminho == '/' or 'home' in titulo or 'início' in titulo
+            
+            if is_planta or is_home:
+                nome = titulo.replace(' - Horto UFSC', '').replace(' | Horto UFSC', '').strip()
+                if not nome or nome == '':
+                    nome = caminho.replace('/planta/', '').replace('-', ' ').title()
+                
+                if is_home and not is_planta:
+                    nome = "🏠 Página Inicial"
+                
+                visualizacoes = float(row.metric_values[0].value) if len(row.metric_values) > 0 else 0
+                usuarios = float(row.metric_values[1].value) if len(row.metric_values) > 1 else 0
+                
+                plantas.append({
+                    'nome': nome[:40],
+                    'visualizacoes': visualizacoes,
+                    'usuarios': usuarios
+                })
+        
+        df_plantas = pd.DataFrame(plantas)
+        if not df_plantas.empty:
+            df_plantas = df_plantas.groupby('nome').agg({
+                'visualizacoes': 'sum',
+                'usuarios': 'sum'
+            }).reset_index()
+            df_plantas = df_plantas.sort_values('visualizacoes', ascending=False).head(top_n)
+        
+        return df_plantas
+        
+    except Exception as e:
+        return None
+
+# ============================================
 # ESTILOS VISUAIS
 # ============================================
 
@@ -319,14 +400,6 @@ st.markdown("""
         line-height: 1.8;
     }
     .glossary-box strong { color: #1E3D59; }
-    .conclusion-box {
-        background: #f0f9f4;
-        padding: 20px;
-        border-radius: 12px;
-        border-left: 4px solid #17B978;
-        margin: 15px 0;
-        line-height: 1.8;
-    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -641,8 +714,9 @@ with aba1:
     
     st.divider()
     
-    # RANKING DE ESPÉCIES COM EXPANDER
+    # RANKING DE ESPÉCIES (DADOS DO ARTIGO)
     st.subheader("🌿 Espécies Mais Acessadas (2026)")
+    st.caption("Dados do artigo - ranking das espécies mais acessadas em 2026")
     
     with st.expander("🌿 Clique para ver o ranking das espécies"):
         df_esp = pd.DataFrame({
@@ -676,7 +750,7 @@ with aba1:
         """)
 
 # ============================================
-# ABA 2: TEMPO REAL (MANTIDA IGUAL)
+# ABA 2: TEMPO REAL
 # ============================================
 
 with aba2:
@@ -684,11 +758,13 @@ with aba2:
     st.caption("Dados do Google Analytics 4")
     
     st.info("""
-    **O que você está vendo?**
+    👋 **Bem-vindo ao painel de visitantes!**
     
-    Este painel mostra dados reais de visitantes do site do Horto Didático.
-    - Se aparecerem números → são visitas **reais**!
-    - Se aparecer "sem dados" → o site não recebeu visitas no período
+    Aqui você vê quantas pessoas estão acessando o site do Horto agora e nos últimos dias.
+    
+    - ✅ Números VERDES → são visitas **reais** que aconteceram!
+    - ⚠️ Se aparecer "sem dados" → significa que não houve visitas no período (isso é normal)
+    - 📅 Use o menu abaixo para ver diferentes períodos
     """)
     
     count = st_autorefresh(interval=30000, key="refresh")
@@ -696,40 +772,72 @@ with aba2:
     col1, col2 = st.columns([3, 1])
     with col1:
         periodo = st.selectbox(
-            "📅 Período:",
-            ["⚡ Últimos 30 minutos", "📆 Últimos 7 dias", "📆 Últimos 30 dias", "📆 Ano de 2026"]
+            "📅 Escolha o período:",
+            ["⚡ Agora (últimos 30 min)", "📆 Últimos 7 dias", "📆 Últimos 30 dias", "📆 Ano de 2026"],
+            help="Selecione um período para ver os dados de visitantes"
         )
     with col2:
-        st.caption(f"🔄 {datetime.now().strftime('%H:%M:%S')}")
+        st.caption(f"🔄 Atualização: a cada 30s")
+        st.caption(f"⏱️ {datetime.now().strftime('%H:%M:%S')}")
     
     st.divider()
     
-    if "30 minutos" in periodo:
-        st.markdown("### ⚡ Agora no site")
+    # ============================================
+    # MODO TEMPO REAL
+    # ============================================
+    
+    if "Agora" in periodo:
+        st.markdown("### 🟢 Quem está no site AGORA?")
         
-        with st.spinner("🔄 Buscando dados..."):
+        with st.spinner("🔄 Buscando visitantes ativos..."):
             df_rt = get_realtime_data()
         
         if df_rt is not None and not df_rt.empty:
             total = df_rt['activeUsers'].sum() if 'activeUsers' in df_rt.columns else 0
             
             col_a1, col_a2, col_a3 = st.columns(3)
-            col_a1.metric("👤 Pessoas agora", f"{total:.0f}")
-            col_a2.metric("📄 Páginas vistas", f"{df_rt['screenPageViews'].sum():.0f}")
             
-            if 'deviceCategory' in df_rt.columns:
-                top = df_rt.groupby('deviceCategory')['activeUsers'].sum().idxmax()
-                col_a3.metric("📱 Dispositivo", top)
+            with col_a1:
+                st.markdown(f"""
+                <div style="background: #f0f9f4; padding: 25px; border-radius: 12px; text-align: center; border: 2px solid #17B978;">
+                    <div style="font-size: 3rem; font-weight: 700; color: #1E3D59;">{total:.0f}</div>
+                    <div style="font-size: 1rem; color: #555;">👤 Pessoas no site<br><span style="font-size: 0.8rem; color: #999;">neste exato momento</span></div>
+                </div>
+                """, unsafe_allow_html=True)
+            
+            with col_a2:
+                page_views = df_rt['screenPageViews'].sum() if 'screenPageViews' in df_rt.columns else 0
+                st.markdown(f"""
+                <div style="background: #f0f9f4; padding: 25px; border-radius: 12px; text-align: center; border: 2px solid #17B978;">
+                    <div style="font-size: 3rem; font-weight: 700; color: #1E3D59;">{page_views:.0f}</div>
+                    <div style="font-size: 1rem; color: #555;">📄 Páginas visitadas<br><span style="font-size: 0.8rem; color: #999;">nos últimos 30 min</span></div>
+                </div>
+                """, unsafe_allow_html=True)
+            
+            with col_a3:
+                if 'deviceCategory' in df_rt.columns:
+                    device_counts = df_rt.groupby('deviceCategory')['activeUsers'].sum()
+                    top_device = device_counts.idxmax() if not device_counts.empty else "N/A"
+                    device_map = {'mobile': '📱 Celular', 'desktop': '💻 Computador', 'tablet': '📟 Tablet'}
+                    top_device_display = device_map.get(top_device.lower(), top_device)
+                    st.markdown(f"""
+                    <div style="background: #f0f9f4; padding: 25px; border-radius: 12px; text-align: center; border: 2px solid #17B978;">
+                        <div style="font-size: 2.5rem; font-weight: 700; color: #1E3D59;">{top_device_display}</div>
+                        <div style="font-size: 1rem; color: #555;">📱 Dispositivo mais usado<br><span style="font-size: 0.8rem; color: #999;">acessando agora</span></div>
+                    </div>
+                    """, unsafe_allow_html=True)
             
             st.divider()
+            
+            st.markdown("#### 📊 O que as pessoas estão vendo?")
             
             col_p1, col_p2 = st.columns(2)
             
             with col_p1:
-                st.write("**📄 Páginas em destaque**")
+                st.markdown("**📄 Páginas mais visitadas agora**")
                 if 'pageTitle' in df_rt.columns:
                     df_pages = df_rt.groupby('pageTitle')['activeUsers'].sum().reset_index()
-                    df_pages = df_pages.sort_values('activeUsers', ascending=True).tail(8)
+                    df_pages = df_pages.sort_values('activeUsers', ascending=True).tail(6)
                     
                     def nome_amigavel(nome):
                         nome = str(nome).lower()
@@ -747,34 +855,88 @@ with aba2:
                     fig = px.bar(df_pages, x='activeUsers', y='Página',
                                 orientation='h', color='activeUsers',
                                 color_continuous_scale='Greens', text_auto=True)
-                    fig.update_layout(showlegend=False, height=300, plot_bgcolor='rgba(0,0,0,0)')
+                    fig.update_layout(
+                        showlegend=False,
+                        height=280,
+                        plot_bgcolor='rgba(0,0,0,0)',
+                        xaxis_title="👤 Pessoas",
+                        yaxis_title="",
+                        margin=dict(l=0, r=0, t=0, b=0)
+                    )
                     st.plotly_chart(fig, use_container_width=True)
+                    st.caption("💡 Passe o mouse sobre as barras para ver detalhes")
             
             with col_p2:
-                st.write("**🌍 Origem**")
+                st.markdown("**🌍 De onde vêm os visitantes**")
                 if 'country' in df_rt.columns:
                     df_geo = df_rt.groupby('country')['activeUsers'].sum().reset_index()
-                    df_geo = df_geo.sort_values('activeUsers', ascending=False).head(8)
-                    fig = px.pie(df_geo, values='activeUsers', names='country',
-                                color_discrete_sequence=px.colors.sequential.Greens_r,
+                    df_geo = df_geo.sort_values('activeUsers', ascending=False).head(6)
+                    
+                    flags = {
+                        'Brazil': '🇧🇷 Brasil',
+                        'Portugal': '🇵🇹 Portugal',
+                        'United States': '🇺🇸 EUA',
+                        'Angola': '🇦🇴 Angola',
+                        'Mozambique': '🇲🇿 Moçambique',
+                        'Spain': '🇪🇸 Espanha'
+                    }
+                    df_geo['Local'] = df_geo['country'].apply(lambda x: flags.get(x, f'🌍 {x}'))
+                    
+                    fig = px.pie(df_geo, values='activeUsers', names='Local',
+                                color_discrete_sequence=['#1E3D59', '#17B978', '#334E68', '#4CAF50', '#66BB6A', '#81C784'],
                                 hole=0.3)
-                    fig.update_layout(height=300)
+                    fig.update_traces(textposition='inside', textinfo='percent+label')
+                    fig.update_layout(height=280, margin=dict(l=0, r=0, t=0, b=0))
                     st.plotly_chart(fig, use_container_width=True)
+                    st.caption("💡 Clique nas fatias para ver detalhes")
+        
         else:
-            st.warning("⚠️ Dados de demonstração - site sem visitas agora")
+            st.info("📊 **Demonstração** - O site não teve visitas nos últimos 30 minutos.")
+            st.markdown("""
+            Isso é **normal** se:
+            - O site está com pouco tráfego agora
+            - Você está testando o app fora do horário de pico
+            
+            Os dados abaixo são apenas para mostrar como o painel funciona:
+            """)
             
             col_d1, col_d2, col_d3 = st.columns(3)
-            col_d1.metric("👤 Pessoas agora", "18")
-            col_d2.metric("📄 Páginas vistas", "42")
-            col_d3.metric("📱 Dispositivo", "📱 Celular")
+            
+            with col_d1:
+                st.markdown("""
+                <div style="background: #f0f9f4; padding: 25px; border-radius: 12px; text-align: center; border: 2px solid #17B978;">
+                    <div style="font-size: 3rem; font-weight: 700; color: #1E3D59;">18</div>
+                    <div style="font-size: 1rem; color: #555;">👤 Pessoas no site</div>
+                    <div style="font-size: 0.8rem; color: #999;">(dados ilustrativos)</div>
+                </div>
+                """, unsafe_allow_html=True)
+            
+            with col_d2:
+                st.markdown("""
+                <div style="background: #f0f9f4; padding: 25px; border-radius: 12px; text-align: center; border: 2px solid #17B978;">
+                    <div style="font-size: 3rem; font-weight: 700; color: #1E3D59;">42</div>
+                    <div style="font-size: 1rem; color: #555;">📄 Páginas visitadas</div>
+                    <div style="font-size: 0.8rem; color: #999;">(dados ilustrativos)</div>
+                </div>
+                """, unsafe_allow_html=True)
+            
+            with col_d3:
+                st.markdown("""
+                <div style="background: #f0f9f4; padding: 25px; border-radius: 12px; text-align: center; border: 2px solid #17B978;">
+                    <div style="font-size: 2.5rem; font-weight: 700; color: #1E3D59;">📱 Celular</div>
+                    <div style="font-size: 1rem; color: #555;">Dispositivo mais usado</div>
+                    <div style="font-size: 0.8rem; color: #999;">(dados ilustrativos)</div>
+                </div>
+                """, unsafe_allow_html=True)
             
             st.divider()
             
-            col_p1, col_p2 = st.columns(2)
-            with col_p1:
-                st.write("**📄 Páginas em destaque**")
+            col_d4, col_d5 = st.columns(2)
+            
+            with col_d4:
+                st.write("**📄 Páginas mais visitadas (exemplo)**")
                 df_demo = pd.DataFrame({
-                    'Página': ['🌿 Folha da Fortuna', '🌿 Quebra-pedra', '🏠 Home', '🌿 Buchinha'],
+                    'Página': ['🌿 Folha da Fortuna', '🌿 Quebra-pedra', '🏠 Página Inicial', '🌿 Buchinha'],
                     'Pessoas': [7, 5, 4, 2]
                 })
                 fig = px.bar(df_demo, x='Pessoas', y='Página', orientation='h',
@@ -782,8 +944,8 @@ with aba2:
                 fig.update_layout(showlegend=False, height=250, plot_bgcolor='rgba(0,0,0,0)')
                 st.plotly_chart(fig, use_container_width=True)
             
-            with col_p2:
-                st.write("**🌍 Origem**")
+            with col_d5:
+                st.write("**🌍 Origem dos visitantes (exemplo)**")
                 df_geo = pd.DataFrame({
                     'Local': ['🇧🇷 Brasil', '🇵🇹 Portugal', '🇺🇸 EUA', '🇦🇴 Angola'],
                     'Pessoas': [8, 5, 3, 2]
@@ -791,85 +953,180 @@ with aba2:
                 fig = px.pie(df_geo, values='Pessoas', names='Local',
                             color_discrete_sequence=['#1E3D59', '#17B978', '#334E68', '#A7E9AF'],
                             hole=0.3)
+                fig.update_traces(textposition='inside', textinfo='percent+label')
                 fig.update_layout(height=250)
                 st.plotly_chart(fig, use_container_width=True)
         
-        st.caption(f"🔄 Ciclo: #{count}")
+        st.caption(f"🔄 Atualizado automaticamente a cada 30 segundos | Ciclo: #{count}")
+    
+    # ============================================
+    # MODO HISTÓRICO (com plantas dinâmicas)
+    # ============================================
     
     else:
-        st.info(f"📊 Período: {periodo}")
+        st.markdown(f"### 📊 Visitas na **{periodo.replace('📆 ', '')}**")
         
         end = datetime.now().strftime('%Y-%m-%d')
         if "7 dias" in periodo:
             start = (datetime.now() - timedelta(days=7)).strftime('%Y-%m-%d')
+            label = "última semana"
         elif "30 dias" in periodo:
             start = (datetime.now() - timedelta(days=30)).strftime('%Y-%m-%d')
+            label = "último mês"
         else:
             start = '2026-01-01'
+            label = "2026"
         
-        with st.spinner("🔄 Carregando dados..."):
+        with st.spinner(f"🔄 Carregando dados da {label}..."):
             df_hist = get_ga4_data(start, end)
+            df_plantas = get_top_plants(start, end)
         
         if df_hist is not None and not df_hist.empty:
+            
+            # Resumo simples
+            total_pessoas = df_hist['totalUsers'].sum() if 'totalUsers' in df_hist.columns else 0
+            total_visitas = df_hist['sessions'].sum() if 'sessions' in df_hist.columns else 0
+            
+            col_r1, col_r2 = st.columns(2)
+            
+            with col_r1:
+                st.markdown(f"""
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; text-align: center; border-left: 4px solid #17B978;">
+                    <div style="font-size: 2rem; font-weight: 700; color: #1E3D59;">{total_pessoas:,.0f}</div>
+                    <div style="font-size: 0.9rem; color: #555;">👤 Pessoas diferentes visitaram o site</div>
+                </div>
+                """, unsafe_allow_html=True)
+            
+            with col_r2:
+                st.markdown(f"""
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; text-align: center; border-left: 4px solid #17B978;">
+                    <div style="font-size: 2rem; font-weight: 700; color: #1E3D59;">{total_visitas:,.0f}</div>
+                    <div style="font-size: 0.9rem; color: #555;">📊 Visitas (sessões) no total</div>
+                </div>
+                """, unsafe_allow_html=True)
+            
+            st.divider()
+            
+            # ============================================
+            # PLANTAS MAIS ACESSADAS NO PERÍODO (DINÂMICO)
+            # ============================================
+            
+            st.subheader("🌿 Plantas Medicinais Mais Acessadas")
+            st.caption(f"Período: {label}")
+            
+            if df_plantas is not None and not df_plantas.empty:
+                fig = px.bar(df_plantas, x='visualizacoes', y='nome', orientation='h',
+                            text_auto=',d', color='visualizacoes',
+                            color_continuous_scale='Greens',
+                            labels={'visualizacoes': '👀 Visualizações', 'nome': 'Planta'})
+                fig.update_traces(textposition='outside', textfont_size=10)
+                fig.update_layout(
+                    plot_bgcolor='rgba(0,0,0,0)',
+                    height=350,
+                    showlegend=False,
+                    xaxis_title="Número de visualizações",
+                    yaxis_title=""
+                )
+                st.plotly_chart(fig, use_container_width=True)
+                st.caption("💡 As plantas medicinais mais acessadas neste período (dados do GA4)")
+            else:
+                st.info("📊 Nenhuma página de planta foi acessada neste período.")
+                st.markdown("""
+                **Alternativa:** Use os dados do seu artigo na aba **RESULTADOS**, 
+                que contêm o ranking das espécies mais acessadas em 2026.
+                """)
+            
+            st.divider()
+            
+            # Gráficos de visão geral
             col_h1, col_h2 = st.columns(2)
             
             with col_h1:
-                st.subheader("📈 Visitas por dia")
+                st.subheader("📈 Pessoas por dia")
                 if 'date' in df_hist.columns:
                     df_daily = df_hist.groupby('date')['activeUsers'].sum().reset_index()
                     df_daily['date'] = pd.to_datetime(df_daily['date'])
                     fig = px.line(df_daily, x='date', y='activeUsers',
-                                 color_discrete_sequence=['#17B978'])
-                    fig.update_layout(plot_bgcolor='rgba(0,0,0,0)', height=300)
+                                 color_discrete_sequence=['#17B978'],
+                                 labels={'date': 'Data', 'activeUsers': '👤 Pessoas'})
+                    fig.update_layout(
+                        plot_bgcolor='rgba(0,0,0,0)',
+                        hovermode='x unified',
+                        height=300,
+                        margin=dict(l=0, r=0, t=30, b=0)
+                    )
                     st.plotly_chart(fig, use_container_width=True)
+                    st.caption("💡 Cada ponto representa quantas pessoas visitaram o site naquele dia")
             
             with col_h2:
-                st.subheader("📊 De onde vêm")
+                st.subheader("📊 De onde vieram")
                 if 'sessionDefaultChannelGroup' in df_hist.columns:
                     df_chan = df_hist.groupby('sessionDefaultChannelGroup')['activeUsers'].sum().reset_index()
-                    df_chan = df_chan.sort_values('activeUsers', ascending=True).tail(8)
-                    fig = px.bar(df_chan, x='activeUsers', y='sessionDefaultChannelGroup',
+                    df_chan = df_chan.sort_values('activeUsers', ascending=True).tail(6)
+                    
+                    canal_map = {
+                        'Organic Search': '🔍 Busca no Google',
+                        'Direct': '🏠 Digitaram o endereço',
+                        'Referral': '🔗 Indicação de outro site',
+                        'Social': '📱 Redes Sociais',
+                        'Email': '✉️ Email'
+                    }
+                    df_chan['Canal'] = df_chan['sessionDefaultChannelGroup'].apply(
+                        lambda x: canal_map.get(x, x)
+                    )
+                    
+                    fig = px.bar(df_chan, x='activeUsers', y='Canal',
                                 orientation='h', color='activeUsers',
                                 color_continuous_scale='Greens', text_auto=True)
-                    fig.update_layout(showlegend=False, height=300, plot_bgcolor='rgba(0,0,0,0)')
+                    fig.update_layout(
+                        showlegend=False,
+                        height=300,
+                        plot_bgcolor='rgba(0,0,0,0)',
+                        xaxis_title="👤 Pessoas",
+                        yaxis_title="",
+                        margin=dict(l=0, r=0, t=0, b=0)
+                    )
                     st.plotly_chart(fig, use_container_width=True)
+                    st.caption("💡 Como as pessoas chegaram ao site")
+        
         else:
             st.warning("⚠️ Nenhum dado disponível para este período")
             
             st.markdown("""
-            **Por que não aparecem dados?**
+            ### 🤔 Por que não aparecem dados?
             
-            1. O site pode não ter recebido visitas
-            2. O código de rastreamento pode não estar instalado
-            3. A propriedade selecionada pode não ter dados
+            **Motivos mais comuns:**
+            1. O site não recebeu visitas nesse período
+            2. O código de rastreamento do Google Analytics pode não estar instalado no site
             
-            **Os dados do seu artigo estão na aba RESULTADOS!**
+            **O que fazer:**
+            - ✅ Tente selecionar um período mais longo
+            - ✅ Os dados do seu artigo estão disponíveis na aba **RESULTADOS**
+            - ✅ Você pode apresentar com os dados do artigo, que são os da sua pesquisa!
             """)
 
 # ============================================
-# ABA 3: REFERÊNCIAS
+# ABA 3: REFERÊNCIAS (MARKDOWN PURO)
 # ============================================
 
 with aba3:
     st.header("📚 Referências Bibliográficas")
     
     st.markdown("""
-    <div class="ref-box">
-        <p><strong>BOELL, M. E. C.</strong> Espécies do Horto Didático de Plantas Medicinais do HU/CCS (UFSC): identificação botânica e uso terapêutico de plantas medicinais. 2023. Trabalho de Conclusão de Curso (Graduação) – Universidade Federal de Santa Catarina, Florianópolis, 2023.</p>
-        
-        <p><strong>CEUTERICK, M.; VANDEBROEK, I.; TORRY, B.; PIERONI, A.</strong> Cross-cultural adaptation in urban ethnobotany: the Colombian folk pharmacopoeia in London. Journal of Ethnopharmacology, v. 120, n. 3, p. 342-359, 2008. DOI: 10.1016/j.jep.2008.09.004.</p>
-        
-        <p><strong>DE MEYER, E.; CEUTERICK, M.</strong> Digital Ethnobiology: exploring the digisphere in search of traditional and indigenous knowledge and practices. Ethnobotany Research and Applications, v. 24, p. 1-8, 2022. DOI: 10.32859/era.24.37.1-8.</p>
-        
-        <p><strong>FOLKE, C.; BIGGS, R.; NORSTRÖM, A. V.; REYERS, B.; ROCKSTRÖM, J.</strong> Social-ecological resilience and biosphere-based sustainability science. Ecology and Society, v. 21, n. 3, p. 41, 2016. DOI: 10.5751/ES-08748-210341.</p>
-        
-        <p><strong>RITTER, G. D.</strong> O site do Horto Didático de Plantas Medicinais (UFSC) como ferramenta de divulgação científica para o uso de plantas medicinais. 2025. Trabalho de Conclusão de Curso (Graduação) – Universidade Federal de Santa Catarina, Florianópolis, 2025.</p>
-        
-        <p><strong>SIMON, F. M.; CAMARGO, C. Q.</strong> Autopsy of a metaphor: the origins, use and blind spots of the 'infodemic'. New Media & Society, v. 25, n. 8, p. 2219-2240, 2023. DOI: 10.1177/14614448211031908.</p>
-        
-        <p><strong>WELLMAN, B.</strong> Little Boxes, Glocalization, and Networked Individualism. In: TANABE, M.; BESSELAAR, P. van den; ISHIDA, T. (ed.). Digital Cities II: computational and sociological approaches. Berlin: Springer, 2002. p. 10-25.</p>
-    </div>
-    """, unsafe_allow_html=True)
+    **BOELL, M. E. C.** Espécies do Horto Didático de Plantas Medicinais do HU/CCS (UFSC): identificação botânica e uso terapêutico de plantas medicinais. 2023. Trabalho de Conclusão de Curso (Graduação) – Universidade Federal de Santa Catarina, Florianópolis, 2023.
+
+    **CEUTERICK, M.; VANDEBROEK, I.; TORRY, B.; PIERONI, A.** Cross-cultural adaptation in urban ethnobotany: the Colombian folk pharmacopoeia in London. Journal of Ethnopharmacology, v. 120, n. 3, p. 342-359, 2008. DOI: 10.1016/j.jep.2008.09.004.
+
+    **DE MEYER, E.; CEUTERICK, M.** Digital Ethnobiology: exploring the digisphere in search of traditional and indigenous knowledge and practices. Ethnobotany Research and Applications, v. 24, p. 1-8, 2022. DOI: 10.32859/era.24.37.1-8.
+
+    **FOLKE, C.; BIGGS, R.; NORSTRÖM, A. V.; REYERS, B.; ROCKSTRÖM, J.** Social-ecological resilience and biosphere-based sustainability science. Ecology and Society, v. 21, n. 3, p. 41, 2016. DOI: 10.5751/ES-08748-210341.
+
+    **RITTER, G. D.** O site do Horto Didático de Plantas Medicinais (UFSC) como ferramenta de divulgação científica para o uso de plantas medicinais. 2025. Trabalho de Conclusão de Curso (Graduação) – Universidade Federal de Santa Catarina, Florianópolis, 2025.
+
+    **SIMON, F. M.; CAMARGO, C. Q.** Autopsy of a metaphor: the origins, use and blind spots of the 'infodemic'. New Media & Society, v. 25, n. 8, p. 2219-2240, 2023. DOI: 10.1177/14614448211031908.
+
+    **WELLMAN, B.** Little Boxes, Glocalization, and Networked Individualism. In: TANABE, M.; BESSELAAR, P. van den; ISHIDA, T. (ed.). Digital Cities II: computational and sociological approaches. Berlin: Springer, 2002. p. 10-25.
+    """)
 
 # ============================================
 # RODAPÉ
