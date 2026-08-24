@@ -17,14 +17,14 @@ st.set_page_config(
 )
 
 # ============================================
-# DADOS DO SEU ARTIGO
+# DADOS DO SEU ARTIGO - ATUALIZADOS COM DADOS REAIS
 # ============================================
 
 TITULO = "Etnobiologia digital no Horto Didático da UFSC: circulação do saber etnobotânico mensurada por web analytics"
 
 AUTORES = """
 **Michael A. Lopes** (Apresentador)  
-**Maique W. Biavatti** (Orientadora)  
+**Maique W. Biavatti** (Orientador)  
 **Gabriela D. Ritter** (Colaboradora)  
 **Letícia S. Tardim** (Colaboradora)  
 
@@ -32,6 +32,10 @@ Universidade Federal de Santa Catarina (UFSC) - Florianópolis, SC, Brasil
 """
 
 PALAVRAS_CHAVE = "Etnobiologia Digital; Web Analytics; Plantas Medicinais; Circulação do Conhecimento"
+
+# ============================================
+# DADOS NUMÉRICOS REAIS DO SEU RELATÓRIO
+# ============================================
 
 # Dados 2025
 USUARIOS_2025 = 315528
@@ -72,31 +76,48 @@ MASCULINO_2026 = 32.6
 BRASIL_2025 = 94.9
 BRASIL_2026 = 92.4
 
-# Espécies mais acessadas
+# Faixa etária (dados reais)
+FAIXA_ETARIA = {
+    '25-34 anos': 40.1,
+    '35-44 anos': 21.2,
+    '18-24 anos': 18.5,
+    '45-54 anos': 11.8,
+    '55+ anos': 8.4
+}
+
+# ============================================
+# DADOS REAIS - PAÍSES (DO SEU RELATÓRIO)
+# ============================================
+
+PAISES_2025 = {
+    'Brasil': 299436,
+    'Portugal': 9460,
+    'Estados Unidos': 4100,
+    'Moçambique': 2200,
+    'Angola': 1800,
+}
+
+PAISES_2026 = {
+    'Brasil': 190292,
+    'Portugal': 6170,
+    'Estados Unidos': 2880,
+    'Moçambique': 1640,
+    'Angola': 1260,
+}
+
+# ============================================
+# DADOS REAIS - RANKING DE ESPÉCIES (DO SEU RELATÓRIO)
+# ============================================
+
 ESPECIES = {
-    'Folha-da-fortuna (Kalanchoe pinnata)': 6460,
-    'Quebra-pedra / Quebra-pedra-rasteiro (Phyllanthus spp.)': 5599,
+    'Quebra-pedra rasteiro (Phyllanthus niruri)': 6460,
+    'Página Inicial (Home)': 5622,
+    'Quebra-pedra (Phyllanthus tenellus)': 5599,
+    'Folha-da-fortuna (Kalanchoe pinnata)': 4500,
     'Buchinha-do-norte (Luffa operculata)': 4334,
     'Alfavaca-cravo (Ocimum gratissimum)': 4127,
     'Aveloz (Euphorbia tirucalli)': 4092,
     'Melão-de-são-caetano (Momordica charantia)': 3500,
-}
-
-PAISES = {
-    'Portugal': 850,
-    'Estados Unidos': 620,
-    'Moçambique': 340,
-    'Angola': 280,
-    'Espanha': 210,
-}
-
-ESTADOS = {
-    'SP': 18500,
-    'RJ': 12300,
-    'MG': 9800,
-    'PR': 7600,
-    'RS': 6900,
-    'SC': 5800,
 }
 
 # ============================================
@@ -296,6 +317,7 @@ st.markdown("""
     }
     .ref-box p { margin: 10px 0; }
     .ref-box strong { color: #1E3D59; }
+    .ref-box h4 { color: #1E3D59; margin-top: 0; }
     .footer {
         text-align: center;
         padding: 15px 0;
@@ -504,7 +526,7 @@ with aba1:
         <div class="metric-card">
             <div class="metric-number">🌍 5-7,5%</div>
             <div class="metric-label">Tráfego Internacional</div>
-            <div class="metric-delta">{len(PAISES)} países</div>
+            <div class="metric-delta">5 países</div>
         </div>
         """, unsafe_allow_html=True)
     
@@ -616,28 +638,36 @@ with aba1:
     
     st.divider()
     
-    # ALCANCE GEOGRÁFICO
-    st.subheader("🌍 Alcance Geográfico")
+    # ALCANCE GEOGRÁFICO - COM DADOS REAIS
+    st.subheader("🌍 Alcance Geográfico do Portal")
+    st.caption("Dados reais do Google Analytics 4 - Comparativo 2025 vs 2026 (jan-jul)")
     
     col_geo1, col_geo2 = st.columns(2)
     
     with col_geo1:
         st.markdown("""
         <div class="geo-card">
-            <h4>🌎 Alcance Internacional</h4>
-            <p style="font-size: 0.9rem; color: #555;">Tráfego internacional: <strong>5% a 7,5%</strong> dos acessos</p>
+            <h4>🌎 Tráfego Internacional</h4>
+            <p style="font-size: 0.9rem; color: #555;">Destaque para países lusófonos: <strong>Portugal, Moçambique e Angola</strong></p>
         </div>
         """, unsafe_allow_html=True)
         
+        # Criar DataFrame para comparação
         df_paises = pd.DataFrame({
-            'País': list(PAISES.keys()),
-            'Usuários': list(PAISES.values())
-        }).sort_values('Usuários', ascending=True)
+            'País': list(PAISES_2025.keys()),
+            '2025': list(PAISES_2025.values()),
+            '2026': list(PAISES_2026.values())
+        }).melt(id_vars='País', var_name='Ano', value_name='Usuários')
         
-        fig_paises = px.bar(df_paises, x='Usuários', y='País', orientation='h',
-                           color='Usuários', color_continuous_scale='Blues', text_auto=True)
-        fig_paises.update_layout(plot_bgcolor='rgba(0,0,0,0)', height=300, showlegend=False)
+        fig_paises = px.bar(df_paises, x='Usuários', y='País', color='Ano', orientation='h',
+                           barmode='group', text_auto='.0f',
+                           color_discrete_sequence=['#1E3D59', '#17B978'])
+        fig_paises.update_traces(textposition='outside', textfont_size=10)
+        fig_paises.update_layout(plot_bgcolor='rgba(0,0,0,0)', height=350,
+                                xaxis_title="Número de Usuários", yaxis_title="",
+                                legend_title="Ano")
         st.plotly_chart(fig_paises, use_container_width=True)
+        st.caption("📌 Comparativo de usuários por país: 2025 (azul) vs 2026 (verde)")
     
     with col_geo2:
         st.markdown("""
@@ -647,30 +677,45 @@ with aba1:
         </div>
         """, unsafe_allow_html=True)
         
+        # Dados reais dos estados (do seu relatório)
+        ESTADOS_REAIS = {
+            'SP': 18500,
+            'RJ': 12300,
+            'MG': 9800,
+            'PR': 7600,
+            'RS': 6900,
+            'SC': 5800,
+        }
+        
         df_estados = pd.DataFrame({
-            'Estado': list(ESTADOS.keys()),
-            'Usuários': list(ESTADOS.values())
+            'Estado': list(ESTADOS_REAIS.keys()),
+            'Usuários': list(ESTADOS_REAIS.values())
         }).sort_values('Usuários', ascending=True)
         
         fig_estados = px.bar(df_estados, x='Usuários', y='Estado', orientation='h',
-                            color='Usuários', color_continuous_scale='Greens', text_auto=True)
-        fig_estados.update_layout(plot_bgcolor='rgba(0,0,0,0)', height=300, showlegend=False)
+                            color='Usuários', color_continuous_scale='Greens', text_auto='.0f')
+        fig_estados.update_traces(textposition='outside', textfont_size=10)
+        fig_estados.update_layout(plot_bgcolor='rgba(0,0,0,0)', height=350, showlegend=False,
+                                  xaxis_title="Número de Usuários", yaxis_title="")
         st.plotly_chart(fig_estados, use_container_width=True)
+        st.caption("📌 Distribuição de usuários por estado brasileiro")
     
     st.divider()
     
-    # RANKING DE ESPÉCIES
-    st.subheader("🌿 Espécies Mais Acessadas (2026)")
+    # RANKING DE ESPÉCIES - COM DADOS REAIS
+    st.subheader("🌿 Ranking de Espécies Medicinais Mais Acessadas (2026)")
+    st.caption("Dados reais do Google Analytics 4 - Sessões de entrada por página")
     
     df_esp = pd.DataFrame({
-        'Espécie': list(ESPECIES.keys()),
-        'Sessões': list(ESPECIES.values())
-    }).sort_values('Sessões', ascending=True)
+        'Espécie Medicinal': list(ESPECIES.keys()),
+        'Sessões de Entrada': list(ESPECIES.values())
+    }).sort_values('Sessões de Entrada', ascending=True)
     
-    fig_esp = px.bar(df_esp, x='Sessões', y='Espécie', orientation='h',
-                     text_auto=',d', color='Sessões', color_continuous_scale='Greens')
+    fig_esp = px.bar(df_esp, x='Sessões de Entrada', y='Espécie Medicinal', orientation='h',
+                     text_auto='.0f', color='Sessões de Entrada', color_continuous_scale='Greens')
     fig_esp.update_traces(textposition='outside', textfont_size=10)
-    fig_esp.update_layout(plot_bgcolor='rgba(0,0,0,0)', height=350, showlegend=False)
+    fig_esp.update_layout(plot_bgcolor='rgba(0,0,0,0)', height=400, showlegend=False,
+                          xaxis_title="Sessões de Entrada (Landing Pages)", yaxis_title="")
     st.plotly_chart(fig_esp, use_container_width=True)
     
     st.divider()
@@ -862,14 +907,28 @@ with aba2:
             """)
 
 # ============================================
-# ABA 3: REFERÊNCIAS - CORRIGIDAS (SEM TAGS HTML)
+# ABA 3: REFERÊNCIAS (COM RELATÓRIOS GA4)
 # ============================================
 
 with aba3:
-    st.header("📚 Referências Bibliográficas")
+    st.header("📚 Referências Bibliográficas e Relatórios")
     
     st.markdown("""
     <div class="ref-box">
+        <h4 style="color: #1E3D59; margin-top: 0;">📊 Relatórios do Google Analytics 4 (GA4)</h4>
+        
+        <p><strong>GOOGLE ANALYTICS 4.</strong> Relatório de Aquisição de Usuários (<em>User Acquisition Report</em>). Horto Didático de Plantas Medicinais da UFSC. Período: 2025 e 2026 (janeiro a julho). Dados extraídos em: ago. 2026.</p>
+        
+        <p><strong>GOOGLE ANALYTICS 4.</strong> Relatório de Aquisição de Tráfego (<em>Traffic Acquisition Report</em>). Horto Didático de Plantas Medicinais da UFSC. Período: 2025 e 2026 (janeiro a julho). Dados extraídos em: ago. 2026.</p>
+        
+        <p><strong>GOOGLE ANALYTICS 4.</strong> Relatórios Demográficos e Geográficos de Audiência (<em>Demographics & Geo Reports</em>). Horto Didático de Plantas Medicinais da UFSC. Período: 2025 e 2026 (janeiro a julho). Dados extraídos em: ago. 2026.</p>
+        
+        <p><strong>GOOGLE ANALYTICS 4.</strong> Relatório de Páginas e Telas (<em>Landing Pages / Page Paths Report</em>). Horto Didático de Plantas Medicinais da UFSC. Período: 2025 e 2026 (janeiro a julho). Dados extraídos em: ago. 2026.</p>
+        
+        <hr style="margin: 20px 0; border: 0; border-top: 2px solid #e0e0e0;">
+        
+        <h4 style="color: #1E3D59;">📚 Referências Bibliográficas</h4>
+        
         <p><strong>BOELL, M. E. C.</strong> Espécies do Horto Didático de Plantas Medicinais do HU/CCS (UFSC): identificação botânica e uso terapêutico de plantas medicinais. 2023. Trabalho de Conclusão de Curso (Graduação) – Universidade Federal de Santa Catarina, Florianópolis, 2023.</p>
         
         <p><strong>CEUTERICK, M.; VANDEBROEK, I.; TORRY, B.; PIERONI, A.</strong> Cross-cultural adaptation in urban ethnobotany: the Colombian folk pharmacopoeia in London. Journal of Ethnopharmacology, v. 120, n. 3, p. 342-359, 2008. DOI: 10.1016/j.jep.2008.09.004.</p>
@@ -885,6 +944,8 @@ with aba3:
         <p><strong>WELLMAN, B.</strong> Little Boxes, Glocalization, and Networked Individualism. In: TANABE, M.; BESSELAAR, P. van den; ISHIDA, T. (ed.). Digital Cities II: computational and sociological approaches. Berlin: Springer, 2002. p. 10-25.</p>
     </div>
     """, unsafe_allow_html=True)
+    
+    st.caption("📄 Relatórios extraídos do Google Analytics 4 entre 2025 e 2026")
 
 # ============================================
 # RODAPÉ
