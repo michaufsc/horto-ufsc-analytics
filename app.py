@@ -17,21 +17,19 @@ st.set_page_config(
 )
 
 # ============================================
-# INFORMAÇÕES DO TRABALHO
+# INFORMAÇÕES DO TRABALHO (CORRIGIDAS)
 # ============================================
 
 TITULO = "Etnobiologia digital no Horto Didático da UFSC: circulação do saber etnobotânico mensurada por web analytics"
 
+# VERSÃO MAIS CLARA DOS AUTORES
 AUTORES_COMPLETOS = """
-**Michael A. Lopes**¹ (Apresentador)  
-**Maique W. Biavatti**²  
-**Gabriela D. Ritter**³  
-**Laura S. Tardim**⁴  
+👤 **Michael A. Lopes** (Apresentador) - Graduando em Química Tecnológica  
+👤 **Maique W. Biavatti** - Depto. Ciências Farmacêuticas  
+👤 **Gabriela D. Ritter** - Farmacêutica  
+👤 **Letícia S. Tardim** - Graduanda em Farmácia  
 
-¹UFSC - Graduando em Química Tecnológica, Florianópolis, SC, Brasil  
-²UFSC - Departamento de Ciências Farmacêuticas, Florianópolis, SC, Brasil  
-³Farmacêutica, Florianópolis, SC, Brasil  
-⁴UFSC - Graduanda em Farmácia, Florianópolis, SC, Brasil
+🏛️ Universidade Federal de Santa Catarina (UFSC) - Florianópolis, SC, Brasil
 """
 
 PALAVRAS_CHAVE = "Etnobiologia Digital; Web Analytics; Plantas Medicinais; Circulação do Conhecimento"
@@ -191,7 +189,8 @@ def get_ga4_data(start_date, end_date):
         
         return pd.DataFrame(data)
         
-    except:
+    except Exception as e:
+        st.error(f"Erro ao buscar dados do GA4: {str(e)}")
         return None
 
 def get_realtime_data():
@@ -229,7 +228,7 @@ def get_realtime_data():
         
         return pd.DataFrame(data)
         
-    except:
+    except Exception as e:
         return None
 
 # ============================================
@@ -263,6 +262,10 @@ st.markdown("""
         color: #555;
         text-align: center;
         line-height: 1.8;
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 10px;
+        border: 1px solid #e0e0e0;
     }
     .metric-card {
         background-color: #F8F9FA;
@@ -283,15 +286,6 @@ st.markdown("""
     .metric-delta {
         font-size: 0.8rem;
         color: #17B978;
-    }
-    .insight-badge {
-        background: #f0f9f4;
-        padding: 8px 15px;
-        border-radius: 20px;
-        border-left: 3px solid #17B978;
-        font-size: 0.9rem;
-        color: #1E3D59;
-        margin: 5px 0;
     }
     .event-banner {
         background: linear-gradient(135deg, #1E3D59 0%, #17B978 100%);
@@ -420,6 +414,14 @@ st.markdown("""
         color: #1E3D59;
         margin-top: 0;
     }
+    .teste-conexao {
+        background: #fff3cd;
+        padding: 10px 15px;
+        border-radius: 8px;
+        border-left: 4px solid #ffc107;
+        margin: 10px 0;
+        font-size: 0.9rem;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -473,6 +475,24 @@ st.markdown(f"""
     <p style="font-size: 0.85rem; color: #17B978; margin-top: 8px;">🔑 {PALAVRAS_CHAVE}</p>
 </div>
 """, unsafe_allow_html=True)
+
+# ============================================
+# TESTE DE CONEXÃO GA4 (OPCIONAL)
+# ============================================
+
+# Descomente para testar
+# with st.expander("🔍 Status da conexão GA4"):
+#     if credentials_info:
+#         st.success("✅ Credenciais carregadas")
+#         st.info(f"Property ID: {GA4_PROPERTY_ID}")
+#         # Teste rápido
+#         df_test = get_ga4_data((datetime.now() - timedelta(days=7)).strftime('%Y-%m-%d'), datetime.now().strftime('%Y-%m-%d'))
+#         if df_test is not None and not df_test.empty:
+#             st.success(f"✅ Dados carregados: {len(df_test)} linhas")
+#         else:
+#             st.warning("⚠️ Nenhum dado encontrado para os últimos 7 dias")
+#     else:
+#         st.error("❌ Credenciais não carregadas")
 
 # ============================================
 # BANNER DO EVENTO
@@ -608,13 +628,13 @@ with aba1:
     
     st.divider()
     
-    # GRÁFICOS
+    # GRÁFICOS - CORRIGIDOS
     col_g1, col_g2 = st.columns(2)
     
     with col_g1:
         st.subheader("📊 Canais de Aquisição")
         df_canais = pd.DataFrame({
-            'Canal': ['Busca Orgânica', 'Acesso Direto', 'Outros'],
+            'Canal': ['Busca Orgânica', 'Acesso Direto', 'Outras Fontes'],  # CORRIGIDO
             '2025': [DADOS_2025['busca_organica_pct'], DADOS_2025['acesso_direto_pct'], 
                     100 - DADOS_2025['busca_organica_pct'] - DADOS_2025['acesso_direto_pct']],
             '2026': [DADOS_2026['busca_organica_pct'], DADOS_2026['acesso_direto_pct'],
@@ -624,8 +644,15 @@ with aba1:
         fig = px.bar(df_canais, x='Canal', y='%', color='Ano', barmode='group',
                      text_auto='.2f', color_discrete_sequence=['#1E3D59', '#17B978'])
         fig.update_traces(texttemplate='%{y:.2f}%', textposition='outside')
-        fig.update_layout(yaxis_range=[0, 100], plot_bgcolor='rgba(0,0,0,0)',
-                          height=350, showlegend=True)
+        fig.update_layout(
+            yaxis_range=[0, 100], 
+            plot_bgcolor='rgba(0,0,0,0)',
+            height=350, 
+            showlegend=True,
+            hovermode='x unified',
+            dragmode='zoom',
+            clickmode='event+select'
+        )
         st.plotly_chart(fig, use_container_width=True)
     
     with col_g2:
@@ -639,16 +666,20 @@ with aba1:
         fig = px.bar(df_gen, x='Ano', y='%', color='Gênero', barmode='group',
                      text_auto='.1f', color_discrete_sequence=['#17B978', '#1E3D59'])
         fig.update_traces(texttemplate='%{y:.1f}%', textposition='outside')
-        fig.update_layout(yaxis_range=[0, 85], plot_bgcolor='rgba(0,0,0,0)',
-                          height=350, showlegend=True)
+        fig.update_layout(
+            yaxis_range=[0, 85], 
+            plot_bgcolor='rgba(0,0,0,0)',
+            height=350, 
+            showlegend=True,
+            hovermode='x unified',
+            dragmode='zoom',
+            clickmode='event+select'
+        )
         st.plotly_chart(fig, use_container_width=True)
     
     st.divider()
     
-    # ============================================
-    # ALCANCE GEOGRÁFICO - NOVO!
-    # ============================================
-    
+    # ALCANCE GEOGRÁFICO
     st.subheader("🌍 Alcance Geográfico do Portal")
     
     col_geo1, col_geo2 = st.columns(2)
@@ -675,7 +706,8 @@ with aba1:
             height=350,
             showlegend=False,
             xaxis_title="Número de Usuários",
-            yaxis_title=""
+            yaxis_title="",
+            hovermode='y unified'
         )
         st.plotly_chart(fig_paises, use_container_width=True)
     
@@ -701,7 +733,8 @@ with aba1:
             height=350,
             showlegend=False,
             xaxis_title="Número de Usuários",
-            yaxis_title=""
+            yaxis_title="",
+            hovermode='y unified'
         )
         st.plotly_chart(fig_estados, use_container_width=True)
     
@@ -727,9 +760,14 @@ with aba1:
     fig = px.bar(df_esp, x='Sessões de Entrada', y='Espécie Medicinal', orientation='h',
                  text_auto=',d', color='Sessões de Entrada', color_continuous_scale='Greens')
     fig.update_traces(textposition='outside', textfont_size=10)
-    fig.update_layout(plot_bgcolor='rgba(0,0,0,0)', height=400,
-                      xaxis_title="Sessões de Entrada (Landing Pages)", yaxis_title="",
-                      showlegend=False)
+    fig.update_layout(
+        plot_bgcolor='rgba(0,0,0,0)',
+        height=400,
+        xaxis_title="Sessões de Entrada (Landing Pages)",
+        yaxis_title="",
+        showlegend=False,
+        hovermode='y unified'
+    )
     st.plotly_chart(fig, use_container_width=True)
     
     st.divider()
@@ -799,7 +837,12 @@ with aba2:
                     fig = px.bar(df_pages, x='activeUsers', y='pageTitle',
                                 orientation='h', color='activeUsers',
                                 color_continuous_scale='Greens', text_auto=True)
-                    fig.update_layout(showlegend=False, height=350, plot_bgcolor='rgba(0,0,0,0)')
+                    fig.update_layout(
+                        showlegend=False,
+                        height=350,
+                        plot_bgcolor='rgba(0,0,0,0)',
+                        hovermode='y unified'
+                    )
                     st.plotly_chart(fig, use_container_width=True)
             
             with c_rt2:
@@ -830,7 +873,12 @@ with aba2:
                 })
                 fig = px.bar(df_demo, x='Usuários', y='Página', orientation='h',
                             color='Usuários', color_continuous_scale='Greens', text_auto=True)
-                fig.update_layout(showlegend=False, height=350, plot_bgcolor='rgba(0,0,0,0)')
+                fig.update_layout(
+                    showlegend=False,
+                    height=350,
+                    plot_bgcolor='rgba(0,0,0,0)',
+                    hovermode='y unified'
+                )
                 st.plotly_chart(fig, use_container_width=True)
             
             with c_rt2:
@@ -873,7 +921,10 @@ with aba2:
                     fig = px.line(df_daily, x='date', y='activeUsers',
                                  title=f"Tráfego Diário - {periodo}",
                                  color_discrete_sequence=['#17B978'])
-                    fig.update_layout(plot_bgcolor='rgba(0,0,0,0)')
+                    fig.update_layout(
+                        plot_bgcolor='rgba(0,0,0,0)',
+                        hovermode='x unified'
+                    )
                     st.plotly_chart(fig, use_container_width=True)
             
             with col2:
@@ -884,7 +935,12 @@ with aba2:
                     fig = px.bar(df_chan, x='activeUsers', y='sessionDefaultChannelGroup',
                                 orientation='h', color='activeUsers',
                                 color_continuous_scale='Greens', text_auto=True)
-                    fig.update_layout(showlegend=False, height=350, plot_bgcolor='rgba(0,0,0,0)')
+                    fig.update_layout(
+                        showlegend=False,
+                        height=350,
+                        plot_bgcolor='rgba(0,0,0,0)',
+                        hovermode='y unified'
+                    )
                     st.plotly_chart(fig, use_container_width=True)
         else:
             st.warning("⚠️ Dados históricos não disponíveis - usando demonstração")
@@ -900,7 +956,10 @@ with aba2:
                                 380, 390, 385, 400, 420, 410, 430, 440, 450, 435]
                 })
                 fig = px.line(data_hist, x='Data', y='Usuários', color_discrete_sequence=['#17B978'])
-                fig.update_layout(plot_bgcolor='rgba(0,0,0,0)')
+                fig.update_layout(
+                    plot_bgcolor='rgba(0,0,0,0)',
+                    hovermode='x unified'
+                )
                 st.plotly_chart(fig, use_container_width=True)
             
             with col2:
