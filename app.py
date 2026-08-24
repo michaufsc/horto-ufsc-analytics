@@ -110,7 +110,7 @@ INSIGHTS = {
 # CARREGAR CREDENCIAIS GA4
 # ============================================
 
-GA4_PROPERTY_ID = "750410485227"
+GA4_PROPERTY_ID = "GA4_PROPERTY_ID = "353285465"
 
 if os.path.exists('ga4-credentials.json'):
     try:
