@@ -17,43 +17,158 @@ st.set_page_config(
 )
 
 # ============================================
-# GLOSSÁRIO - PARA AVALIADORES
+# GLOSSÁRIO COMPLETO - PARA AVALIADORES
 # ============================================
 
 GLOSSARIO = """
-<div style="background: #f8f9fa; padding: 15px 20px; border-radius: 10px; border: 1px solid #e0e0e0; margin: 10px 0;">
-    <p><strong>👥 Usuários</strong> → Pessoas que acessaram o site (cada pessoa contada uma vez)</p>
-    <p><strong>🆕 Usuários Novos</strong> → Pessoas que acessaram o site pela primeira vez</p>
-    <p><strong>📊 Sessões</strong> → Cada visita ao site (pode incluir várias páginas)</p>
-    <p><strong>🔍 Busca Orgânica</strong> → Visitas vindas do Google (sem anúncios pagos)</p>
-    <p><strong>🏠 Acesso Direto</strong> → Quando o usuário digita o endereço diretamente</p>
-    <p><strong>🔗 Referral</strong> → Visitas vindas de outros sites (blogs, redes sociais)</p>
-    <p><strong>📱 Dispositivo</strong> → Celular, computador ou tablet usado para acessar</p>
-    <p><strong>🤖 IA (Inteligência Artificial)</strong> → Assistentes como Google Gemini, ChatGPT</p>
-    <p><strong>📄 Landing Page</strong> → Primeira página que o usuário vê ao entrar</p>
+<div style="background: #f8f9fa; padding: 20px; border-radius: 12px; border: 1px solid #e0e0e0; margin: 10px 0; max-height: 500px; overflow-y: auto;">
+
+    <h4 style="color: #1E3D59; margin-top: 0;">📊 Conceitos Gerais</h4>
+    <p><strong>Google Analytics 4 (GA4)</strong> → Plataforma do Google destinada à coleta, organização e análise de dados de interação dos usuários com sites e aplicativos.</p>
+    <p><strong>Web Analytics</strong> → Processo de coleta, medição, análise e interpretação de dados relacionados ao acesso e comportamento dos usuários em ambientes digitais.</p>
+    
+    <h4 style="color: #1E3D59; margin-top: 15px;">👥 Usuários e Sessões</h4>
+    <p><strong>Usuário (User)</strong> → Pessoa identificada pelo Google Analytics que interage com o site durante o período analisado.</p>
+    <p><strong>Novos usuários (New users)</strong> → Usuários identificados como novos no período de análise.</p>
+    <p><strong>Usuários recorrentes (Returning users)</strong> → Usuários que já haviam acessado o site anteriormente e retornam em outro momento.</p>
+    <p><strong>Usuários engajados (Engaged users)</strong> → Usuários que realizaram interações consideradas relevantes pelo sistema de mensuração.</p>
+    <p><strong>Sessão (Session)</strong> → Período em que um usuário interage com o site.</p>
+    <p><strong>Sessão engajada (Engaged session)</strong> → Sessão que atende aos critérios de engajamento definidos pelo GA4.</p>
+    <p><strong>Engajamento (Engagement)</strong> → Grau de interação dos usuários com o conteúdo e os recursos do site.</p>
+    <p><strong>Taxa de engajamento (Engagement rate)</strong> → Proporção das sessões que foram classificadas como engajadas.</p>
+    <p><strong>Evento (Event)</strong> → Ação ou interação registrada pelo Google Analytics, como visualização de uma página ou outra interação configurada.</p>
+    
+    <h4 style="color: #1E3D59; margin-top: 15px;">📥 Aquisição e Tráfego</h4>
+    <p><strong>Aquisição (Acquisition)</strong> → Conjunto de métricas utilizadas para identificar como os usuários ou sessões chegaram ao site.</p>
+    <p><strong>Aquisição de usuários (User acquisition)</strong> → Análise da origem pela qual os usuários, especialmente os novos usuários, chegaram ao site.</p>
+    <p><strong>Aquisição de tráfego (Traffic acquisition)</strong> → Análise da origem das sessões ou do tráfego recebido pelo site.</p>
+    <p><strong>Tráfego (Traffic)</strong> → Conjunto de acessos ou sessões registrados em um site durante determinado período.</p>
+    <p><strong>Canal (Channel)</strong> → Categoria utilizada para agrupar diferentes formas de aquisição de tráfego.</p>
+    <p><strong>Grupo de canais (Channel group)</strong> → Classificação que organiza as diferentes origens de tráfego em categorias, como busca orgânica, acesso direto e referência.</p>
+    <p><strong>Busca orgânica (Organic Search)</strong> → Tráfego proveniente de resultados não pagos de mecanismos de busca, como o Google.</p>
+    <p><strong>Acesso direto (Direct)</strong> → Tráfego para o qual o Analytics não identifica uma origem externa atribuível. Pode ocorrer quando o usuário acessa diretamente um endereço, utiliza um favorito ou quando a informação de origem não está disponível.</p>
+    <p><strong>Referência (Referral)</strong> → Tráfego originado a partir de links presentes em outros sites.</p>
+    <p><strong>Origem (Source)</strong> → Identifica de onde o tráfego foi originado, como um mecanismo de busca ou outro site.</p>
+    <p><strong>Mídia (Medium)</strong> → Classificação do tipo de origem do tráfego, como <code>organic</code>, <code>referral</code> ou <code>direct</code>.</p>
+    <p><strong>Origem/mídia (Source/Medium)</strong> → Combinação utilizada para identificar de forma mais específica a procedência do tráfego.</p>
+    <p><strong>Tráfego orgânico</strong> → Conjunto de acessos provenientes de mecanismos de busca sem utilização de anúncios pagos.</p>
+    <p><strong>Tráfego de referência (Referral traffic)</strong> → Acessos provenientes de links disponibilizados em outros sites.</p>
+    <p><strong>Tráfego direto (Direct traffic)</strong> → Acessos classificados pelo Analytics como provenientes do canal Direct.</p>
+    
+    <h4 style="color: #1E3D59; margin-top: 15px;">📄 Conteúdo e Páginas</h4>
+    <p><strong>Página (Page)</strong> → Unidade de conteúdo do site que pode ser visualizada e analisada individualmente.</p>
+    <p><strong>Visualização de página (Page view)</strong> → Registro de que uma página foi visualizada.</p>
+    <p><strong>Página de destino (Landing page)</strong> → Primeira página acessada pelo usuário em uma sessão.</p>
+    <p><strong>Páginas mais acessadas</strong> → Páginas que apresentam maior volume de visualizações ou interações no período analisado.</p>
+    <p><strong>Página de entrada</strong> → Página pela qual o usuário inicia sua interação com o site.</p>
+    <p><strong>Página de saída</strong> → Página associada ao encerramento da navegação ou da sessão.</p>
+    <p><strong>URL</strong> → Endereço eletrônico que identifica uma página ou recurso na Internet.</p>
+    <p><strong>Domínio</strong> → Parte principal do endereço de um site, como <code>ufsc.br</code>.</p>
+    
+    <h4 style="color: #1E3D59; margin-top: 15px;">👤 Perfil e Audiência</h4>
+    <p><strong>Perfil demográfico</strong> → Conjunto de características demográficas atribuídas à audiência analisada.</p>
+    <p><strong>Idade (Age)</strong> → Informação demográfica utilizada para distribuir os usuários em diferentes faixas etárias.</p>
+    <p><strong>Faixa etária</strong> → Agrupamento dos usuários de acordo com intervalos de idade.</p>
+    <p><strong>Sexo</strong> → Dimensão demográfica utilizada para caracterizar a composição da audiência.</p>
+    <p><strong>Localização geográfica (Geography)</strong> → Informação referente à localização geográfica associada aos usuários.</p>
+    <p><strong>País (Country)</strong> → Dimensão geográfica que permite identificar o país associado ao acesso.</p>
+    <p><strong>Estado/região</strong> → Dimensão geográfica utilizada para detalhar a localização dos usuários dentro de um país.</p>
+    <p><strong>Audiência (Audience)</strong> → Conjunto de usuários que acessam ou interagem com o site.</p>
+    <p><strong>Alcance</strong> → Dimensão relacionada à quantidade de pessoas alcançadas pelo conteúdo digital.</p>
+    <p><strong>Retenção (Retention)</strong> → Indicador relacionado à permanência ou retorno dos usuários ao ambiente digital.</p>
+    
+    <h4 style="color: #1E3D59; margin-top: 15px;">📊 Métricas e Análise</h4>
+    <p><strong>Métrica</strong> → Medida quantitativa utilizada para representar determinado aspecto do comportamento dos usuários ou do desempenho do site.</p>
+    <p><strong>Dimensão</strong> → Característica utilizada para organizar, segmentar ou contextualizar os dados, como país, idade ou canal.</p>
+    <p><strong>Período de análise</strong> → Intervalo de tempo utilizado para a coleta e interpretação dos dados.</p>
+    <p><strong>Comparação temporal</strong> → Comparação dos resultados obtidos em diferentes períodos, como 2025 e janeiro–julho de 2026.</p>
+    <p><strong>Volume de tráfego</strong> → Quantidade de acessos ou usuários associados ao site em determinado período.</p>
+    <p><strong>Crescimento de tráfego</strong> → Aumento do volume de usuários, sessões ou outras métricas de tráfego entre períodos.</p>
+    <p><strong>Tendência</strong> → Padrão de crescimento, redução ou estabilidade observado nos dados ao longo do tempo.</p>
+    <p><strong>Projeção</strong> → Estimativa de um resultado futuro baseada no comportamento observado anteriormente.</p>
+    <p><strong>Dados agregados</strong> → Dados reunidos e apresentados de forma estatística, sem representar necessariamente cada usuário individualmente.</p>
+    <p><strong>Análise descritiva</strong> → Abordagem que descreve padrões e características observados nos dados, sem necessariamente estabelecer relações causais.</p>
+    <p><strong>Indicador</strong> → Medida utilizada para representar determinado aspecto do fenômeno estudado.</p>
+    <p><strong>Monitoramento</strong> → Acompanhamento sistemático das métricas ao longo do tempo.</p>
+    <p><strong>Dashboard</strong> → Painel visual que reúne diferentes métricas e dimensões para facilitar o acompanhamento dos dados.</p>
+    
+    <h4 style="color: #1E3D59; margin-top: 15px;">🔗 Ferramentas e Conceitos Técnicos</h4>
+    <p><strong>Campanha (Campaign)</strong> → Identificação de uma campanha ou ação específica responsável por gerar tráfego para o site.</p>
+    <p><strong>UTM</strong> → Parâmetros adicionados aos endereços de páginas para identificar a origem, mídia e campanha associadas a determinado acesso.</p>
+    <p><strong>Referenciador (Referrer)</strong> → Página ou site anterior que direcionou o usuário para determinada página.</p>
+    <p><strong>Mecanismo de busca</strong> → Serviço utilizado para localizar informações na Internet, como Google ou Bing.</p>
+    <p><strong>Pesquisa orgânica</strong> → Pesquisa realizada em um mecanismo de busca cujos resultados não são anúncios pagos.</p>
+    <p><strong>SEO (Search Engine Optimization)</strong> → Conjunto de práticas destinadas a melhorar a visibilidade de páginas nos resultados orgânicos dos mecanismos de busca.</p>
+    <p><strong>Impressão</strong> → Registro de que determinado conteúdo ou resultado foi apresentado ao usuário, dependendo da plataforma e do contexto de mensuração.</p>
+    <p><strong>Clique</strong> → Interação do usuário com um elemento clicável.</p>
+    <p><strong>Interação</strong> → Ação realizada pelo usuário dentro do site.</p>
+    <p><strong>Conversão</strong> → Ação considerada especialmente importante para os objetivos de um site e definida para ser mensurada.</p>
+    <p><strong>Evento principal (Key event)</strong> → Evento considerado relevante para os objetivos de análise do site.</p>
+    <p><strong>Relatório</strong> → Interface do Analytics utilizada para consultar e interpretar os dados coletados.</p>
+    <p><strong>Exploração (Explore)</strong> → Ferramenta do GA4 que permite realizar análises personalizadas e cruzar dimensões e métricas.</p>
+    <p><strong>Segmentação</strong> → Processo de separar os dados em grupos segundo características específicas, como idade, país ou canal.</p>
+    <p><strong>Filtro</strong> → Recurso utilizado para restringir os dados apresentados em uma análise.</p>
+    <p><strong>Período</strong> → Intervalo temporal selecionado para visualizar os dados.</p>
+    <p><strong>Porcentagem (%)</strong> → Forma de expressar a participação proporcional de uma categoria em relação ao total.</p>
+    
+    <h4 style="color: #1E3D59; margin-top: 15px;">📱 Dispositivos e Tecnologia</h4>
+    <p><strong>Dispositivo</strong> → Equipamento utilizado para acessar o site, como computador, celular ou tablet.</p>
+    <p><strong>Tecnologia</strong> → Conjunto de características técnicas associadas ao acesso, incluindo dispositivo, navegador e sistema operacional.</p>
+    <p><strong>Navegador (Browser)</strong> → Programa utilizado para acessar páginas da Internet, como Chrome, Firefox ou Safari.</p>
+    <p><strong>Sistema operacional (Operating system)</strong> → Sistema utilizado pelo dispositivo para executar suas funções, como Android, Windows, iOS ou macOS.</p>
+    
+    <h4 style="color: #1E3D59; margin-top: 15px;">🧠 Contexto do seu Estudo</h4>
+    <p><strong>Circulação do conhecimento</strong> → No contexto do seu estudo, refere-se à disseminação e ao acesso ao conhecimento etnobotânico por meio do ambiente digital.</p>
+    <p><strong>Vetor de tráfego</strong> → Meio ou canal responsável por direcionar usuários para o site.</p>
+    <p><strong>Assistente de IA</strong> → Sistema de inteligência artificial capaz de fornecer respostas ou recomendações que podem direcionar usuários para páginas da Web.</p>
+    <p><strong>Tráfego proveniente de IA</strong> → Acessos ao site associados a sistemas ou assistentes de inteligência artificial.</p>
+    <p><strong>Audiência nacional</strong> → Parcela dos acessos originada dentro do Brasil.</p>
+    <p><strong>Audiência internacional</strong> → Parcela dos acessos originada fora do Brasil.</p>
 </div>
 """
 
 # ============================================
-# INFORMAÇÕES DO TRABALHO (DO SEU PDF)
+# AUTORES - VERSÃO COM CARDS
 # ============================================
 
-TITULO = "Etnobiologia digital no Horto Didático da UFSC: circulação do saber etnobotânico mensurada por web analytics"
-
-AUTORES = """
-**Lopes MAL¹, Biavatti MW², Ritter GD³, Tardim LS⁴**
-
-¹UFSC - Graduando em Química Tecnológica  
-²UFSC - Depto. Ciências Farmacêuticas  
-³Farmacêutica  
-⁴UFSC - Graduanda em Farmácia
+AUTORES_COMPLETOS = """
+<div style="background: linear-gradient(135deg, #f0f9f4 0%, #e8f5e9 100%); padding: 20px; border-radius: 12px; border: 2px solid #17B978; margin: 10px 0;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; text-align: center;">
+        <div style="background: white; padding: 12px; border-radius: 8px; border-left: 4px solid #17B978;">
+            <strong style="color: #1E3D59;">👤 Michael A. Lopes</strong><br>
+            <span style="font-size: 0.85rem; color: #17B978;">Apresentador</span><br>
+            <span style="font-size: 0.8rem; color: #666;">Graduando em Química Tecnológica - UFSC</span>
+        </div>
+        <div style="background: white; padding: 12px; border-radius: 8px; border-left: 4px solid #1E3D59;">
+            <strong style="color: #1E3D59;">👤 Maique W. Biavatti</strong><br>
+            <span style="font-size: 0.85rem; color: #17B978;">Orientador</span><br>
+            <span style="font-size: 0.8rem; color: #666;">Depto. Ciências Farmacêuticas - UFSC</span>
+        </div>
+        <div style="background: white; padding: 12px; border-radius: 8px; border-left: 4px solid #17B978;">
+            <strong style="color: #1E3D59;">👤 Gabriela D. Ritter</strong><br>
+            <span style="font-size: 0.85rem; color: #17B978;">Colaboradora</span><br>
+            <span style="font-size: 0.8rem; color: #666;">Farmacêutica</span>
+        </div>
+        <div style="background: white; padding: 12px; border-radius: 8px; border-left: 4px solid #1E3D59;">
+            <strong style="color: #1E3D59;">👤 Letícia S. Tardim</strong><br>
+            <span style="font-size: 0.85rem; color: #17B978;">Colaboradora</span><br>
+            <span style="font-size: 0.8rem; color: #666;">Graduanda em Farmácia - UFSC</span>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 12px; padding-top: 10px; border-top: 2px dashed #17B978;">
+        <span style="font-size: 0.9rem; color: #1E3D59;">🏛️ <strong>Universidade Federal de Santa Catarina (UFSC)</strong></span><br>
+        <span style="font-size: 0.85rem; color: #666;">Florianópolis, SC, Brasil</span>
+    </div>
+</div>
 """
-
-PALAVRAS_CHAVE = "Etnobiologia Digital; Web Analytics; Plantas Medicinais; Circulação do Conhecimento"
 
 # ============================================
 # DADOS DO SEU ARTIGO (DO PDF)
 # ============================================
+
+TITULO = "Etnobiologia digital no Horto Didático da UFSC: circulação do saber etnobotânico mensurada por web analytics"
+
+PALAVRAS_CHAVE = "Etnobiologia Digital; Web Analytics; Plantas Medicinais; Circulação do Conhecimento"
 
 # Dados 2025
 USUARIOS_2025 = 315528
@@ -253,7 +368,8 @@ st.markdown("""
     .main-title { font-size: 2.2rem; color: #1E3D59; font-weight: 700; text-align: center; }
     .sub-title { font-size: 1.1rem; color: #17B978; text-align: center; margin-bottom: 20px; }
     .work-title { font-size: 1.3rem; color: #1E3D59; font-weight: 600; text-align: center; margin: 15px 0; }
-    .metric-card { background: #F8F9FA; padding: 15px; border-radius: 10px; border-left: 4px solid #17B978; text-align: center; }
+    .metric-card { background: #F8F9FA; padding: 15px; border-radius: 10px; border-left: 4px solid #17B978; text-align: center; transition: transform 0.2s; }
+    .metric-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
     .metric-number { font-size: 1.8rem; font-weight: 700; color: #1E3D59; }
     .metric-label { font-size: 0.85rem; color: #666; }
     .metric-delta { font-size: 0.8rem; color: #17B978; }
@@ -264,9 +380,11 @@ st.markdown("""
         color: white;
         margin: 15px 0;
         text-align: center;
+        box-shadow: 0 4px 15px rgba(23,185,120,0.3);
     }
     .event-banner h2 { margin: 0; color: white; font-size: 1.3rem; }
     .event-banner p { margin: 3px 0; opacity: 0.9; font-size: 0.9rem; }
+    .event-banner .highlight { background: rgba(255,255,255,0.2); padding: 3px 15px; border-radius: 20px; display: inline-block; margin-top: 5px; font-weight: 600; }
     .stTabs [data-baseweb="tab-list"] {
         gap: 8px;
         background: #f0f2f6;
@@ -280,10 +398,12 @@ st.markdown("""
         font-size: 1.0rem;
         background: transparent;
         color: #555;
+        transition: all 0.3s;
     }
     .stTabs [aria-selected="true"] {
         background: #17B978 !important;
         color: white !important;
+        box-shadow: 0 2px 10px rgba(23,185,120,0.3);
     }
     .ref-box {
         background: #f8f9fa;
@@ -319,6 +439,7 @@ st.markdown("""
     }
     .horto-link { text-align: center; margin: 5px 0 15px 0; font-size: 0.9rem; }
     .horto-link a { color: #17B978; text-decoration: none; font-weight: 600; }
+    .horto-link a:hover { text-decoration: underline; }
     .geo-card { background: #f8f9fa; padding: 15px; border-radius: 10px; border: 1px solid #e0e0e0; margin: 10px 0; }
     .geo-card h4 { color: #1E3D59; margin-top: 0; }
     .status-success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; padding: 10px; border-radius: 8px; }
@@ -364,14 +485,8 @@ st.markdown("""
 # ============================================
 
 st.markdown(f'<p class="work-title">{TITULO}</p>', unsafe_allow_html=True)
-
-st.markdown(f"""
-<div style="text-align: center; font-size: 1.0rem; color: #555; line-height: 1.8; background: #f8f9fa; padding: 15px; border-radius: 10px; border: 1px solid #e0e0e0; margin: 10px 0;">
-    {AUTORES}
-</div>
-""", unsafe_allow_html=True)
-
-st.markdown(f'<p style="text-align: center; font-size: 0.9rem; color: #17B978; margin-top: 8px;">🔑 {PALAVRAS_CHAVE}</p>', unsafe_allow_html=True)
+st.markdown(AUTORES_COMPLETOS, unsafe_allow_html=True)
+st.markdown(f'<p style="text-align: center; font-size: 0.85rem; color: #17B978; margin-top: 8px;">🔑 {PALAVRAS_CHAVE}</p>', unsafe_allow_html=True)
 
 # ============================================
 # GLOSSÁRIO
@@ -406,7 +521,7 @@ st.markdown("""
     <h2>🎓 XXVIII Simpósio de Plantas Medicinais do Brasil (SPMB) 2026</h2>
     <p>15 a 18 de setembro de 2026 | Univali - Itajaí/SC</p>
     <p>Tema: <strong>Plantas medicinais como fonte de novos agentes medicinais</strong></p>
-    <p style="margin-top: 5px; font-weight: 600;">Apresentador: Michael A. Lopes</p>
+    <div class="highlight">Apresentador: Michael A. Lopes</div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -470,7 +585,7 @@ with aba1:
     
     st.divider()
     
-    # RESUMO - TEXTO DO SEU PDF
+    # RESUMO
     st.markdown("### 📋 Resumo dos Resultados")
     
     st.markdown(f"""
@@ -649,7 +764,6 @@ with aba2:
     st.header("📊 Painel de Controle - Visitantes do Site")
     st.caption("Dados do Google Analytics 4")
     
-    # Explicação para avaliadores
     st.info("""
     🧐 **O que você está vendo?**
     
@@ -698,7 +812,6 @@ with aba2:
                     df_pages = df_rt.groupby('pageTitle')['activeUsers'].sum().reset_index()
                     df_pages = df_pages.sort_values('activeUsers', ascending=True).tail(8)
                     
-                    # Nomes amigáveis
                     def nome_amigavel(nome):
                         nome = str(nome).lower()
                         if 'folha' in nome: return '🌿 Folha da Fortuna'
@@ -815,7 +928,7 @@ with aba2:
             """)
 
 # ============================================
-# ABA 3: REFERÊNCIAS (COMPLETAS DO PDF)
+# ABA 3: REFERÊNCIAS
 # ============================================
 
 with aba3:
