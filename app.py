@@ -17,33 +17,51 @@ st.set_page_config(
 )
 
 # ============================================
+# GLOSSÁRIO - PARA OS AVALIADORES
+# ============================================
+
+GLOSSARIO = {
+    "Usuários": "Número de pessoas que acessaram o site. Cada pessoa é contada uma vez, mesmo que visite várias páginas.",
+    "Usuários Novos": "Pessoas que acessaram o site pela primeira vez no período analisado.",
+    "Sessões": "Conjunto de interações de um usuário no site em um determinado período (ex: uma visita).",
+    "Busca Orgânica": "Visitas que vêm de resultados de busca do Google, sem anúncios pagos.",
+    "Acesso Direto": "Visitas que vêm quando o usuário digita o endereço do site diretamente no navegador.",
+    "Referral": "Visitas que vêm de outros sites que indicam o Horto (ex: blogs, redes sociais).",
+    "Engajamento": "Usuários que interagiram com o site (ex: clicaram em algo, leram um artigo, etc.).",
+    "Landing Page": "Primeira página que o usuário vê ao entrar no site.",
+    "Taxa de Retenção": "Percentual de usuários que voltam a visitar o site após a primeira visita.",
+    "Dispositivo": "Tipo de aparelho usado para acessar o site (celular, computador, tablet).",
+    "IA (Inteligência Artificial)": "Assistentes como Google Gemini, ChatGPT, etc., que estão direcionando usuários para o site."
+}
+
+# ============================================
 # INFORMAÇÕES DO TRABALHO
 # ============================================
 
 TITULO = "Etnobiologia digital no Horto Didático da UFSC: circulação do saber etnobotânico mensurada por web analytics"
 
-# DISPOSIÇÃO DOS AUTORES - VERSÃO TOP
+# DISPOSIÇÃO DOS AUTORES - SEM ESTRELA
 AUTORES_COMPLETOS = """
 <div style="background: linear-gradient(135deg, #f0f9f4 0%, #e8f5e9 100%); padding: 20px; border-radius: 12px; border: 2px solid #17B978; margin: 10px 0;">
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; text-align: center;">
         <div style="background: white; padding: 12px; border-radius: 8px; border-left: 4px solid #17B978;">
             <strong style="color: #1E3D59;">👤 Michael A. Lopes</strong><br>
-            <span style="font-size: 0.85rem; color: #17B978;">🎤 Apresentador</span><br>
+            <span style="font-size: 0.85rem; color: #17B978;">Apresentador</span><br>
             <span style="font-size: 0.8rem; color: #666;">Graduando em Química Tecnológica - UFSC</span>
         </div>
         <div style="background: white; padding: 12px; border-radius: 8px; border-left: 4px solid #1E3D59;">
             <strong style="color: #1E3D59;">👤 Maique W. Biavatti</strong><br>
-            <span style="font-size: 0.85rem; color: #17B978;">👨‍🏫 Orientador</span><br>
+            <span style="font-size: 0.85rem; color: #17B978;">Orientador</span><br>
             <span style="font-size: 0.8rem; color: #666;">Depto. Ciências Farmacêuticas - UFSC</span>
         </div>
         <div style="background: white; padding: 12px; border-radius: 8px; border-left: 4px solid #17B978;">
             <strong style="color: #1E3D59;">👤 Gabriela D. Ritter</strong><br>
-            <span style="font-size: 0.85rem; color: #17B978;">👩‍🔬 Colaboradora</span><br>
+            <span style="font-size: 0.85rem; color: #17B978;">Colaboradora</span><br>
             <span style="font-size: 0.8rem; color: #666;">Farmacêutica</span>
         </div>
         <div style="background: white; padding: 12px; border-radius: 8px; border-left: 4px solid #1E3D59;">
             <strong style="color: #1E3D59;">👤 Letícia S. Tardim</strong><br>
-            <span style="font-size: 0.85rem; color: #17B978;">👩‍🎓 Colaboradora</span><br>
+            <span style="font-size: 0.85rem; color: #17B978;">Colaboradora</span><br>
             <span style="font-size: 0.8rem; color: #666;">Graduanda em Farmácia - UFSC</span>
         </div>
     </div>
@@ -130,7 +148,7 @@ INSIGHTS = {
 }
 
 # ============================================
-# CARREGAR CREDENCIAIS GA4 (CORRIGIDO)
+# CARREGAR CREDENCIAIS GA4
 # ============================================
 
 GA4_PROPERTY_ID = "353285465"
@@ -328,6 +346,26 @@ st.markdown("""
         font-weight: 600;
         font-size: 0.85rem;
     }
+    .glossary-box {
+        background: #f8f9fa;
+        padding: 15px 20px;
+        border-radius: 10px;
+        border: 1px solid #e0e0e0;
+        margin: 10px 0;
+    }
+    .glossary-box strong {
+        color: #1E3D59;
+    }
+    .glossary-box p {
+        margin: 5px 0;
+        font-size: 0.9rem;
+    }
+    .glossary-term {
+        color: #1E3D59;
+        font-weight: 600;
+        display: inline-block;
+        min-width: 120px;
+    }
     .stTabs [data-baseweb="tab-list"] {
         gap: 8px;
         background-color: #f0f2f6;
@@ -451,6 +489,28 @@ st.markdown("""
         color: #721c24;
         border: 1px solid #f5c6cb;
     }
+    .simples-card {
+        background: white;
+        padding: 15px;
+        border-radius: 10px;
+        border: 1px solid #e0e0e0;
+        text-align: center;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .simples-number {
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: #17B978;
+    }
+    .simples-label {
+        font-size: 0.85rem;
+        color: #666;
+        margin-top: 5px;
+    }
+    .simples-delta {
+        font-size: 0.8rem;
+        color: #999;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -502,6 +562,25 @@ st.markdown(AUTORES_COMPLETOS, unsafe_allow_html=True)
 st.markdown(f'<p style="text-align: center; font-size: 0.85rem; color: #17B978; margin-top: 8px;">🔑 {PALAVRAS_CHAVE}</p>', unsafe_allow_html=True)
 
 # ============================================
+# GLOSSÁRIO - NOVO!
+# ============================================
+
+with st.expander("📖 Glossário - Entenda os termos do Analytics"):
+    st.markdown("""
+    <div class="glossary-box">
+        <p><span class="glossary-term">👥 Usuários</span> → Número de pessoas que acessaram o site. Cada pessoa é contada uma vez.</p>
+        <p><span class="glossary-term">🆕 Usuários Novos</span> → Pessoas que acessaram o site pela primeira vez.</p>
+        <p><span class="glossary-term">📊 Sessões</span> → Cada visita ao site, que pode incluir várias páginas.</p>
+        <p><span class="glossary-term">🔍 Busca Orgânica</span> → Visitas vindas do Google (sem anúncios pagos).</p>
+        <p><span class="glossary-term">🏠 Acesso Direto</span> → Quando o usuário digita o endereço do site diretamente.</p>
+        <p><span class="glossary-term">🔗 Referral</span> → Visitas vindas de outros sites (blogs, redes sociais).</p>
+        <p><span class="glossary-term">📱 Dispositivo</span> → Celular, computador ou tablet usado para acessar o site.</p>
+        <p><span class="glossary-term">🤖 IA (Inteligência Artificial)</span> → Assistentes como Google Gemini, ChatGPT, etc.</p>
+        <p><span class="glossary-term">📄 Landing Page</span> → Primeira página que o usuário vê ao entrar no site.</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+# ============================================
 # TESTE DE CONEXÃO GA4
 # ============================================
 
@@ -550,7 +629,7 @@ st.markdown("""
     <h2>🎓 XXVIII Simpósio de Plantas Medicinais do Brasil (SPMB) 2026</h2>
     <p>15 a 18 de setembro de 2026 | Univali - Campus Professor Edison Villela, Itajaí/SC</p>
     <p>Tema: <strong>Plantas medicinais como fonte de novos agentes medicinais</strong></p>
-    <div class="highlight">🌟 Apresentador: Michael A. Lopes</div>
+    <div class="highlight">Apresentador: Michael A. Lopes</div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -833,7 +912,7 @@ with aba1:
     """, unsafe_allow_html=True)
 
 # ============================================
-# ABA 2: TEMPO REAL
+# ABA 2: TEMPO REAL - SIMPLIFICADO
 # ============================================
 
 with aba2:
@@ -863,88 +942,146 @@ with aba2:
         if df_rt is not None and not df_rt.empty:
             total_active = df_rt['activeUsers'].sum() if 'activeUsers' in df_rt.columns else 0
             
+            # MÉTRICAS SIMPLES
             rt_c1, rt_c2, rt_c3 = st.columns(3)
-            rt_c1.metric("👤 Usuários Ativos", f"{total_active:.0f}", "Dados em tempo real")
-            rt_c2.metric("📄 Páginas Vistas (30 min)", df_rt['screenPageViews'].sum() if 'screenPageViews' in df_rt.columns else "N/A", "Últimos 30 min")
+            rt_c1.metric("👤 Pessoas no site agora", f"{total_active:.0f}")
+            rt_c2.metric("📄 Páginas visitadas (30 min)", df_rt['screenPageViews'].sum() if 'screenPageViews' in df_rt.columns else "N/A")
             
             if 'deviceCategory' in df_rt.columns:
                 device_counts = df_rt.groupby('deviceCategory')['activeUsers'].sum()
                 top_device = device_counts.idxmax() if not device_counts.empty else "N/A"
-                rt_c3.metric("📱 Dispositivo Dominante", top_device, "Dados em tempo real")
+                # Traduzir dispositivos
+                device_map = {
+                    'mobile': '📱 Celular',
+                    'desktop': '💻 Computador',
+                    'tablet': '📟 Tablet'
+                }
+                top_device_display = device_map.get(top_device.lower(), top_device)
+                rt_c3.metric("📱 Dispositivo mais usado", top_device_display)
             
             st.divider()
+            
+            # GRÁFICOS SIMPLES
+            st.subheader("📊 O que está acontecendo agora")
             
             c_rt1, c_rt2 = st.columns(2)
             
             with c_rt1:
-                st.write("**📄 Páginas Sendo Acessadas**")
+                st.write("**📄 Páginas mais visitadas**")
                 if 'pageTitle' in df_rt.columns:
                     df_pages = df_rt.groupby('pageTitle')['activeUsers'].sum().reset_index()
-                    df_pages = df_pages.sort_values('activeUsers', ascending=True).tail(10)
-                    fig = px.bar(df_pages, x='activeUsers', y='pageTitle',
+                    df_pages = df_pages.sort_values('activeUsers', ascending=True).tail(8)
+                    
+                    # Simplificar nomes das páginas
+                    def simplificar_nome(nome):
+                        nome = str(nome)
+                        if 'folha-da-fortuna' in nome.lower():
+                            return '🌿 Folha da Fortuna'
+                        elif 'quebra-pedra' in nome.lower():
+                            return '🌿 Quebra-pedra'
+                        elif 'buchinha' in nome.lower():
+                            return '🌿 Buchinha do Norte'
+                        elif 'alfavaca' in nome.lower():
+                            return '🌿 Alfavaca-cravo'
+                        elif 'aveloz' in nome.lower():
+                            return '🌿 Aveloz'
+                        elif 'home' in nome.lower():
+                            return '🏠 Página Inicial'
+                        else:
+                            return nome[:30] + ('...' if len(nome) > 30 else '')
+                    
+                    df_pages['Página'] = df_pages['pageTitle'].apply(simplificar_nome)
+                    
+                    fig = px.bar(df_pages, x='activeUsers', y='Página',
                                 orientation='h', color='activeUsers',
                                 color_continuous_scale='Greens', text_auto=True)
                     fig.update_layout(
                         showlegend=False,
-                        height=350,
+                        height=300,
                         plot_bgcolor='rgba(0,0,0,0)',
-                        hovermode='y unified'
+                        xaxis_title="Pessoas",
+                        yaxis_title=""
                     )
                     st.plotly_chart(fig, use_container_width=True)
             
             with c_rt2:
-                st.write("**🌍 Origem Geográfica**")
+                st.write("**🌍 De onde vêm os visitantes**")
                 if 'country' in df_rt.columns:
                     df_geo = df_rt.groupby('country')['activeUsers'].sum().reset_index()
-                    df_geo = df_geo.sort_values('activeUsers', ascending=False).head(10)
-                    fig = px.pie(df_geo, values='activeUsers', names='country',
+                    df_geo = df_geo.sort_values('activeUsers', ascending=False).head(8)
+                    
+                    # País com bandeirinha
+                    flags = {
+                        'Brazil': '🇧🇷',
+                        'Portugal': '🇵🇹',
+                        'United States': '🇺🇸',
+                        'Angola': '🇦🇴',
+                        'Mozambique': '🇲🇿',
+                        'Spain': '🇪🇸',
+                        'Germany': '🇩🇪',
+                        'France': '🇫🇷',
+                        'United Kingdom': '🇬🇧',
+                        'Italy': '🇮🇹',
+                        'Canada': '🇨🇦'
+                    }
+                    df_geo['País'] = df_geo['country'].apply(
+                        lambda x: f"{flags.get(x, '🌍')} {x}"
+                    )
+                    
+                    fig = px.pie(df_geo, values='activeUsers', names='País',
                                 color_discrete_sequence=px.colors.sequential.Greens_r,
                                 hole=0.3)
                     fig.update_traces(textposition='inside', textinfo='percent+label')
-                    fig.update_layout(height=350)
+                    fig.update_layout(height=300)
                     st.plotly_chart(fig, use_container_width=True)
         else:
             st.warning("⚠️ Dados em tempo real não disponíveis - usando demonstração")
             
+            # DADOS DE DEMONSTRAÇÃO SIMPLES
             rt_c1, rt_c2, rt_c3 = st.columns(3)
-            rt_c1.metric("👤 Usuários Ativos Agora", "18", "+3 nos últimos 5 min")
-            rt_c2.metric("📄 Páginas Vistas (30 min)", "42", "1.4 págs/minuto")
-            rt_c3.metric("📱 Dispositivo Dominante", "Mobile (76%)", "Smartphone")
+            rt_c1.metric("👤 Pessoas no site agora", "18")
+            rt_c2.metric("📄 Páginas visitadas", "42")
+            rt_c3.metric("📱 Dispositivo", "📱 Celular")
+            
+            st.divider()
+            
+            st.subheader("📊 O que está acontecendo agora")
             
             c_rt1, c_rt2 = st.columns(2)
             with c_rt1:
-                st.write("**📄 Páginas Sendo Acessadas**")
+                st.write("**📄 Páginas mais visitadas**")
                 df_demo = pd.DataFrame({
-                    'Página': ['Folha da Fortuna', 'Quebra-pedra', 'Home', 'Buchinha do Norte'],
-                    'Usuários': [7, 5, 4, 2]
+                    'Página': ['🌿 Folha da Fortuna', '🌿 Quebra-pedra', '🏠 Home', '🌿 Buchinha'],
+                    'Pessoas': [7, 5, 4, 2]
                 })
-                fig = px.bar(df_demo, x='Usuários', y='Página', orientation='h',
-                            color='Usuários', color_continuous_scale='Greens', text_auto=True)
+                fig = px.bar(df_demo, x='Pessoas', y='Página', orientation='h',
+                            color='Pessoas', color_continuous_scale='Greens', text_auto=True)
                 fig.update_layout(
                     showlegend=False,
-                    height=350,
+                    height=300,
                     plot_bgcolor='rgba(0,0,0,0)',
-                    hovermode='y unified'
+                    xaxis_title="Pessoas",
+                    yaxis_title=""
                 )
                 st.plotly_chart(fig, use_container_width=True)
             
             with c_rt2:
-                st.write("**🌍 Origem Geográfica Instantânea**")
+                st.write("**🌍 De onde vêm os visitantes**")
                 df_geo = pd.DataFrame({
-                    'Localidade': ['São Paulo (BR)', 'Santa Catarina (BR)', 'Rio de Janeiro (BR)', 'Lisboa (PT)'],
-                    'Usuários': [8, 5, 3, 2]
+                    'País': ['🇧🇷 Brasil', '🇵🇹 Portugal', '🇺🇸 EUA', '🇦🇴 Angola'],
+                    'Pessoas': [8, 5, 3, 2]
                 })
-                fig = px.pie(df_geo, values='Usuários', names='Localidade',
+                fig = px.pie(df_geo, values='Pessoas', names='País',
                             color_discrete_sequence=['#1E3D59', '#17B978', '#334E68', '#A7E9AF'],
                             hole=0.3)
                 fig.update_traces(textposition='inside', textinfo='percent+label')
-                fig.update_layout(height=350)
+                fig.update_layout(height=300)
                 st.plotly_chart(fig, use_container_width=True)
         
-        st.caption(f"🔄 Atualizado automaticamente a cada 30 segundos | Ciclo atual: #{count} | {datetime.now().strftime('%H:%M:%S')}")
+        st.caption(f"🔄 Atualizado automaticamente a cada 30 segundos | Ciclo: #{count}")
     
     else:
-        st.info(f"📊 Exibindo dados históricos filtrados para: **{periodo}**")
+        st.info(f"📊 Exibindo dados históricos para: **{periodo}**")
         
         end = datetime.now().strftime('%Y-%m-%d')
         if "7 dias" in periodo:
@@ -954,20 +1091,21 @@ with aba2:
         else:
             start = '2026-01-01'
         
-        with st.spinner("🔄 Carregando dados históricos..."):
+        with st.spinner("🔄 Carregando dados..."):
             df_hist = get_ga4_data(start, end)
         
         if df_hist is not None and not df_hist.empty:
             col1, col2 = st.columns(2)
             
             with col1:
-                st.subheader("📈 Evolução Diária")
+                st.subheader("📈 Visitas por dia")
                 if 'date' in df_hist.columns:
                     df_daily = df_hist.groupby('date')['activeUsers'].sum().reset_index()
                     df_daily['date'] = pd.to_datetime(df_daily['date'])
                     fig = px.line(df_daily, x='date', y='activeUsers',
-                                 title=f"Tráfego Diário - {periodo}",
-                                 color_discrete_sequence=['#17B978'])
+                                 title="Pessoas que visitaram o site por dia",
+                                 color_discrete_sequence=['#17B978'],
+                                 labels={'date': 'Data', 'activeUsers': 'Pessoas'})
                     fig.update_layout(
                         plot_bgcolor='rgba(0,0,0,0)',
                         hovermode='x unified'
@@ -975,47 +1113,61 @@ with aba2:
                     st.plotly_chart(fig, use_container_width=True)
             
             with col2:
-                st.subheader("📊 Top Fontes de Tráfego")
+                st.subheader("📊 De onde vêm as visitas")
                 if 'sessionDefaultChannelGroup' in df_hist.columns:
                     df_chan = df_hist.groupby('sessionDefaultChannelGroup')['activeUsers'].sum().reset_index()
-                    df_chan = df_chan.sort_values('activeUsers', ascending=True).tail(10)
-                    fig = px.bar(df_chan, x='activeUsers', y='sessionDefaultChannelGroup',
+                    df_chan = df_chan.sort_values('activeUsers', ascending=True).tail(8)
+                    
+                    # Simplificar nomes dos canais
+                    canal_map = {
+                        'Organic Search': '🔍 Busca Google',
+                        'Direct': '🏠 Acesso Direto',
+                        'Referral': '🔗 Indicação',
+                        'Social': '📱 Redes Sociais',
+                        'Email': '✉️ Email',
+                        'Paid Search': '💲 Anúncios'
+                    }
+                    df_chan['Canal'] = df_chan['sessionDefaultChannelGroup'].apply(
+                        lambda x: canal_map.get(x, x)
+                    )
+                    
+                    fig = px.bar(df_chan, x='activeUsers', y='Canal',
                                 orientation='h', color='activeUsers',
                                 color_continuous_scale='Greens', text_auto=True)
                     fig.update_layout(
                         showlegend=False,
                         height=350,
                         plot_bgcolor='rgba(0,0,0,0)',
-                        hovermode='y unified'
+                        xaxis_title="Pessoas",
+                        yaxis_title=""
                     )
                     st.plotly_chart(fig, use_container_width=True)
         else:
-            st.warning("⚠️ Dados históricos não disponíveis - usando demonstração")
+            st.warning("⚠️ Dados não disponíveis - usando demonstração")
             
             col1, col2 = st.columns(2)
             with col1:
-                st.subheader("📈 Evolução Diária (Simulação)")
+                st.subheader("📈 Visitas por dia")
                 dates = pd.date_range(start='2026-01-01', periods=30, freq='D')
                 data_hist = pd.DataFrame({
                     'Data': dates,
-                    'Usuários': [150, 180, 200, 190, 220, 250, 230, 260, 280, 300,
-                                290, 310, 320, 305, 330, 350, 340, 360, 370, 355,
-                                380, 390, 385, 400, 420, 410, 430, 440, 450, 435]
+                    'Pessoas': [150, 180, 200, 190, 220, 250, 230, 260, 280, 300,
+                               290, 310, 320, 305, 330, 350, 340, 360, 370, 355,
+                               380, 390, 385, 400, 420, 410, 430, 440, 450, 435]
                 })
-                fig = px.line(data_hist, x='Data', y='Usuários', color_discrete_sequence=['#17B978'])
-                fig.update_layout(
-                    plot_bgcolor='rgba(0,0,0,0)',
-                    hovermode='x unified'
-                )
+                fig = px.line(data_hist, x='Data', y='Pessoas',
+                             title="Pessoas que visitaram o site por dia",
+                             color_discrete_sequence=['#17B978'])
+                fig.update_layout(plot_bgcolor='rgba(0,0,0,0)')
                 st.plotly_chart(fig, use_container_width=True)
             
             with col2:
-                st.subheader("📊 Top Fontes de Tráfego")
+                st.subheader("📊 De onde vêm as visitas")
                 df_fontes = pd.DataFrame({
-                    'Fonte': ['Google', 'Direct', 'Bing', 'Social', 'Outros'],
-                    'Sessões': [2500, 800, 300, 150, 100]
+                    'Canal': ['🔍 Busca Google', '🏠 Acesso Direto', '🔗 Indicação', '📱 Redes Sociais', 'Outros'],
+                    'Pessoas': [2500, 800, 300, 150, 100]
                 })
-                fig = px.pie(df_fontes, values='Sessões', names='Fonte',
+                fig = px.pie(df_fontes, values='Pessoas', names='Canal',
                             color_discrete_sequence=px.colors.sequential.Greens_r)
                 fig.update_traces(textposition='inside', textinfo='percent+label')
                 fig.update_layout(height=350)
