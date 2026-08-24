@@ -17,18 +17,41 @@ st.set_page_config(
 )
 
 # ============================================
-# INFORMAÇÕES DO TRABALHO (AUTORES ORGANIZADOS)
+# INFORMAÇÕES DO TRABALHO
 # ============================================
 
 TITULO = "Etnobiologia digital no Horto Didático da UFSC: circulação do saber etnobotânico mensurada por web analytics"
 
+# DISPOSIÇÃO DOS AUTORES - VERSÃO TOP
 AUTORES_COMPLETOS = """
-👤 **Michael A. Lopes** (Apresentador) · Graduando em Química Tecnológica - UFSC  
-👤 **Maique W. Biavatti** · Depto. Ciências Farmacêuticas - UFSC  
-👤 **Gabriela D. Ritter** · Farmacêutica  
-👤 **Letícia S. Tardim** · Graduanda em Farmácia - UFSC  
-
-🏛️ Universidade Federal de Santa Catarina (UFSC) - Florianópolis, SC, Brasil
+<div style="background: linear-gradient(135deg, #f0f9f4 0%, #e8f5e9 100%); padding: 20px; border-radius: 12px; border: 2px solid #17B978; margin: 10px 0;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; text-align: center;">
+        <div style="background: white; padding: 12px; border-radius: 8px; border-left: 4px solid #17B978;">
+            <strong style="color: #1E3D59;">👤 Michael A. Lopes</strong><br>
+            <span style="font-size: 0.85rem; color: #17B978;">🎤 Apresentador</span><br>
+            <span style="font-size: 0.8rem; color: #666;">Graduando em Química Tecnológica - UFSC</span>
+        </div>
+        <div style="background: white; padding: 12px; border-radius: 8px; border-left: 4px solid #1E3D59;">
+            <strong style="color: #1E3D59;">👤 Maique W. Biavatti</strong><br>
+            <span style="font-size: 0.85rem; color: #17B978;">👨‍🏫 Orientador</span><br>
+            <span style="font-size: 0.8rem; color: #666;">Depto. Ciências Farmacêuticas - UFSC</span>
+        </div>
+        <div style="background: white; padding: 12px; border-radius: 8px; border-left: 4px solid #17B978;">
+            <strong style="color: #1E3D59;">👤 Gabriela D. Ritter</strong><br>
+            <span style="font-size: 0.85rem; color: #17B978;">👩‍🔬 Colaboradora</span><br>
+            <span style="font-size: 0.8rem; color: #666;">Farmacêutica</span>
+        </div>
+        <div style="background: white; padding: 12px; border-radius: 8px; border-left: 4px solid #1E3D59;">
+            <strong style="color: #1E3D59;">👤 Letícia S. Tardim</strong><br>
+            <span style="font-size: 0.85rem; color: #17B978;">👩‍🎓 Colaboradora</span><br>
+            <span style="font-size: 0.8rem; color: #666;">Graduanda em Farmácia - UFSC</span>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 12px; padding-top: 10px; border-top: 2px dashed #17B978;">
+        <span style="font-size: 0.9rem; color: #1E3D59;">🏛️ <strong>Universidade Federal de Santa Catarina (UFSC)</strong></span><br>
+        <span style="font-size: 0.85rem; color: #666;">Florianópolis, SC, Brasil</span>
+    </div>
+</div>
 """
 
 PALAVRAS_CHAVE = "Etnobiologia Digital; Web Analytics; Plantas Medicinais; Circulação do Conhecimento"
@@ -68,7 +91,7 @@ DADOS_2026 = {
     'brasil': 92.4,
 }
 
-# NOVOS DADOS - ALCANCE INTERNACIONAL
+# ALCANCE INTERNACIONAL
 PAISES_INTERNACIONAIS = {
     'Portugal': 850,
     'Estados Unidos': 620,
@@ -95,7 +118,7 @@ ESTADOS_BRASIL = {
     'GO': 2100
 }
 
-# INSIGHTS DO ARTIGO
+# INSIGHTS
 INSIGHTS = {
     'ia_usuarios': 139,
     'ia_sessoes': 221,
@@ -107,35 +130,23 @@ INSIGHTS = {
 }
 
 # ============================================
-# CARREGAR CREDENCIAIS GA4
+# CARREGAR CREDENCIAIS GA4 (CORRIGIDO)
 # ============================================
 
-GA4_PROPERTY_ID = "353285465"  # ← PROPRIEDADE Horto hu ccs
+GA4_PROPERTY_ID = "353285465"
 
-if os.path.exists('ga4-credentials.json'):
-    try:
+try:
+    if os.path.exists('ga4-credentials.json'):
         with open('ga4-credentials.json', 'r') as f:
             credentials_info = json.load(f)
-    except:
-        credentials_info = None
-else:
-    try:
+    else:
         credentials_json = st.secrets["google_analytics"]["credentials_json"]
         if isinstance(credentials_json, str):
             credentials_info = json.loads(credentials_json)
         else:
             credentials_info = credentials_json
-    except:
-        credentials_info = None
-else:
-    try:
-        credentials_json = st.secrets["google_analytics"]["credentials_json"]
-        if isinstance(credentials_json, str):
-            credentials_info = json.loads(credentials_json)
-        else:
-            credentials_info = credentials_json
-    except:
-        credentials_info = None
+except Exception as e:
+    credentials_info = None
 
 # ============================================
 # FUNÇÕES GA4
@@ -245,34 +256,24 @@ def get_realtime_data():
 st.markdown("""
 <style>
     .main-title {
-        font-size: 2.0rem;
+        font-size: 2.2rem;
         color: #1E3D59;
         font-weight: 700;
         text-align: center;
         margin-bottom: 5px;
     }
     .sub-title {
-        font-size: 1.0rem;
+        font-size: 1.1rem;
         color: #17B978;
         text-align: center;
         margin-bottom: 20px;
     }
     .work-title {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
         color: #1E3D59;
         font-weight: 600;
         text-align: center;
-        margin: 10px 0;
-    }
-    .authors {
-        font-size: 0.95rem;
-        color: #555;
-        text-align: center;
-        line-height: 1.8;
-        background: #f8f9fa;
-        padding: 15px;
-        border-radius: 10px;
-        border: 1px solid #e0e0e0;
+        margin: 15px 0 5px 0;
     }
     .metric-card {
         background-color: #F8F9FA;
@@ -280,6 +281,11 @@ st.markdown("""
         border-radius: 10px;
         border-left: 4px solid #17B978;
         text-align: center;
+        transition: transform 0.2s;
+    }
+    .metric-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
     .metric-number {
         font-size: 1.8rem;
@@ -297,10 +303,11 @@ st.markdown("""
     .event-banner {
         background: linear-gradient(135deg, #1E3D59 0%, #17B978 100%);
         padding: 15px 20px;
-        border-radius: 10px;
+        border-radius: 12px;
         color: white;
         margin: 15px 0;
         text-align: center;
+        box-shadow: 0 4px 15px rgba(23, 185, 120, 0.3);
     }
     .event-banner h2 {
         margin: 0;
@@ -325,7 +332,7 @@ st.markdown("""
         gap: 8px;
         background-color: #f0f2f6;
         padding: 8px;
-        border-radius: 10px;
+        border-radius: 12px;
     }
     .stTabs [data-baseweb="tab"] {
         padding: 10px 25px;
@@ -334,10 +341,12 @@ st.markdown("""
         font-size: 1.0rem;
         background-color: transparent;
         color: #555;
+        transition: all 0.3s;
     }
     .stTabs [aria-selected="true"] {
         background-color: #17B978 !important;
         color: white !important;
+        box-shadow: 0 2px 10px rgba(23, 185, 120, 0.3);
     }
     .ref-box {
         background: #f8f9fa;
@@ -359,7 +368,7 @@ st.markdown("""
     .highlight-box {
         background: #f0f9f4;
         padding: 20px;
-        border-radius: 10px;
+        border-radius: 12px;
         border-left: 4px solid #17B978;
         margin: 15px 0;
         line-height: 1.6;
@@ -379,7 +388,7 @@ st.markdown("""
         text-align: justify;
         background: #f8f9fa;
         padding: 20px;
-        border-radius: 10px;
+        border-radius: 12px;
         border-left: 4px solid #17B978;
     }
     .resumo-texto p {
@@ -421,19 +430,32 @@ st.markdown("""
         color: #1E3D59;
         margin-top: 0;
     }
-    .teste-conexao {
-        background: #fff3cd;
+    .status-box {
         padding: 10px 15px;
         border-radius: 8px;
-        border-left: 4px solid #ffc107;
-        margin: 10px 0;
+        margin: 5px 0;
         font-size: 0.9rem;
+    }
+    .status-success {
+        background: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
+    .status-warning {
+        background: #fff3cd;
+        color: #856404;
+        border: 1px solid #ffc107;
+    }
+    .status-error {
+        background: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
     }
 </style>
 """, unsafe_allow_html=True)
 
 # ============================================
-# HEADER
+# HEADER COM LOGOS
 # ============================================
 
 col_logo1, col_titulo, col_logo2 = st.columns([1, 3, 1])
@@ -475,37 +497,35 @@ st.markdown("""
 # TÍTULO E AUTORES
 # ============================================
 
-st.markdown(f"""
-<div style="text-align: center; margin: 10px 0;">
-    <p class="work-title">{TITULO}</p>
-    <div class="authors">{AUTORES_COMPLETOS}</div>
-    <p style="font-size: 0.85rem; color: #17B978; margin-top: 8px;">🔑 {PALAVRAS_CHAVE}</p>
-</div>
-""", unsafe_allow_html=True)
+st.markdown(f'<p class="work-title">{TITULO}</p>', unsafe_allow_html=True)
+st.markdown(AUTORES_COMPLETOS, unsafe_allow_html=True)
+st.markdown(f'<p style="text-align: center; font-size: 0.85rem; color: #17B978; margin-top: 8px;">🔑 {PALAVRAS_CHAVE}</p>', unsafe_allow_html=True)
 
 # ============================================
-# TESTE DE CONEXÃO GA4 (DIAGNÓSTICO)
+# TESTE DE CONEXÃO GA4
 # ============================================
 
-with st.expander("🔍 Status da Conexão com GA4 (Clique para ver)"):
-    st.write("**Verificando conexão...**")
+with st.expander("🔍 Status da Conexão com GA4"):
+    col_status1, col_status2 = st.columns(2)
     
-    if credentials_info:
-        st.success("✅ Credenciais carregadas com sucesso!")
-        st.write(f"📊 Property ID: `{GA4_PROPERTY_ID}`")
-        st.write(f"📧 Client Email: `{credentials_info.get('client_email', 'N/A')}`")
-    else:
-        st.error("❌ Credenciais NÃO carregadas!")
-        st.warning("Verifique o arquivo secrets.toml ou ga4-credentials.json")
+    with col_status1:
+        st.write("**Credenciais:**")
+        if credentials_info:
+            st.markdown('<div class="status-box status-success">✅ Credenciais carregadas</div>', unsafe_allow_html=True)
+            st.write(f"📊 Property ID: `{GA4_PROPERTY_ID}`")
+        else:
+            st.markdown('<div class="status-box status-error">❌ Credenciais NÃO carregadas</div>', unsafe_allow_html=True)
     
-    client = get_ga4_client()
-    if client:
-        st.success("✅ Cliente GA4 criado com sucesso!")
-    else:
-        st.error("❌ Falha ao criar cliente GA4!")
+    with col_status2:
+        st.write("**Cliente GA4:**")
+        client = get_ga4_client()
+        if client:
+            st.markdown('<div class="status-box status-success">✅ Cliente GA4 criado</div>', unsafe_allow_html=True)
+        else:
+            st.markdown('<div class="status-box status-error">❌ Falha ao criar cliente</div>', unsafe_allow_html=True)
     
     st.write("---")
-    st.write("**Testando busca de dados (últimos 7 dias):**")
+    st.write("**Teste de dados (últimos 7 dias):**")
     
     try:
         end_date = datetime.now().strftime('%Y-%m-%d')
@@ -513,14 +533,13 @@ with st.expander("🔍 Status da Conexão com GA4 (Clique para ver)"):
         df_test = get_ga4_data(start_date, end_date)
         
         if df_test is not None and not df_test.empty:
-            st.success(f"✅ Dados carregados! {len(df_test)} linhas encontradas.")
-            st.dataframe(df_test.head(5))
+            st.markdown(f'<div class="status-box status-success">✅ Dados carregados! {len(df_test)} linhas encontradas.</div>', unsafe_allow_html=True)
+            st.dataframe(df_test.head(5), use_container_width=True)
         else:
-            st.warning("⚠️ Nenhum dado encontrado para os últimos 7 dias.")
-            st.info("Isso pode ser normal se o site não teve acessos no período.")
-            st.info("Tente selecionar um período mais longo na aba 'TEMPO REAL'.")
+            st.markdown('<div class="status-box status-warning">⚠️ Nenhum dado encontrado para os últimos 7 dias.</div>', unsafe_allow_html=True)
+            st.info("💡 Isso é normal se o site não teve acessos no período. Tente selecionar um período mais longo na aba TEMPO REAL.")
     except Exception as e:
-        st.error(f"❌ Erro ao buscar dados: {str(e)}")
+        st.markdown(f'<div class="status-box status-error">❌ Erro: {str(e)}</div>', unsafe_allow_html=True)
 
 # ============================================
 # BANNER DO EVENTO
@@ -531,7 +550,7 @@ st.markdown("""
     <h2>🎓 XXVIII Simpósio de Plantas Medicinais do Brasil (SPMB) 2026</h2>
     <p>15 a 18 de setembro de 2026 | Univali - Campus Professor Edison Villela, Itajaí/SC</p>
     <p>Tema: <strong>Plantas medicinais como fonte de novos agentes medicinais</strong></p>
-    <div class="highlight">Apresentador: Michael A. Lopes</div>
+    <div class="highlight">🌟 Apresentador: Michael A. Lopes</div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -552,7 +571,7 @@ aba1, aba2, aba3 = st.tabs([
 with aba1:
     st.header("📈 Resultados e Discussão da Pesquisa")
     
-    # INSIGHTS EM DESTAQUE
+    # INSIGHTS
     st.subheader("🔥 Principais Insights")
     
     col_i1, col_i2, col_i3, col_i4 = st.columns(4)
@@ -597,21 +616,23 @@ with aba1:
     
     # RESUMO
     st.markdown(f"""
-    **Resumo dos Resultados:**
-    
-    A análise combinada entre aquisição de usuários e aquisição de tráfego revela a sólida autoridade e o alcance do portal. 
-    
-    Em **2025**, o site registrou **{DADOS_2025['usuarios']:,} usuários** ({DADOS_2025['usuarios_novos']:,} novos), com predomínio da busca orgânica ({DADOS_2025['busca_organica_usuarios']:,}; **{DADOS_2025['busca_organica_pct']:.2f}%**) e do acesso direto ({DADOS_2025['acesso_direto_usuarios']:,}; **{DADOS_2025['acesso_direto_pct']:.2f}%**). Na perspectiva de tráfego, o mesmo período contabilizou {DADOS_2025['usuarios_engajados']:,} usuários engajados, liderados pela busca orgânica ({DADOS_2025['busca_organica_trafego']:,}; **{DADOS_2025['busca_organica_trafego_pct']:.2f}%**) e acesso direto ({DADOS_2025['acesso_direto_trafego']:,}; **{DADOS_2025['acesso_direto_trafego_pct']:.2f}%**).
-    
-    Em **2026 (jan–jul)**, foram **{DADOS_2026['usuarios']:,} usuários** ({DADOS_2026['usuarios_novos']:,} novos), mantendo a liderança da busca orgânica ({DADOS_2026['busca_organica_usuarios']:,}; **{DADOS_2026['busca_organica_pct']:.2f}%**) e acesso direto ({DADOS_2026['acesso_direto_usuarios']:,}; **{DADOS_2026['acesso_direto_pct']:.2f}%**), enquanto o tráfego total atingiu {DADOS_2026['usuarios_engajados']:,} usuários, com busca orgânica ({DADOS_2026['busca_organica_trafego']:,}; **{DADOS_2026['busca_organica_trafego_pct']:.2f}%**) e acesso direto ({DADOS_2026['acesso_direto_trafego']:,}; **{DADOS_2026['acesso_direto_trafego_pct']:.2f}%**).
-    
-    **Destaques:**
-    - 🤖 **Emergência de IA**: {INSIGHTS['ia_usuarios']} usuários e {INSIGHTS['ia_sessoes']} sessões via assistentes de IA
-    - 🔗 **Alta retenção**: {INSIGHTS['referral_retencao']:.2f}% de retenção em canais de indicação (Referral)
-    - 📈 **Crescimento**: Projeção de superar o tráfego total de 2025 até o final de 2026
-    
-    Quanto ao perfil demográfico, observou-se predominância expressiva do público feminino (**{DADOS_2025['feminino']:.1f}% em 2025** e **{DADOS_2026['feminino']:.1f}% em 2026**) e de jovens adultos na faixa etária de 25 a 34 anos (**40,1%**). A imensa maioria dos acessos está concentrada no Brasil (**{DADOS_2025['brasil']:.1f}% em 2025** e **{DADOS_2026['brasil']:.1f}% em 2026**).
-    """)
+    <div class="resumo-texto">
+        <p><strong>Resumo dos Resultados:</strong></p>
+        
+        <p>A análise combinada entre aquisição de usuários e aquisição de tráfego revela a sólida autoridade e o alcance do portal.</p>
+        
+        <p>Em <strong>2025</strong>, o site registrou <strong>{DADOS_2025['usuarios']:,} usuários</strong> ({DADOS_2025['usuarios_novos']:,} novos), com predomínio da busca orgânica ({DADOS_2025['busca_organica_usuarios']:,}; <strong>{DADOS_2025['busca_organica_pct']:.2f}%</strong>) e do acesso direto ({DADOS_2025['acesso_direto_usuarios']:,}; <strong>{DADOS_2025['acesso_direto_pct']:.2f}%</strong>). Na perspectiva de tráfego, o mesmo período contabilizou {DADOS_2025['usuarios_engajados']:,} usuários engajados, liderados pela busca orgânica ({DADOS_2025['busca_organica_trafego']:,}; <strong>{DADOS_2025['busca_organica_trafego_pct']:.2f}%</strong>) e acesso direto ({DADOS_2025['acesso_direto_trafego']:,}; <strong>{DADOS_2025['acesso_direto_trafego_pct']:.2f}%</strong>).</p>
+        
+        <p>Em <strong>2026 (jan–jul)</strong>, foram <strong>{DADOS_2026['usuarios']:,} usuários</strong> ({DADOS_2026['usuarios_novos']:,} novos), mantendo a liderança da busca orgânica ({DADOS_2026['busca_organica_usuarios']:,}; <strong>{DADOS_2026['busca_organica_pct']:.2f}%</strong>) e acesso direto ({DADOS_2026['acesso_direto_usuarios']:,}; <strong>{DADOS_2026['acesso_direto_pct']:.2f}%</strong>), enquanto o tráfego total atingiu {DADOS_2026['usuarios_engajados']:,} usuários, com busca orgânica ({DADOS_2026['busca_organica_trafego']:,}; <strong>{DADOS_2026['busca_organica_trafego_pct']:.2f}%</strong>) e acesso direto ({DADOS_2026['acesso_direto_trafego']:,}; <strong>{DADOS_2026['acesso_direto_trafego_pct']:.2f}%</strong>).</p>
+        
+        <p><strong>Destaques:</strong><br>
+        🤖 <strong>Emergência de IA</strong>: {INSIGHTS['ia_usuarios']} usuários e {INSIGHTS['ia_sessoes']} sessões via assistentes de IA<br>
+        🔗 <strong>Alta retenção</strong>: {INSIGHTS['referral_retencao']:.2f}% de retenção em canais de indicação (Referral)<br>
+        📈 <strong>Crescimento</strong>: Projeção de superar o tráfego total de 2025 até o final de 2026</p>
+        
+        <p>Quanto ao perfil demográfico, observou-se predominância expressiva do público feminino (<strong>{DADOS_2025['feminino']:.1f}% em 2025</strong> e <strong>{DADOS_2026['feminino']:.1f}% em 2026</strong>) e de jovens adultos na faixa etária de 25 a 34 anos (<strong>40,1%</strong>). A imensa maioria dos acessos está concentrada no Brasil (<strong>{DADOS_2025['brasil']:.1f}% em 2025</strong> e <strong>{DADOS_2026['brasil']:.1f}% em 2026</strong>).</p>
+    </div>
+    """, unsafe_allow_html=True)
     
     st.divider()
     
@@ -673,13 +694,11 @@ with aba1:
                      text_auto='.2f', color_discrete_sequence=['#1E3D59', '#17B978'])
         fig.update_traces(texttemplate='%{y:.2f}%', textposition='outside')
         fig.update_layout(
-            yaxis_range=[0, 100], 
+            yaxis_range=[0, 100],
             plot_bgcolor='rgba(0,0,0,0)',
-            height=350, 
+            height=350,
             showlegend=True,
-            hovermode='x unified',
-            dragmode='zoom',
-            clickmode='event+select'
+            hovermode='x unified'
         )
         st.plotly_chart(fig, use_container_width=True)
     
@@ -695,13 +714,11 @@ with aba1:
                      text_auto='.1f', color_discrete_sequence=['#17B978', '#1E3D59'])
         fig.update_traces(texttemplate='%{y:.1f}%', textposition='outside')
         fig.update_layout(
-            yaxis_range=[0, 85], 
+            yaxis_range=[0, 85],
             plot_bgcolor='rgba(0,0,0,0)',
-            height=350, 
+            height=350,
             showlegend=True,
-            hovermode='x unified',
-            dragmode='zoom',
-            clickmode='event+select'
+            hovermode='x unified'
         )
         st.plotly_chart(fig, use_container_width=True)
     
@@ -804,14 +821,16 @@ with aba1:
     st.subheader("💡 Conclusão")
     
     st.markdown("""
-    Os resultados confirmam o site do Horto como **efetivo lócus empírico da Etnobiologia Digital**, ampliando o alcance do conhecimento etnobotânico para além dos muros da universidade e alcançando públicos diversos em escala nacional e internacional.
-    
-    As métricas de **Web Analytics** mostraram-se ferramentas robustas para avaliar essa circulação, permitindo identificar os principais canais de acesso, com destaque para buscadores e, mais recentemente, assistentes de IA, bem como o perfil demográfico dos usuários e os conteúdos mais acessados.
-    
-    Essa análise evidencia a **tensão entre a capilaridade digital**, entendida como a ampla disseminação do conhecimento, e o **risco de descontextualização**, isto é, a perda do vínculo do saber com suas origens étnicas, ecológicas e culturais. Essa tensão reforça a necessidade de conciliar acessibilidade com a preservação da integridade dos saberes, garantindo que a divulgação científica não comprometa a riqueza e a segurança dos conhecimentos tradicionais *(De Meyer & Ceuterick, 2022; Simon & Camargo, 2021)*.
-    
-    **Apoio Financeiro:** Universidade Federal de Santa Catarina (UFSC)
-    """)
+    <div class="highlight-box">
+        <p>Os resultados confirmam o site do Horto como <strong>efetivo lócus empírico da Etnobiologia Digital</strong>, ampliando o alcance do conhecimento etnobotânico para além dos muros da universidade e alcançando públicos diversos em escala nacional e internacional.</p>
+        
+        <p>As métricas de <strong>Web Analytics</strong> mostraram-se ferramentas robustas para avaliar essa circulação, permitindo identificar os principais canais de acesso, com destaque para buscadores e, mais recentemente, assistentes de IA, bem como o perfil demográfico dos usuários e os conteúdos mais acessados.</p>
+        
+        <p>Essa análise evidencia a <strong>tensão entre a capilaridade digital</strong>, entendida como a ampla disseminação do conhecimento, e o <strong>risco de descontextualização</strong>, isto é, a perda do vínculo do saber com suas origens étnicas, ecológicas e culturais. Essa tensão reforça a necessidade de conciliar acessibilidade com a preservação da integridade dos saberes, garantindo que a divulgação científica não comprometa a riqueza e a segurança dos conhecimentos tradicionais <em>(De Meyer & Ceuterick, 2022; Simon & Camargo, 2021)</em>.</p>
+        
+        <p style="color: #555; margin-top: 10px;"><strong>Apoio Financeiro:</strong> Universidade Federal de Santa Catarina (UFSC)</p>
+    </div>
+    """, unsafe_allow_html=True)
 
 # ============================================
 # ABA 2: TEMPO REAL
@@ -1010,20 +1029,22 @@ with aba3:
     st.header("📚 Referências Bibliográficas")
     
     st.markdown("""
-    **BOELL, M. E. C.** Espécies do Horto Didático de Plantas Medicinais do HU/CCS (UFSC): identificação botânica e uso terapêutico de plantas medicinais. 2023. Trabalho de Conclusão de Curso (Graduação) – Universidade Federal de Santa Catarina, Florianópolis, 2023.
-    
-    **CEUTERICK, M.; VANDEBROEK, I.; TORRY, B.; PIERONI, A.** Cross-cultural adaptation in urban ethnobotany: the Colombian folk pharmacopoeia in London. Journal of Ethnopharmacology, v. 120, n. 3, p. 342-359, 2008. DOI: 10.1016/j.jep.2008.09.004.
-    
-    **DE MEYER, E.; CEUTERICK, M.** Digital Ethnobiology: exploring the digisphere in search of traditional and indigenous knowledge and practices. Ethnobotany Research and Applications, v. 24, p. 1-8, 2022. DOI: 10.32859/era.24.37.1-8.
-    
-    **FOLKE, C.; BIGGS, R.; NORSTRÖM, A. V.; REYERS, B.; ROCKSTRÖM, J.** Social-ecological resilience and biosphere-based sustainability science. Ecology and Society, v. 21, n. 3, p. 41, 2016. DOI: 10.5751/ES-08748-210341.
-    
-    **RITTER, G. D.** O site do Horto Didático de Plantas Medicinais (UFSC) como ferramenta de divulgação científica para o uso de plantas medicinais. 2025. Trabalho de Conclusão de Curso (Graduação) – Universidade Federal de Santa Catarina, Florianópolis, 2025.
-    
-    **SIMON, F. M.; CAMARGO, C. Q.** Autopsy of a metaphor: the origins, use and blind spots of the 'infodemic'. New Media & Society, v. 25, n. 8, p. 2219-2240, 2023. DOI: 10.1177/14614448211031908.
-    
-    **WELLMAN, B.** Little Boxes, Glocalization, and Networked Individualism. In: TANABE, M.; BESSELAAR, P. van den; ISHIDA, T. (ed.). Digital Cities II: computational and sociological approaches. Berlin: Springer, 2002. p. 10-25.
-    """)
+    <div class="ref-box">
+        <p><strong>BOELL, M. E. C.</strong> Espécies do Horto Didático de Plantas Medicinais do HU/CCS (UFSC): identificação botânica e uso terapêutico de plantas medicinais. 2023. Trabalho de Conclusão de Curso (Graduação) – Universidade Federal de Santa Catarina, Florianópolis, 2023.</p>
+        
+        <p><strong>CEUTERICK, M.; VANDEBROEK, I.; TORRY, B.; PIERONI, A.</strong> Cross-cultural adaptation in urban ethnobotany: the Colombian folk pharmacopoeia in London. Journal of Ethnopharmacology, v. 120, n. 3, p. 342-359, 2008. DOI: 10.1016/j.jep.2008.09.004.</p>
+        
+        <p><strong>DE MEYER, E.; CEUTERICK, M.</strong> Digital Ethnobiology: exploring the digisphere in search of traditional and indigenous knowledge and practices. Ethnobotany Research and Applications, v. 24, p. 1-8, 2022. DOI: 10.32859/era.24.37.1-8.</p>
+        
+        <p><strong>FOLKE, C.; BIGGS, R.; NORSTRÖM, A. V.; REYERS, B.; ROCKSTRÖM, J.</strong> Social-ecological resilience and biosphere-based sustainability science. Ecology and Society, v. 21, n. 3, p. 41, 2016. DOI: 10.5751/ES-08748-210341.</p>
+        
+        <p><strong>RITTER, G. D.</strong> O site do Horto Didático de Plantas Medicinais (UFSC) como ferramenta de divulgação científica para o uso de plantas medicinais. 2025. Trabalho de Conclusão de Curso (Graduação) – Universidade Federal de Santa Catarina, Florianópolis, 2025.</p>
+        
+        <p><strong>SIMON, F. M.; CAMARGO, C. Q.</strong> Autopsy of a metaphor: the origins, use and blind spots of the 'infodemic'. New Media & Society, v. 25, n. 8, p. 2219-2240, 2023. DOI: 10.1177/14614448211031908.</p>
+        
+        <p><strong>WELLMAN, B.</strong> Little Boxes, Glocalization, and Networked Individualism. In: TANABE, M.; BESSELAAR, P. van den; ISHIDA, T. (ed.). Digital Cities II: computational and sociological approaches. Berlin: Springer, 2002. p. 10-25.</p>
+    </div>
+    """, unsafe_allow_html=True)
     
     st.caption("📄 Referências do trabalho 'Etnobiologia digital no Horto Didático da UFSC'")
 
@@ -1042,9 +1063,11 @@ with col3:
     st.markdown("🎓 **XXVIII SPMB 2026 - Apresentação de Trabalho**")
 
 st.markdown("""
-🌿 Desenvolvido para apresentação no XXVIII Simpósio de Plantas Medicinais do Brasil (SPMB) 2026
-
-*Apoio Financeiro: Universidade Federal de Santa Catarina (UFSC)*
-
-🔗 [hortodidatico.ufsc.br](https://hortodidatico.ufsc.br/)
-""")
+<div class="footer">
+    🌿 Desenvolvido para apresentação no XXVIII Simpósio de Plantas Medicinais do Brasil (SPMB) 2026
+    <br>
+    <span style="font-size: 0.75rem;">Apoio Financeiro: Universidade Federal de Santa Catarina (UFSC)</span>
+    <br>
+    <span style="font-size: 0.75rem;">🔗 <a href="https://hortodidatico.ufsc.br/" target="_blank" style="color: #17B978;">hortodidatico.ufsc.br</a></span>
+</div>
+""", unsafe_allow_html=True)
