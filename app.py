@@ -225,82 +225,6 @@ def get_realtime_data():
         return None
 
 # ============================================
-# FUNÇÃO: PLANTAS MAIS ACESSADAS POR PERÍODO
-# ============================================
-
-@st.cache_data(ttl=300)
-def get_top_plants(start_date, end_date, top_n=10):
-    """
-    Busca as plantas medicinais mais acessadas no período.
-    """
-    try:
-        from google.analytics.data_v1beta.types import DateRange, Dimension, Metric, RunReportRequest
-        
-        client = get_ga4_client()
-        if not client:
-            return None
-        
-        request = RunReportRequest(
-            property=f"properties/{GA4_PROPERTY_ID}",
-            dimensions=[
-                Dimension(name="pageTitle"),
-                Dimension(name="pagePath"),
-            ],
-            metrics=[
-                Metric(name="screenPageViews"),
-                Metric(name="activeUsers"),
-            ],
-            date_ranges=[DateRange(start_date=start_date, end_date=end_date)],
-            limit=50,
-            order_bys=[{"metric": {"metric_name": "screenPageViews"}, "desc": True}]
-        )
-        
-        response = client.run_report(request)
-        
-        palavras_planta = [
-            'folha', 'quebra', 'buchinha', 'alfavaca', 'aveloz', 'melão',
-            'kalanchoe', 'phyllanthus', 'luffa', 'ocimum', 'euphorbia', 'momordica'
-        ]
-        
-        plantas = []
-        for row in response.rows:
-            titulo = row.dimension_values[0].value.lower() if len(row.dimension_values) > 0 else ""
-            caminho = row.dimension_values[1].value.lower() if len(row.dimension_values) > 1 else ""
-            
-            is_planta = any(palavra in titulo or palavra in caminho for palavra in palavras_planta)
-            is_home = caminho == '/' or 'home' in titulo or 'início' in titulo
-            
-            if is_planta or is_home:
-                nome = titulo.replace(' - Horto UFSC', '').replace(' | Horto UFSC', '').strip()
-                if not nome or nome == '':
-                    nome = caminho.replace('/planta/', '').replace('-', ' ').title()
-                
-                if is_home and not is_planta:
-                    nome = "🏠 Página Inicial"
-                
-                visualizacoes = float(row.metric_values[0].value) if len(row.metric_values) > 0 else 0
-                usuarios = float(row.metric_values[1].value) if len(row.metric_values) > 1 else 0
-                
-                plantas.append({
-                    'nome': nome[:40],
-                    'visualizacoes': visualizacoes,
-                    'usuarios': usuarios
-                })
-        
-        df_plantas = pd.DataFrame(plantas)
-        if not df_plantas.empty:
-            df_plantas = df_plantas.groupby('nome').agg({
-                'visualizacoes': 'sum',
-                'usuarios': 'sum'
-            }).reset_index()
-            df_plantas = df_plantas.sort_values('visualizacoes', ascending=False).head(top_n)
-        
-        return df_plantas
-        
-    except Exception as e:
-        return None
-
-# ============================================
 # ESTILOS VISUAIS
 # ============================================
 
@@ -395,11 +319,17 @@ st.markdown("""
         border-radius: 10px;
         border: 1px solid #e0e0e0;
         margin: 10px 0;
-        max-height: 500px;
-        overflow-y: auto;
         line-height: 1.8;
     }
     .glossary-box strong { color: #1E3D59; }
+    .highlight-box {
+        background: #f0f9f4;
+        padding: 20px;
+        border-radius: 12px;
+        border-left: 4px solid #17B978;
+        margin: 15px 0;
+        line-height: 1.8;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -450,35 +380,27 @@ st.markdown(f"""
 st.markdown(f"**Palavras-chave:** {PALAVRAS_CHAVE}")
 
 # ============================================
-# GLOSSÁRIO
+# GLOSSÁRIO - SEMPRE VISÍVEL
 # ============================================
 
-with st.expander("📖 Glossário - Entenda os termos"):
-    st.markdown("""
-    **Google Analytics 4 (GA4)** → Plataforma do Google para coletar e analisar dados de interação dos usuários com sites.
+st.markdown("### 📖 Glossário - Entenda os termos")
 
-    **Web Analytics** → Processo de coletar, medir e analisar dados de acesso e comportamento em ambientes digitais.
-
-    **Usuário** → Pessoa identificada pelo Google Analytics que interage com o site.
-
-    **Usuários Novos** → Pessoas que acessaram o site pela primeira vez.
-
-    **Sessão** → Período em que um usuário interage com o site.
-
-    **Busca Orgânica** → Visitas que vêm de resultados do Google sem anúncios pagos.
-
-    **Acesso Direto** → Quando o usuário digita o endereço do site diretamente.
-
-    **Referral** → Visitas que vêm de outros sites (blogs, redes sociais).
-
-    **Engajamento** → Grau de interação dos usuários com o conteúdo do site.
-
-    **Landing Page** → Primeira página que o usuário vê ao entrar no site.
-
-    **IA (Inteligência Artificial)** → Assistentes como Google Gemini, ChatGPT, que direcionam usuários para o site.
-
-    **Dispositivo** → Celular, computador ou tablet usado para acessar o site.
-    """)
+st.markdown("""
+<div class="glossary-box">
+    <p><strong>Google Analytics 4 (GA4)</strong> → Plataforma do Google para coletar e analisar dados de interação dos usuários com sites.</p>
+    <p><strong>Web Analytics</strong> → Processo de coletar, medir e analisar dados de acesso e comportamento em ambientes digitais.</p>
+    <p><strong>Usuário</strong> → Pessoa identificada pelo Google Analytics que interage com o site.</p>
+    <p><strong>Usuários Novos</strong> → Pessoas que acessaram o site pela primeira vez.</p>
+    <p><strong>Sessão</strong> → Período em que um usuário interage com o site.</p>
+    <p><strong>Busca Orgânica</strong> → Visitas que vêm de resultados do Google sem anúncios pagos.</p>
+    <p><strong>Acesso Direto</strong> → Quando o usuário digita o endereço do site diretamente.</p>
+    <p><strong>Referral</strong> → Visitas que vêm de outros sites (blogs, redes sociais).</p>
+    <p><strong>Engajamento</strong> → Grau de interação dos usuários com o conteúdo do site.</p>
+    <p><strong>Landing Page</strong> → Primeira página que o usuário vê ao entrar no site.</p>
+    <p><strong>IA (Inteligência Artificial)</strong> → Assistentes como Google Gemini, ChatGPT, que direcionam usuários para o site.</p>
+    <p><strong>Dispositivo</strong> → Celular, computador ou tablet usado para acessar o site.</p>
+</div>
+""", unsafe_allow_html=True)
 
 # ============================================
 # STATUS GA4
@@ -571,7 +493,26 @@ with aba1:
     st.divider()
     
     # ============================================
-    # RESUMO COM EXPANDER
+    # RELATÓRIOS ANALISADOS
+    # ============================================
+    
+    st.subheader("📊 Relatórios do Google Analytics Analisados")
+    
+    st.markdown("""
+    <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; border: 1px solid #e0e0e0; margin: 10px 0;">
+        <p><strong>📥 Aquisição de usuários</strong> → Análise da origem pela qual os usuários, especialmente os novos usuários, chegaram ao site.</p>
+        <p><strong>📥 Aquisição de tráfego</strong> → Análise da origem das sessões ou do tráfego recebido pelo site.</p>
+        <p><strong>👥 Perfil demográfico</strong> → Características da audiência: sexo, idade e localização geográfica.</p>
+        <p><strong>📄 Engajamento</strong> → Eventos e interações dos usuários com o conteúdo do site.</p>
+        <p><strong>🌿 Conteúdo</strong> → Páginas e espécies medicinais mais acessadas.</p>
+        <p style="font-size: 0.85rem; color: #666; margin-top: 10px;">📅 Período analisado: Ano completo de 2025 e janeiro a julho de 2026</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.divider()
+    
+    # ============================================
+    # RESUMO
     # ============================================
     
     st.markdown("### 📋 Resumo dos Resultados")
@@ -669,7 +610,7 @@ with aba1:
     
     st.divider()
     
-    # ALCANCE GEOGRÁFICO COM EXPANDER
+    # ALCANCE GEOGRÁFICO
     st.subheader("🌍 Alcance Geográfico")
     
     with st.expander("🌎 Clique para ver o alcance internacional e nacional"):
@@ -714,28 +655,24 @@ with aba1:
     
     st.divider()
     
-    # RANKING DE ESPÉCIES (DADOS DO ARTIGO)
-    st.subheader("🌿 Espécies Mais Acessadas (2026)")
-    st.caption("Dados do artigo - ranking das espécies mais acessadas em 2026")
+    # RANKING DE ESPÉCIES
+    st.subheader("🌿 Ranking de Espécies Mais Acessadas em 2026")
+    st.caption("Dados do artigo - espécies com maior volume de acessos no período")
     
-    with st.expander("🌿 Clique para ver o ranking das espécies"):
-        df_esp = pd.DataFrame({
-            'Espécie': list(ESPECIES.keys()),
-            'Sessões': list(ESPECIES.values())
-        }).sort_values('Sessões', ascending=True)
-        
-        fig_esp = px.bar(df_esp, x='Sessões', y='Espécie', orientation='h',
-                         text_auto=',d', color='Sessões', color_continuous_scale='Greens')
-        fig_esp.update_traces(textposition='outside', textfont_size=10)
-        fig_esp.update_layout(plot_bgcolor='rgba(0,0,0,0)', height=350, showlegend=False)
-        st.plotly_chart(fig_esp, use_container_width=True)
+    df_esp = pd.DataFrame({
+        'Espécie': list(ESPECIES.keys()),
+        'Sessões de Entrada': list(ESPECIES.values())
+    }).sort_values('Sessões de Entrada', ascending=True)
+    
+    fig_esp = px.bar(df_esp, x='Sessões de Entrada', y='Espécie', orientation='h',
+                     text_auto=',d', color='Sessões de Entrada', color_continuous_scale='Greens')
+    fig_esp.update_traces(textposition='outside', textfont_size=10)
+    fig_esp.update_layout(plot_bgcolor='rgba(0,0,0,0)', height=400, showlegend=False)
+    st.plotly_chart(fig_esp, use_container_width=True)
     
     st.divider()
     
-    # ============================================
-    # CONCLUSÃO COM EXPANDER
-    # ============================================
-    
+    # CONCLUSÃO
     st.subheader("💡 Conclusão")
     
     with st.expander("📄 Clique para ler a conclusão completa", expanded=True):
@@ -960,7 +897,7 @@ with aba2:
         st.caption(f"🔄 Atualizado automaticamente a cada 30 segundos | Ciclo: #{count}")
     
     # ============================================
-    # MODO HISTÓRICO (com plantas dinâmicas)
+    # MODO HISTÓRICO
     # ============================================
     
     else:
@@ -979,7 +916,6 @@ with aba2:
         
         with st.spinner(f"🔄 Carregando dados da {label}..."):
             df_hist = get_ga4_data(start, end)
-            df_plantas = get_top_plants(start, end)
         
         if df_hist is not None and not df_hist.empty:
             
@@ -1007,38 +943,7 @@ with aba2:
             
             st.divider()
             
-            # ============================================
-            # PLANTAS MAIS ACESSADAS NO PERÍODO (DINÂMICO)
-            # ============================================
-            
-            st.subheader("🌿 Plantas Medicinais Mais Acessadas")
-            st.caption(f"Período: {label}")
-            
-            if df_plantas is not None and not df_plantas.empty:
-                fig = px.bar(df_plantas, x='visualizacoes', y='nome', orientation='h',
-                            text_auto=',d', color='visualizacoes',
-                            color_continuous_scale='Greens',
-                            labels={'visualizacoes': '👀 Visualizações', 'nome': 'Planta'})
-                fig.update_traces(textposition='outside', textfont_size=10)
-                fig.update_layout(
-                    plot_bgcolor='rgba(0,0,0,0)',
-                    height=350,
-                    showlegend=False,
-                    xaxis_title="Número de visualizações",
-                    yaxis_title=""
-                )
-                st.plotly_chart(fig, use_container_width=True)
-                st.caption("💡 As plantas medicinais mais acessadas neste período (dados do GA4)")
-            else:
-                st.info("📊 Nenhuma página de planta foi acessada neste período.")
-                st.markdown("""
-                **Alternativa:** Use os dados do seu artigo na aba **RESULTADOS**, 
-                que contêm o ranking das espécies mais acessadas em 2026.
-                """)
-            
-            st.divider()
-            
-            # Gráficos de visão geral
+            # Gráficos
             col_h1, col_h2 = st.columns(2)
             
             with col_h1:
@@ -1106,7 +1011,7 @@ with aba2:
             """)
 
 # ============================================
-# ABA 3: REFERÊNCIAS (MARKDOWN PURO)
+# ABA 3: REFERÊNCIAS
 # ============================================
 
 with aba3:
