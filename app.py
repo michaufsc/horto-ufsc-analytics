@@ -220,7 +220,7 @@ def get_realtime_data():
         return None
 
 # ============================================
-# ESTILOS VISUAIS (SÓ CSS, SEM HTML NOS TEXTOS)
+# ESTILOS VISUAIS - COM DESTAQUE PARA QUADROS
 # ============================================
 
 st.markdown("""
@@ -230,12 +230,13 @@ st.markdown("""
     .work-title { font-size: 1.3rem; color: #1E3D59; font-weight: 600; text-align: center; margin: 15px 0; }
     .authors-box { 
         text-align: center; 
-        background: #f8f9fa; 
-        padding: 15px; 
-        border-radius: 10px; 
-        border: 1px solid #e0e0e0; 
+        background: linear-gradient(135deg, #f8f9fa, #e8f5e9);
+        padding: 20px; 
+        border-radius: 12px; 
+        border: 2px solid #17B978; 
         margin: 10px 0; 
         line-height: 1.8;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     }
     .metric-card { 
         background: #F8F9FA; 
@@ -243,9 +244,10 @@ st.markdown("""
         border-radius: 10px; 
         border-left: 4px solid #17B978; 
         text-align: center; 
-        transition: transform 0.2s; 
+        transition: transform 0.2s;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     }
-    .metric-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+    .metric-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(23,185,120,0.15); }
     .metric-number { font-size: 1.8rem; font-weight: 700; color: #1E3D59; }
     .metric-label { font-size: 0.85rem; color: #666; }
     .metric-delta { font-size: 0.8rem; color: #17B978; }
@@ -283,14 +285,17 @@ st.markdown("""
     .ref-box {
         background: #f8f9fa;
         padding: 20px;
-        border-radius: 10px;
+        border-radius: 12px;
         border-left: 4px solid #1E3D59;
         margin: 15px 0;
         font-size: 0.85rem;
         max-height: 500px;
         overflow-y: auto;
         line-height: 1.8;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
+    .ref-box p { margin: 10px 0; }
+    .ref-box strong { color: #1E3D59; }
     .footer {
         text-align: center;
         padding: 15px 0;
@@ -303,29 +308,72 @@ st.markdown("""
     .horto-link { text-align: center; margin: 5px 0 15px 0; font-size: 0.9rem; }
     .horto-link a { color: #17B978; text-decoration: none; font-weight: 600; }
     .horto-link a:hover { text-decoration: underline; }
-    .geo-card { background: #f8f9fa; padding: 15px; border-radius: 10px; border: 1px solid #e0e0e0; margin: 10px 0; }
+    .geo-card { 
+        background: #f8f9fa; 
+        padding: 15px; 
+        border-radius: 10px; 
+        border: 1px solid #e0e0e0; 
+        margin: 10px 0;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
     .geo-card h4 { color: #1E3D59; margin-top: 0; }
     .status-success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; padding: 10px; border-radius: 8px; }
     .status-warning { background: #fff3cd; color: #856404; border: 1px solid #ffc107; padding: 10px; border-radius: 8px; }
     .status-error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; padding: 10px; border-radius: 8px; }
+    
+    /* DESTAQUE PARA GLOSSÁRIO */
     .glossary-box {
-        background: #f8f9fa;
-        padding: 15px 20px;
-        border-radius: 10px;
-        border: 1px solid #e0e0e0;
+        background: linear-gradient(135deg, #f8f9fa, #e8f5e9);
+        padding: 20px 25px;
+        border-radius: 12px;
+        border: 2px solid #17B978;
         margin: 10px 0;
         max-height: 500px;
         overflow-y: auto;
-        line-height: 1.8;
+        line-height: 2.0;
+        box-shadow: 0 4px 15px rgba(23,185,120,0.15);
     }
-    .glossary-box strong { color: #1E3D59; }
+    .glossary-box strong { 
+        color: #1E3D59; 
+        font-size: 0.95rem;
+    }
+    .glossary-box .termo {
+        display: inline-block;
+        min-width: 180px;
+        font-weight: 600;
+        color: #1E3D59;
+    }
+    
+    /* DESTAQUE PARA BOX DE CONCLUSÃO */
     .conclusion-box {
-        background: #f0f9f4;
-        padding: 20px;
+        background: linear-gradient(135deg, #f0f9f4, #e8f5e9);
+        padding: 25px;
         border-radius: 12px;
-        border-left: 4px solid #17B978;
+        border-left: 5px solid #17B978;
         margin: 15px 0;
         line-height: 1.8;
+        box-shadow: 0 4px 15px rgba(23,185,120,0.12);
+    }
+    
+    /* DESTAQUE PARA O RESUMO */
+    .resumo-box {
+        background: #f8f9fa;
+        padding: 25px;
+        border-radius: 12px;
+        border-left: 5px solid #17B978;
+        margin: 15px 0;
+        line-height: 1.8;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    
+    /* DESTAQUE PARA BOX DE INFORMAÇÃO */
+    .info-box {
+        background: #e3f2fd;
+        padding: 15px 20px;
+        border-radius: 10px;
+        border-left: 4px solid #1E3D59;
+        margin: 10px 0;
+        line-height: 1.6;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -363,7 +411,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ============================================
-# TÍTULO E AUTORES (MARKDOWN PURO)
+# TÍTULO E AUTORES
 # ============================================
 
 st.markdown(f"### {TITULO}")
@@ -377,44 +425,41 @@ st.markdown(f"""
 st.markdown(f"**Palavras-chave:** {PALAVRAS_CHAVE}")
 
 # ============================================
-# GLOSSÁRIO (MARKDOWN PURO)
+# GLOSSÁRIO COM DESTAQUE
 # ============================================
 
-with st.expander("📖 Glossário - Entenda os termos"):
+with st.expander("📖 Glossário - Entenda os termos (clique para expandir)"):
     st.markdown("""
-    **Google Analytics 4 (GA4)** → Plataforma do Google para coletar e analisar dados de interação dos usuários com sites.
-
-    **Web Analytics** → Processo de coletar, medir e analisar dados de acesso e comportamento em ambientes digitais.
-
-    **Usuário** → Pessoa identificada pelo Google Analytics que interage com o site.
-
-    **Usuários Novos** → Pessoas que acessaram o site pela primeira vez.
-
-    **Sessão** → Período em que um usuário interage com o site.
-
-    **Busca Orgânica** → Visitas que vêm de resultados do Google sem anúncios pagos.
-
-    **Acesso Direto** → Quando o usuário digita o endereço do site diretamente.
-
-    **Referral** → Visitas que vêm de outros sites (blogs, redes sociais).
-
-    **Engajamento** → Grau de interação dos usuários com o conteúdo do site.
-
-    **Landing Page** → Primeira página que o usuário vê ao entrar no site.
-
-    **IA (Inteligência Artificial)** → Assistentes como Google Gemini, ChatGPT, que direcionam usuários para o site.
-
-    **Dispositivo** → Celular, computador ou tablet usado para acessar o site.
-    """)
+    <div class="glossary-box">
+        <p><span class="termo">📊 Google Analytics 4 (GA4)</span> → Plataforma do Google para coletar e analisar dados de interação dos usuários com sites.</p>
+        <p><span class="termo">📈 Web Analytics</span> → Processo de coletar, medir e analisar dados de acesso e comportamento em ambientes digitais.</p>
+        <p><span class="termo">👤 Usuário</span> → Pessoa identificada pelo Google Analytics que interage com o site.</p>
+        <p><span class="termo">🆕 Usuários Novos</span> → Pessoas que acessaram o site pela primeira vez.</p>
+        <p><span class="termo">📊 Sessão</span> → Período em que um usuário interage com o site.</p>
+        <p><span class="termo">🔍 Busca Orgânica</span> → Visitas que vêm de resultados do Google sem anúncios pagos.</p>
+        <p><span class="termo">🏠 Acesso Direto</span> → Quando o usuário digita o endereço do site diretamente.</p>
+        <p><span class="termo">🔗 Referral</span> → Visitas que vêm de outros sites (blogs, redes sociais).</p>
+        <p><span class="termo">💡 Engajamento</span> → Grau de interação dos usuários com o conteúdo do site.</p>
+        <p><span class="termo">📄 Landing Page</span> → Primeira página que o usuário vê ao entrar no site.</p>
+        <p><span class="termo">🤖 IA (Inteligência Artificial)</span> → Assistentes como Google Gemini, ChatGPT, que direcionam usuários para o site.</p>
+        <p><span class="termo">📱 Dispositivo</span> → Celular, computador ou tablet usado para acessar o site.</p>
+        <p><span class="termo">🌍 Tráfego Internacional</span> → Acessos originados fora do Brasil.</p>
+        <p><span class="termo">🇧🇷 Audiência Nacional</span> → Acessos originados dentro do Brasil.</p>
+    </div>
+    """, unsafe_allow_html=True)
 
 # ============================================
-# STATUS GA4
+# STATUS GA4 COM DESTAQUE
 # ============================================
 
-with st.expander("🔍 Status da Conexão com GA4"):
+with st.expander("🔍 Status da Conexão com GA4 (clique para expandir)"):
+    st.markdown("""
+    <div style="background: #f0f4f8; padding: 15px; border-radius: 10px; border: 1px solid #c0d0e0; margin: 10px 0;">
+    """, unsafe_allow_html=True)
+    
     if credentials_info:
         st.markdown('<div class="status-success">✅ Conectado ao Google Analytics</div>', unsafe_allow_html=True)
-        st.write(f"Property ID: `{GA4_PROPERTY_ID}`")
+        st.write(f"📊 Property ID: `{GA4_PROPERTY_ID}`")
     else:
         st.markdown('<div class="status-error">❌ Falha na conexão</div>', unsafe_allow_html=True)
     
@@ -423,17 +468,18 @@ with st.expander("🔍 Status da Conexão com GA4"):
         st.markdown('<div class="status-success">✅ Permissão concedida</div>', unsafe_allow_html=True)
     else:
         st.markdown('<div class="status-error">❌ Sem permissão</div>', unsafe_allow_html=True)
+    
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # ============================================
-# BANNER DO EVENTO
+# BANNER DO EVENTO (SEM SEU NOME)
 # ============================================
 
 st.markdown("""
 <div class="event-banner">
     <h2>🎓 XXVIII Simpósio de Plantas Medicinais do Brasil (SPMB) 2026</h2>
-    <p>15 a 18 de setembro de 2026 | Univali - Itajaí/SC</p>
-    <p>Tema: <strong>Plantas medicinais como fonte de novos agentes medicinais</strong></p>
-    <p style="margin-top: 5px; font-weight: 600;">Apresentador: Michael A. Lopes</p>
+    <p>📅 15 a 18 de setembro de 2026 | 📍 Univali - Itajaí/SC</p>
+    <p>🌿 Tema: <strong>Plantas medicinais como fonte de novos agentes medicinais</strong></p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -497,26 +543,25 @@ with aba1:
     
     st.divider()
     
-    # ============================================
-    # RESUMO - MARKDOWN PURO (SEM HTML!)
-    # ============================================
-    
+    # RESUMO COM DESTAQUE
     st.markdown("### 📋 Resumo dos Resultados")
     
     st.markdown(f"""
-    A análise combinada entre aquisição de usuários e aquisição de tráfego revela a sólida autoridade e o alcance do portal.
-    
-    Em **2025**, o site registrou **{USUARIOS_2025:,} usuários** ({USUARIOS_NOVOS_2025:,} novos), com predomínio da busca orgânica ({BUSCA_ORGANICA_2025:,}; **{BUSCA_ORGANICA_PCT_2025:.2f}%**) e do acesso direto ({ACESSO_DIRETO_2025:,}; **{ACESSO_DIRETO_PCT_2025:.2f}%**). Na perspectiva de tráfego, o mesmo período contabilizou {USUARIOS_ENGAJADOS_2025:,} usuários engajados, liderados pela busca orgânica ({BUSCA_ORGANICA_TR_2025:,}; **{BUSCA_ORGANICA_TR_PCT_2025:.2f}%**) e acesso direto ({ACESSO_DIRETO_TR_2025:,}; **{ACESSO_DIRETO_TR_PCT_2025:.2f}%**).
-    
-    Em **2026 (jan–jul)**, foram **{USUARIOS_2026:,} usuários** ({USUARIOS_NOVOS_2026:,} novos), mantendo a liderança da busca orgânica ({BUSCA_ORGANICA_2026:,}; **{BUSCA_ORGANICA_PCT_2026:.2f}%**) e acesso direto ({ACESSO_DIRETO_2026:,}; **{ACESSO_DIRETO_PCT_2026:.2f}%**), enquanto o tráfego total atingiu {USUARIOS_ENGAJADOS_2026:,} usuários, com busca orgânica ({BUSCA_ORGANICA_TR_2026:,}; **{BUSCA_ORGANICA_TR_PCT_2026:.2f}%**) e acesso direto ({ACESSO_DIRETO_TR_2026:,}; **{ACESSO_DIRETO_TR_PCT_2026:.2f}%**).
-    
-    **Destaques:**
-    - 🤖 **Emergência de IA**: {IA_USUARIOS} usuários e {IA_SESSOES} sessões via assistentes de IA
-    - 🔗 **Alta retenção**: {REFERRAL_RETENCAO:.2f}% em canais de indicação (Referral)
-    - 📈 **Crescimento**: Projeção de superar o tráfego total de 2025 até o final de 2026
-    
-    Quanto ao perfil demográfico, observou-se predominância expressiva do público feminino (**{FEMININO_2025:.1f}% em 2025** e **{FEMININO_2026:.1f}% em 2026**) e de jovens adultos na faixa etária de 25 a 34 anos (**40,1%**). A imensa maioria dos acessos está concentrada no Brasil (**{BRASIL_2025:.1f}% em 2025** e **{BRASIL_2026:.1f}% em 2026**).
-    """)
+    <div class="resumo-box">
+        A análise combinada entre aquisição de usuários e aquisição de tráfego revela a sólida autoridade e o alcance do portal.
+        
+        Em **2025**, o site registrou **{USUARIOS_2025:,} usuários** ({USUARIOS_NOVOS_2025:,} novos), com predomínio da busca orgânica ({BUSCA_ORGANICA_2025:,}; **{BUSCA_ORGANICA_PCT_2025:.2f}%**) e do acesso direto ({ACESSO_DIRETO_2025:,}; **{ACESSO_DIRETO_PCT_2025:.2f}%**). Na perspectiva de tráfego, o mesmo período contabilizou {USUARIOS_ENGAJADOS_2025:,} usuários engajados, liderados pela busca orgânica ({BUSCA_ORGANICA_TR_2025:,}; **{BUSCA_ORGANICA_TR_PCT_2025:.2f}%**) e acesso direto ({ACESSO_DIRETO_TR_2025:,}; **{ACESSO_DIRETO_TR_PCT_2025:.2f}%**).
+        
+        Em **2026 (jan–jul)**, foram **{USUARIOS_2026:,} usuários** ({USUARIOS_NOVOS_2026:,} novos), mantendo a liderança da busca orgânica ({BUSCA_ORGANICA_2026:,}; **{BUSCA_ORGANICA_PCT_2026:.2f}%**) e acesso direto ({ACESSO_DIRETO_2026:,}; **{ACESSO_DIRETO_PCT_2026:.2f}%**), enquanto o tráfego total atingiu {USUARIOS_ENGAJADOS_2026:,} usuários, com busca orgânica ({BUSCA_ORGANICA_TR_2026:,}; **{BUSCA_ORGANICA_TR_PCT_2026:.2f}%**) e acesso direto ({ACESSO_DIRETO_TR_2026:,}; **{ACESSO_DIRETO_TR_PCT_2026:.2f}%**).
+        
+        **Destaques:**
+        - 🤖 **Emergência de IA**: {IA_USUARIOS} usuários e {IA_SESSOES} sessões via assistentes de IA
+        - 🔗 **Alta retenção**: {REFERRAL_RETENCAO:.2f}% em canais de indicação (Referral)
+        - 📈 **Crescimento**: Projeção de superar o tráfego total de 2025 até o final de 2026
+        
+        Quanto ao perfil demográfico, observou-se predominância expressiva do público feminino (**{FEMININO_2025:.1f}% em 2025** e **{FEMININO_2026:.1f}% em 2026**) e de jovens adultos na faixa etária de 25 a 34 anos (**40,1%**). A imensa maioria dos acessos está concentrada no Brasil (**{BRASIL_2025:.1f}% em 2025** e **{BRASIL_2026:.1f}% em 2026**).
+    </div>
+    """, unsafe_allow_html=True)
     
     st.divider()
     
@@ -654,21 +699,20 @@ with aba1:
     
     st.divider()
     
-    # ============================================
-    # CONCLUSÃO - MARKDOWN PURO
-    # ============================================
-    
+    # CONCLUSÃO COM DESTAQUE
     st.subheader("💡 Conclusão")
     
     st.markdown("""
-    Os resultados confirmam o site do Horto como **efetivo lócus empírico da Etnobiologia Digital**, ampliando o alcance do conhecimento etnobotânico para além dos muros da universidade e alcançando públicos diversos em escala nacional e internacional.
-    
-    As métricas de **Web Analytics** mostraram-se ferramentas robustas para avaliar essa circulação, permitindo identificar os principais canais de acesso, com destaque para buscadores e, mais recentemente, assistentes de IA, bem como o perfil demográfico dos usuários e os conteúdos mais acessados.
-    
-    Essa análise evidencia a **tensão entre a capilaridade digital** e o **risco de descontextualização**, reforçando a necessidade de conciliar acessibilidade com a preservação da integridade dos saberes, garantindo que a divulgação científica não comprometa a riqueza e a segurança dos conhecimentos tradicionais *(De Meyer & Ceuterick, 2022; Simon & Camargo, 2021)*.
-    
-    **Apoio Financeiro:** Universidade Federal de Santa Catarina (UFSC)
-    """)
+    <div class="conclusion-box">
+        Os resultados confirmam o site do Horto como **efetivo lócus empírico da Etnobiologia Digital**, ampliando o alcance do conhecimento etnobotânico para além dos muros da universidade e alcançando públicos diversos em escala nacional e internacional.
+        
+        As métricas de **Web Analytics** mostraram-se ferramentas robustas para avaliar essa circulação, permitindo identificar os principais canais de acesso, com destaque para buscadores e, mais recentemente, assistentes de IA, bem como o perfil demográfico dos usuários e os conteúdos mais acessados.
+        
+        Essa análise evidencia a **tensão entre a capilaridade digital** e o **risco de descontextualização**, reforçando a necessidade de conciliar acessibilidade com a preservação da integridade dos saberes, garantindo que a divulgação científica não comprometa a riqueza e a segurança dos conhecimentos tradicionais *(De Meyer & Ceuterick, 2022; Simon & Camargo, 2021)*.
+        
+        **Apoio Financeiro:** Universidade Federal de Santa Catarina (UFSC)
+    </div>
+    """, unsafe_allow_html=True)
 
 # ============================================
 # ABA 2: TEMPO REAL
