@@ -24,7 +24,7 @@ TITULO = "Etnobiologia digital no Horto Didático da UFSC: circulação do saber
 
 AUTORES = """
 **Michael A. Lopes** (Apresentador)  
-**Maique W. Biavatti** (Orientador)  
+**Maique W. Biavatti** (Orientadora)  
 **Gabriela D. Ritter** (Colaboradora)  
 **Letícia S. Tardim** (Colaboradora)  
 
