@@ -9,7 +9,7 @@ Dashboard interativo para análise de dados do portal de plantas medicinais do H
 - Painel em tempo real
 
 ## 📊 Dados
-- Dados do Google Analytics 4 - Property ID: 750410485227
+- Dados do Google Analytics 4
 - Período: 2025 - 2026
 
 ## 🎓 Apresentação
