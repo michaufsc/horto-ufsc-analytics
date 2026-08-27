@@ -15,3 +15,7 @@ Dashboard interativo para análise de dados do portal de plantas medicinais do H
 ## 🎓 Apresentação
 - XXVIII Simpósio de Plantas Medicinais do Brasil (SPMB) 2026
 - Univali - Itajaí/SC, 15 a 18 de setembro de 2026
+
+ ## 🎓 Autores
+ - Letícia da silva Tardim
+ - Michael Anderson da Luz Lopes 
